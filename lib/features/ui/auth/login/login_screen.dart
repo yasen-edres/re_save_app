@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login', style: AppStyles.semi20Primary,),
+        title: Text('تسجيل الدخول', style: AppStyles.semi20Primary,),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
               controller: emailController,
               filledColor: AppColors.transparentColor,
               borderColor: AppColors.primaryColor,
-              hintText: 'Enter your email',
+              hintText: 'أدخل بريدك الإلكتروني',
               prefixIcon: Icon(Icons.email),
             ),
             CustomTextFormField(
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
               isObscureText: true,
               filledColor: AppColors.transparentColor,
               borderColor: AppColors.primaryColor,
-              hintText: "Enter your password",
+              hintText: "أدخل كلمة المرور",
               controller: passwordController,
             ),
             TextButton(
@@ -50,12 +50,12 @@ class LoginScreen extends StatelessWidget {
                 //todo: navigator to forget password screen
               },
               child: Text(
-                'Forget Password?', style: AppStyles.bold16Green,),
+                'نسيت كلمة المرور؟', style: AppStyles.bold16Green,),
             ),
             SizedBox(
               width: double.infinity,
               child: CustomElevatedButton(
-                text: 'Sign in',
+                text: 'تسجيل الدخول',
                 onPressed: () {
                   //todo: Sign in.
                 },
@@ -74,7 +74,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: Text('OR', style: AppStyles.bold16Green,),
+                  child: Text('أو', style: AppStyles.bold16Green,),
                 ),
                 Expanded(
                     child: Divider(
@@ -104,7 +104,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     Brand(Brands.google),
                     SizedBox(width: 8.w,),
-                    Text('Continue With Google',
+                    Text('المتابعة عبر جوجل',
                       style: AppStyles.medium18Header,)
                   ],
                 ),
@@ -114,14 +114,14 @@ class LoginScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Don't Have An Account?",
+                Text("ليس لديك حساب؟",
                   style: AppStyles.bold16Primary,),
                 TextButton(
                     onPressed: () {
                       //todo: navigator to register screen.
                       Navigator.of(context).pushNamed(AppRoutes.registerRoute);
                     },
-                    child: Text("sign Up", style: AppStyles.bold16Green,)
+                    child: Text("إنشاء حساب", style: AppStyles.bold16Green,)
                 )
               ],
             )

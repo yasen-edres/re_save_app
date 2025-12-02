@@ -4,6 +4,8 @@ import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/core/utils/app_theme.dart';
 import 'package:re_save_app/features/ui/auth/login/login_screen.dart';
 import 'package:re_save_app/features/ui/auth/register/register_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:re_save_app/features/ui/onboarding/onboarding_screen.dart';
 
 void main(){
   runApp(MyApp());
@@ -18,11 +20,21 @@ class MyApp extends StatelessWidget{
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.loginRoute,
+          initialRoute: AppRoutes.onboardingRoute,
           routes: {
             AppRoutes.loginRoute : (context) => LoginScreen(),
             AppRoutes.registerRoute: (context) => RegisterScreen(),
           },
+          locale: Locale('ar'),
+          supportedLocales: [
+            Locale('en'),
+            Locale('ar'),
+          ],
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           theme: AppTheme.themeMode,
         );
       },

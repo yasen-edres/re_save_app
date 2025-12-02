@@ -39,6 +39,7 @@ dependencies:
   google_fonts: ^6.3.2
   auto_size_text: ^3.0.0
   icons_plus: ^5.0.0
+  flutter_localization: ^0.3.3
 
 dev_dependencies:
   flutter_test:

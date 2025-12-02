@@ -28,27 +28,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Register', style: AppStyles.semi20Primary)),
+      appBar: AppBar(title: Text('إنشاء حساب', style: AppStyles.semi20Primary)),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
         child: Column(
           children: [
             CustomTextFormField(
-              hintText: 'Name',
+              hintText: 'الاسم',
               prefixIcon: Icon(Icons.person),
               controller: nameController,
               filledColor: AppColors.transparentColor,
               borderColor: AppColors.primaryColor,
             ),
             CustomTextFormField(
-              hintText: 'Email',
+              hintText: 'البريد الإلكتروني',
               prefixIcon: Icon(Icons.email),
               controller: emailController,
               filledColor: AppColors.transparentColor,
               borderColor: AppColors.primaryColor,
             ),
             CustomTextFormField(
-              hintText: 'Password',
+              hintText: 'كلمة المرور',
               isPassword: true,
               controller: passwordController,
               prefixIcon: Icon(Icons.lock),
@@ -57,13 +57,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
               isObscureText: false,
             ),
             CustomTextFormField(
-              hintText: 'Re Password',
+              hintText: 'تأكيد كلمة المرور',
               isPassword: true,
               controller: rePasswordController,
               filledColor: AppColors.transparentColor,
               borderColor: AppColors.primaryColor,
               prefixIcon: Icon(Icons.lock),
-
               isObscureText: false,
             ),
             SizedBox(height: 10.h),
@@ -78,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Expanded(
                   child: Text(
-                    'I Agree with Terms of Service and Privacy Policy',
+                    'أوافق على شروط الخدمة وسياسة الخصوصية',
                     style: AppStyles.bold16Green,
                   ),
                 ),
@@ -86,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             SizedBox(height: 40.h),
             CustomElevatedButton(
-              text: 'Create Account',
+              text: 'إنشاء الحساب',
               onPressed: () {
                 //todo: sign in
               },
@@ -97,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Already Have Account ?', style: AppStyles.bold16Primary),
+                Text('هل لديك حساب بالفعل؟', style: AppStyles.bold16Primary),
                 TextButton(
                   onPressed: () {
                     //todo: navigator to login screen.
@@ -106,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       (route) => false,
                     );
                   },
-                  child: Text("Login", style: AppStyles.bold16Green),
+                  child: Text("تسجيل الدخول", style: AppStyles.bold16Green),
                 ),
               ],
             ),

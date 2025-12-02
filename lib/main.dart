@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_routes.dart';
+import 'package:re_save_app/core/utils/app_theme.dart';
 import 'package:re_save_app/features/ui/auth/login/login_screen.dart';
 
 void main(){
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget{
           routes: {
             AppRoutes.loginRoute : (context) => LoginScreen(),
           },
+          theme: AppTheme.themeMode,
         );
       },
     );

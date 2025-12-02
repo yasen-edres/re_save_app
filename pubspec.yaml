@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.3
   flutter_native_splash: ^2.4.7
+  google_fonts: ^6.3.2
+  auto_size_text: ^3.0.0
+  icons_plus: ^5.0.0
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,8 @@ import 'package:re_save_app/core/utils/app_theme.dart';
 import 'package:re_save_app/features/ui/auth/login/login_screen.dart';
 import 'package:re_save_app/features/ui/auth/register/register_screen.dart';
 
+import 'features/ui/home/home_screen.dart';
+
 void main(){
   runApp(MyApp());
 }
@@ -19,10 +21,11 @@ class MyApp extends StatelessWidget{
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.loginRoute,
+          initialRoute: AppRoutes.homeRoute,
           routes: {
             AppRoutes.loginRoute : (context) => LoginScreen(),
             AppRoutes.registerRoute: (context) => RegisterScreen(),
+            AppRoutes.homeRoute: (context) => HomeScreen(),
           },
           locale: Locale('ar'),
           supportedLocales: [

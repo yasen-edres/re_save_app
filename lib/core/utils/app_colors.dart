@@ -12,7 +12,7 @@ class AppColors {
   static const Color discountTextColor = Color(0x99004182);
   static const Color orangeColor = Color(0xFFF4B400);
   static const Color yellowColor = Color(0xFFFDD835);
-  static const Color lightYellowColor = Color(0xFFEBF4D5);
+  static const Color lightYellowColor = Color(0xFFF1F1F1);
   static const Color lightBlack = Color(0xFF2F2929);
   static const Color redColor = Color(0xFFBC3018);
   static const Color blueColor = Color(0xFF0973DD);

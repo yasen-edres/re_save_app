@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'app_colors.dart';
 
 class AppStyles {
@@ -39,6 +39,11 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.primaryColor,
   );
+  static TextStyle bold16Blue = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blueColor,
+  );
   static TextStyle light16White = GoogleFonts.poppins(
     fontSize: 16,
     fontWeight: FontWeight.w300,
@@ -62,6 +67,11 @@ class AppStyles {
   static TextStyle semi24White = GoogleFonts.poppins(
     fontSize: 24,
     fontWeight: FontWeight.w600,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle bold24White = GoogleFonts.poppins(
+    fontSize: 26,
+    fontWeight: FontWeight.w700,
     color: AppColors.whiteColor,
   );
   static TextStyle medium14Category = GoogleFonts.poppins(
@@ -93,5 +103,10 @@ class AppStyles {
     fontSize: 20,
     fontWeight: FontWeight.w500,
     color: AppColors.whiteColor,
+  );
+  static TextStyle bold20PrimaryDark = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primaryDark,
   );
 }

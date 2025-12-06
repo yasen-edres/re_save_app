@@ -18,6 +18,7 @@ class AppAssets {
   static String paperImage = 'assets/images/paper_image.png';
   static String learnRecycleCover = 'assets/images/learn_recycle_cover.png';
   static String plasticCover = 'assets/images/plastic_cover.png';
+  static String yassinImage = 'assets/images/yassin_image.png';
   static String refrigeratorImage = 'assets/images/Refrigerator_image.png';
   static String potelCover = 'assets/images/potel_cover.png';
 }

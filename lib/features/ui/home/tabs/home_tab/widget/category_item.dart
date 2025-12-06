@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
@@ -7,6 +8,7 @@ class CategoryItem extends StatelessWidget {
   String image;
 
   String title;
+  String description;
 
   double price;
 
@@ -15,31 +17,55 @@ class CategoryItem extends StatelessWidget {
     required this.title,
     required this.image,
     required this.price,
+    required this.description,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.antiAlias,
-      width: 158.w,
-      height: 211.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: Column(
         children: [
-          SizedBox(height: 122.h, child: Image.asset(image)),
+          Container(
+            height: 122.h,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(image), fit: BoxFit.fill)
+            ),
+          ),
           Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
               width: double.infinity,
               decoration: BoxDecoration(color: AppColors.whiteColor),
-              child: Column(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: AppStyles.bold24Black),
-                  Text('EGP :${price}', style: AppStyles.semi16TextBlack),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title, style: AppStyles.bold20Black),
+                      Text(description, style: AppStyles.light16Gray),
+                      Spacer(),
+                      Text('${price.toInt()} جنيه/القطعه',
+                          style: AppStyles.semi14TextBlack),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(height: 37.h,),
+                      CircleAvatar(
+                        backgroundColor: AppColors.darkGreenColor,
+                        radius: 18,
+                        child: Icon(
+                          CupertinoIcons.add, color: AppColors.whiteColor,
+                          size: 17,),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

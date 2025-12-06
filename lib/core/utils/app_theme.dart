@@ -17,12 +17,12 @@ class AppTheme {
           backgroundColor: AppColors.lightYellowColor,
           centerTitle: true,
           iconTheme: IconThemeData(
-              color: AppColors.primaryColor
+              color: AppColors.blackColor
           )
 
       ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: AppColors.greenColor,
+      backgroundColor: AppColors.darkGreenColor,
       shape: StadiumBorder(
         side: BorderSide(color: AppColors.whiteColor, width: 6),
       ),

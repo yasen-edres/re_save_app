@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -18,7 +19,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('تسجيل الدخول', style: AppStyles.semi20Primary,),
+        title: Text('تسجيل الدخول', style: AppStyles.bold24Black,),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -28,20 +29,19 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             CustomTextFormField(
               controller: emailController,
               filledColor: AppColors.transparentColor,
-              borderColor: AppColors.primaryColor,
+              borderColor: AppColors.blackColor,
               hintText: 'أدخل بريدك الإلكتروني',
-              prefixIcon: Icon(Icons.email),
+              prefixIcon: Icon(CupertinoIcons.mail),
             ),
             CustomTextFormField(
               isPassword: true,
               keyboardType: TextInputType.visiblePassword,
               isObscureText: true,
               filledColor: AppColors.transparentColor,
-              borderColor: AppColors.primaryColor,
+              borderColor: AppColors.blackColor,
               hintText: "أدخل كلمة المرور",
               controller: passwordController,
             ),
@@ -58,6 +58,8 @@ class LoginScreen extends StatelessWidget {
                 text: 'تسجيل الدخول',
                 onPressed: () {
                   //todo: Sign in.
+                  Navigator.of(context).pushReplacementNamed(
+                      AppRoutes.homeRoute);
                 },
                 backgroundColor: AppColors.greenColor,
                 textStyle: AppStyles.regular18White,
@@ -110,12 +112,12 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            SizedBox(height: 20.h,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("ليس لديك حساب؟",
-                  style: AppStyles.bold16Primary,),
+                  style: AppStyles.bold16Black,),
                 TextButton(
                     onPressed: () {
                       //todo: navigator to register screen.

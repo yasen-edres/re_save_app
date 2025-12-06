@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
@@ -16,6 +17,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   TextEditingController emailController = TextEditingController();
 
@@ -28,41 +30,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('إنشاء حساب', style: AppStyles.semi20Primary)),
+      appBar: AppBar(title: Text('إنشاء حساب', style: AppStyles.bold24Black)),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
         child: Column(
           children: [
             CustomTextFormField(
               hintText: 'الاسم',
-              prefixIcon: Icon(Icons.person),
+              prefixIcon: Icon(CupertinoIcons.person),
               controller: nameController,
               filledColor: AppColors.transparentColor,
-              borderColor: AppColors.primaryColor,
+              borderColor: AppColors.blackColor,
+            ),
+            CustomTextFormField(
+              hintText: 'رقم التليفون',
+              prefixIcon: Icon(CupertinoIcons.phone),
+              controller: phoneController,
+              filledColor: AppColors.transparentColor,
+              borderColor: AppColors.blackColor,
             ),
             CustomTextFormField(
               hintText: 'البريد الإلكتروني',
-              prefixIcon: Icon(Icons.email),
+              prefixIcon: Icon(CupertinoIcons.mail),
               controller: emailController,
               filledColor: AppColors.transparentColor,
-              borderColor: AppColors.primaryColor,
+              borderColor: AppColors.blackColor,
             ),
             CustomTextFormField(
               hintText: 'كلمة المرور',
               isPassword: true,
               controller: passwordController,
-              prefixIcon: Icon(Icons.lock),
+              prefixIcon: Icon(CupertinoIcons.lock),
               filledColor: AppColors.transparentColor,
-              borderColor: AppColors.primaryColor,
-              isObscureText: false,
-            ),
-            CustomTextFormField(
-              hintText: 'تأكيد كلمة المرور',
-              isPassword: true,
-              controller: rePasswordController,
-              filledColor: AppColors.transparentColor,
-              borderColor: AppColors.primaryColor,
-              prefixIcon: Icon(Icons.lock),
+              borderColor: AppColors.blackColor,
               isObscureText: false,
             ),
             SizedBox(height: 10.h),
@@ -92,11 +92,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               backgroundColor: AppColors.greenColor,
               textStyle: AppStyles.regular18White,
             ),
-            Spacer(),
+            SizedBox(height: 20.h,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('هل لديك حساب بالفعل؟', style: AppStyles.bold16Primary),
+                Text('هل لديك حساب بالفعل؟', style: AppStyles.bold16Black),
                 TextButton(
                   onPressed: () {
                     //todo: navigator to login screen.

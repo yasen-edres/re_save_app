@@ -59,6 +59,11 @@ class AppStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.whiteColor,
   );
+  static TextStyle semi16TextBlack = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: AppColors.blackColor,
+  );
   static TextStyle semi20Primary = GoogleFonts.poppins(
     fontSize: 20,
     fontWeight: FontWeight.w600,
@@ -73,6 +78,11 @@ class AppStyles {
     fontSize: 26,
     fontWeight: FontWeight.w700,
     color: AppColors.whiteColor,
+  );
+  static TextStyle bold24Black = GoogleFonts.poppins(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
   );
   static TextStyle medium14Category = GoogleFonts.poppins(
     fontSize: 14,

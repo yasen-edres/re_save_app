@@ -3,17 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_assets.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
+import 'package:re_save_app/features/ui/home/tabs/home_tab/widget/category_item.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 
 class HomeTab extends StatelessWidget {
   HomeTab({super.key});
 
-  List<Widget> asd = [
+  List<Widget> eventsCover = [
     Image.asset(AppAssets.learnRecycleCover),
-    Image.asset(AppAssets.plasticCover),
     Image.asset(AppAssets.potelCover),
 
+  ];
+  List<String> electronicDevicesImage = [
+    AppAssets.refrigeratorImage,
+    AppAssets.refrigeratorImage,
+    AppAssets.refrigeratorImage,
+    AppAssets.refrigeratorImage,
+    AppAssets.refrigeratorImage,
+  ];
+  List<String> electronicDevicesName = [
+    'ثلاجة',
+    'ثلاجة',
+    'ثلاجة',
+    'ثلاجة',
+    'ثلاجة',
+  ];
+  List<double> electronicDevicesPrice = [
+    1000,
+    2000,
+    3000,
+    4000,
+    5000,
   ];
   List<String> categoriesList = [
     AppAssets.ironImage,
@@ -89,12 +110,19 @@ class HomeTab extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("العروض", style: AppStyles.medium18Header,),
-                  Text("عرض المزيد", style: AppStyles.bold16Blue,),
+                  InkWell(
+                      onTap: () {
+                        //todo: show all events
+                      },
+                      child: Text("عرض المزيد", style: AppStyles.bold16Blue,)),
                 ],
               ),
               CarouselSlider(
-                  items: asd,
+                  items: eventsCover,
                   options: CarouselOptions(
+                    onPageChanged: (index, reason) {
+                      //todo: show all details
+                    },
                     padEnds: false,
                     height: 200.h,
                     aspectRatio: 16 / 9,
@@ -115,27 +143,28 @@ class HomeTab extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("فئات", style: AppStyles.medium18Header,),
-                  Text("عرض المزيد", style: AppStyles.bold16Blue,),
+                  InkWell(
+                      onTap: () {
+                        //todo: show all categories
+                      },
+                      child: Text("عرض المزيد", style: AppStyles.bold16Blue,)),
                 ],
               ),
               SizedBox(height: 20.h,),
               SizedBox(
-                height: 350.h,
+                height: 300.h,
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 1.5,
                     mainAxisSpacing: 20.h,
-                    //   crossAxisCount: 2,
-                    // childAspectRatio: 2,
-                    // mainAxisSpacing: 30.h,
                   ),
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
                         CircleAvatar(
                           backgroundImage: AssetImage(categoriesList[index]),
-                          radius: 50,
+                          radius: 40,
                         ),
                         SizedBox(height: 5.h,),
                         Expanded(child: Text(categoriesNameList[index],
@@ -146,8 +175,37 @@ class HomeTab extends StatelessWidget {
                   itemCount: categoriesList.length,
                   scrollDirection: Axis.horizontal,
                 ),
-              )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("الأجهزة الإلكترونية", style: AppStyles.medium18Header,),
+                  InkWell(
+                      onTap: () {
+                        //todo: show all electronicDevices
+                      },
+                      child: Text("عرض المزيد", style: AppStyles.bold16Blue,)),
+                ],
+              ),
+              SizedBox(height: 10.h,),
+              SizedBox(
+                height: 220,
+                child: ListView.separated(
 
+                  scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return CategoryItem(
+                          title: electronicDevicesName[index],
+                          image: electronicDevicesImage[index],
+                          price: electronicDevicesPrice[index]
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                        SizedBox(width: 25.w,),
+                    itemCount: electronicDevicesImage.length
+                ),
+              ),
+              SizedBox(height: 20.h,)
             ],
           ),
         ),

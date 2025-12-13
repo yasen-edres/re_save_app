@@ -44,10 +44,25 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.blueColor,
   );
+  static TextStyle bold18Black = GoogleFonts.poppins(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
+  );
+  static TextStyle bold20White = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+  );
   static TextStyle light16White = GoogleFonts.poppins(
     fontSize: 16,
     fontWeight: FontWeight.w300,
     color: AppColors.whiteColor,
+  );
+  static TextStyle light16Black = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w300,
+    color: AppColors.blackColor,
   );
   static TextStyle light18HintText = GoogleFonts.poppins(
     fontSize: 18,

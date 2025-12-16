@@ -17,6 +17,7 @@ class CategoryTab extends StatefulWidget {
 class _CategoryTabState extends State<CategoryTab> {
   TextEditingController searchController = TextEditingController();
   int selectedIndex = 0;
+  String searchText = '';
   List<String> categories = [
     'الكل',
     'الالكترونيات',
@@ -29,6 +30,16 @@ class _CategoryTabState extends State<CategoryTab> {
     'زيوت',
     'اقمشه',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      setState(() {
+        searchText = searchController.text;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +75,10 @@ class _CategoryTabState extends State<CategoryTab> {
                           .map((e) => Text(e, style: AppStyles.bold20Black))
                           .toList(),
                     ),
-                    GetCategories(categoryName: categories[selectedIndex]),
+                    GetCategories(
+                      categoryName: categories[selectedIndex],
+                      searchText: searchController.text,
+                    ),
                   ],
                 ),
               ),

@@ -7,8 +7,9 @@ import 'package:re_save_app/features/ui/home/tabs/home_tab/widget/category_item.
 
 class GetCategories extends StatelessWidget {
   String categoryName;
+  final String searchText;
 
-  GetCategories({required this.categoryName});
+  GetCategories({required this.categoryName, this.searchText = ''});
 
   List<Map<String, String>> productItems = [
     {
@@ -195,9 +196,26 @@ class GetCategories extends StatelessWidget {
   ];
 
   Widget build(BuildContext context) {
-    List<Map<String, String>> filterProduct = categoryName == 'الكل'
-        ? productItems
-        : productItems.where((p) => p['category'] == categoryName).toList();
+    List<Map<String, String>> filterProduct = productItems.where((p) {
+      bool matchesCategory =
+          categoryName == 'الكل' || p['category'] == categoryName;
+
+      bool matchesSearch =
+          searchText.isEmpty ||
+          p['name']!.toLowerCase().contains(searchText.toLowerCase());
+
+      return matchesCategory && matchesSearch;
+    }).toList();
+
+    if (filterProduct.isEmpty) {
+      return Center(
+        heightFactor: 20.h,
+        child: Text(
+          'لم يتم العثور على أي عناصر في هذه الفئة!',
+          style: AppStyles.bold20Black,
+        ),
+      );
+    }
     return filterProduct.isEmpty
         ? Center(
             heightFactor: 20.h,

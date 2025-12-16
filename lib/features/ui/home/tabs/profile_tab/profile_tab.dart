@@ -15,7 +15,7 @@ class ProfileTab extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20.h),
+          padding: EdgeInsets.symmetric(vertical: 30.h,),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -158,6 +158,25 @@ class ProfileTab extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 20.h,),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 50.w,
+                  vertical: 20.h,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.transparentRedColor,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(CupertinoIcons.square_arrow_right,
+                      color: AppColors.redColor,),
+                    SizedBox(width: 10.w,),
+                    Text('تسجيل الخروج', style: AppStyles.bold16Red,)
+                  ],
+                ),
+              )
             ],
           ),
         ),

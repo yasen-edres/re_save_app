@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'app_colors.dart';
 
 class AppStyles {
@@ -39,10 +39,35 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.primaryColor,
   );
+  static TextStyle bold16Blue = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blueColor,
+  );
+  static TextStyle bold18Black = GoogleFonts.poppins(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
+  );
+  static TextStyle bold20White = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle bold16Red = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: AppColors.redColor,
+  );
   static TextStyle light16White = GoogleFonts.poppins(
     fontSize: 16,
     fontWeight: FontWeight.w300,
     color: AppColors.whiteColor,
+  );
+  static TextStyle light16Black = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w300,
+    color: AppColors.blackColor,
   );
   static TextStyle light18HintText = GoogleFonts.poppins(
     fontSize: 18,
@@ -54,6 +79,16 @@ class AppStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.whiteColor,
   );
+  static TextStyle semi16TextBlack = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: AppColors.blackColor,
+  );
+  static TextStyle semi14TextBlack = GoogleFonts.poppins(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.blackColor,
+  );
   static TextStyle semi20Primary = GoogleFonts.poppins(
     fontSize: 20,
     fontWeight: FontWeight.w600,
@@ -63,6 +98,32 @@ class AppStyles {
     fontSize: 24,
     fontWeight: FontWeight.w600,
     color: AppColors.whiteColor,
+  );
+  static TextStyle bold24White = GoogleFonts.poppins(
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle light16Gray = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w300,
+    color: AppColors.grayColor,
+  );
+
+  static TextStyle bold20Black = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
+  );
+  static TextStyle bold16Black = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
+  );
+  static TextStyle bold24Black = GoogleFonts.poppins(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
   );
   static TextStyle medium14Category = GoogleFonts.poppins(
     fontSize: 14,
@@ -93,5 +154,10 @@ class AppStyles {
     fontSize: 20,
     fontWeight: FontWeight.w500,
     color: AppColors.whiteColor,
+  );
+  static TextStyle bold20PrimaryDark = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primaryDark,
   );
 }

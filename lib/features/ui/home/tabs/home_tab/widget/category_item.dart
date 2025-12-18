@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
+import 'package:readmore/readmore.dart';
 
 class CategoryItem extends StatelessWidget {
   String image;
@@ -44,28 +45,40 @@ class CategoryItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(title, style: AppStyles.bold20Black),
-                      Text(description, style: AppStyles.light16Gray),
-                      Spacer(),
-                      Text('${price.toInt()} جنيه/القطعه',
-                          style: AppStyles.semi14TextBlack),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(title, style: AppStyles.bold20Black,
+                          maxLines: 2,
+                          softWrap: true,
+                          overflow: TextOverflow.visible,),
+                        ReadMoreText(
+                          description,
+                          trimLines: 2,
+                          colorClickableText: AppColors.greenColor,
+                          trimMode: TrimMode.Line,
+                          trimCollapsedText: '... اقرأ المزيد',
+                          isExpandable: false,
+                          style: AppStyles.light16Gray,
+                          moreStyle: AppStyles.semi14TextBlack.copyWith(
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Spacer(),
+                        Text('${price.toInt()} جنيه/القطعه',
+                          style: AppStyles.semi14TextBlack,
+                          softWrap: true,
+                          overflow: TextOverflow.visible,),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      SizedBox(height: 37.h,),
-                      CircleAvatar(
-                        backgroundColor: AppColors.greenColor,
-                        radius: 18,
-                        child: Icon(
-                          CupertinoIcons.add, color: AppColors.whiteColor,
-                          size: 17,),
-                      ),
-                    ],
-                  )
+                  SizedBox(width: 10.w),
+                  CircleAvatar(
+                    backgroundColor: AppColors.greenColor,
+                    radius: 18,
+                    child: Icon(CupertinoIcons.add, color: AppColors.whiteColor,
+                        size: 17),
+                  ),
                 ],
               ),
             ),

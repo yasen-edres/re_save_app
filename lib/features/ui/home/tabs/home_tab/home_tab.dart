@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_assets.dart';
+import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
 import 'package:re_save_app/features/ui/home/tabs/home_tab/widget/category_item.dart';
 
@@ -116,12 +117,25 @@ class HomeTab extends StatelessWidget {
 
                     Row(
                       children: [
-                        Icon(CupertinoIcons.cart, color: AppColors.whiteColor,
-                          size: 30,),
-                        SizedBox(width: 7.w,),
-                        Icon(
-                          CupertinoIcons.bell, color: AppColors.whiteColor,
-                          size: 30,),
+                        IconButton(
+                          onPressed: () {
+
+                          },
+                          icon: Icon(
+                            CupertinoIcons.cart, color: AppColors.whiteColor,
+                            size: 30,),
+                        ),
+
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                                AppRoutes.notificationTabRoute);
+                          },
+                          icon: Icon(
+                            CupertinoIcons.bell, color: AppColors.whiteColor,
+                            size: 30,),
+                        )
+
                       ],
                     )
                   ],

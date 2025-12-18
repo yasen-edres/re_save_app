@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:re_save_app/core/utils/app_assets.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
+import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/features/ui/home/tabs/category_tab/category_tab.dart';
 import 'package:re_save_app/features/ui/home/tabs/challenge_tab/challenge_tab.dart';
 import 'package:re_save_app/features/ui/home/tabs/home_tab/home_tab.dart';
@@ -87,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //todo: Navigate to add Event.
+          Navigator.of(context).pushNamed(AppRoutes.addTabRoute);
         },
         child: Icon(Icons.add, size: 30, color: AppColors.whiteColor),
       ),

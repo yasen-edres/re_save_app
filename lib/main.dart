@@ -5,6 +5,8 @@ import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/core/utils/app_theme.dart';
 import 'package:re_save_app/features/ui/auth/login/login_screen.dart';
 import 'package:re_save_app/features/ui/auth/register/register_screen.dart';
+import 'package:re_save_app/features/ui/home/tabs/profile_tab/profile_pages/change_password_page.dart';
+import 'package:re_save_app/features/ui/home/tabs/profile_tab/profile_pages/edit_profile_page.dart';
 
 import 'features/ui/home/home_screen.dart';
 
@@ -26,6 +28,8 @@ class MyApp extends StatelessWidget{
             AppRoutes.loginRoute : (context) => LoginScreen(),
             AppRoutes.registerRoute: (context) => RegisterScreen(),
             AppRoutes.homeRoute: (context) => HomeScreen(),
+            AppRoutes.editProfilePageRoute: (context) => EditProfilePage(),
+            AppRoutes.editProfilePageRoute: (context) => ChangePasswordPage(),
           },
           locale: Locale('ar'),
           supportedLocales: [

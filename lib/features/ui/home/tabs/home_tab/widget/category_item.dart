@@ -58,7 +58,7 @@ class CategoryItem extends StatelessWidget {
                     children: [
                       SizedBox(height: 37.h,),
                       CircleAvatar(
-                        backgroundColor: AppColors.darkGreenColor,
+                        backgroundColor: AppColors.greenColor,
                         radius: 18,
                         child: Icon(
                           CupertinoIcons.add, color: AppColors.whiteColor,

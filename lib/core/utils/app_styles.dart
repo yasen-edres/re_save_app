@@ -32,7 +32,7 @@ class AppStyles {
   static TextStyle bold16Green = GoogleFonts.poppins(
     fontSize: 16,
     fontWeight: FontWeight.w700,
-    color: AppColors.greenColor,
+    color: AppColors.lightGreenColor,
   );
   static TextStyle bold16Primary = GoogleFonts.poppins(
     fontSize: 16,
@@ -53,6 +53,11 @@ class AppStyles {
     fontSize: 20,
     fontWeight: FontWeight.w700,
     color: AppColors.whiteColor,
+  );
+  static TextStyle bold22Black = GoogleFonts.poppins(
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
   );
   static TextStyle bold16Red = GoogleFonts.poppins(
     fontSize: 16,

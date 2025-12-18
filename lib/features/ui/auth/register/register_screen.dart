@@ -89,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               onPressed: () {
                 //todo: sign in
               },
-              backgroundColor: AppColors.greenColor,
+              backgroundColor: AppColors.lightGreenColor,
               textStyle: AppStyles.regular18White,
             ),
             SizedBox(height: 20.h,),

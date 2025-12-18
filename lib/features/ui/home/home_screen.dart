@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             unSelectedIconName: Image.asset(
               AppAssets.homeIcon,
-              color: AppColors.greenColor,
+              color: AppColors.lightGreenColor,
             ),
             label: 'الرئيسية',
             index: 0,
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             unSelectedIconName: Image.asset(
               AppAssets.categoryIcon,
-              color: AppColors.greenColor,
+              color: AppColors.lightGreenColor,
             ),
             label: 'الفئات',
             index: 1,
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             unSelectedIconName: Icon(
               Icons.emoji_events_outlined,
-              color: AppColors.greenColor,
+              color: AppColors.lightGreenColor,
               size: 28,
             ),
             label: 'تحدّي',
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             unSelectedIconName: Image.asset(
               AppAssets.profileIcon,
-              color: AppColors.greenColor,
+              color: AppColors.lightGreenColor,
             ),
             label: 'الحساب',
             index: 3,

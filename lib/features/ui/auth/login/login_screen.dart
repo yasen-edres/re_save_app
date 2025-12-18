@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                   Navigator.of(context).pushReplacementNamed(
                       AppRoutes.homeRoute);
                 },
-                backgroundColor: AppColors.greenColor,
+                backgroundColor: AppColors.lightGreenColor,
                 textStyle: AppStyles.regular18White,
               ),
             ),

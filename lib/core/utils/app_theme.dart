@@ -7,7 +7,7 @@ class AppTheme {
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.lightYellowColor,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: AppColors.greenColor,
+      selectedItemColor: AppColors.lightGreenColor,
       // selectedItemColor: AppColor.whiteBgColor,
       // unselectedItemColor: AppColor.whiteBgColor,
       selectedLabelStyle: AppStyles.bold16Primary,
@@ -19,10 +19,9 @@ class AppTheme {
           iconTheme: IconThemeData(
               color: AppColors.blackColor
           )
-
       ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: AppColors.darkGreenColor,
+      backgroundColor: AppColors.greenColor,
       shape: StadiumBorder(
         side: BorderSide(color: AppColors.whiteColor, width: 6),
       ),

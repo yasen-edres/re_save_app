@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_assets.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
+import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/features/widget/custom_setting_bottom.dart';
 
 import '../../../../../core/utils/app_styles.dart';
@@ -90,10 +91,25 @@ class ProfileTab extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomSettingBottom(
-                        title: 'الحساب', icon: CupertinoIcons.person),
+                      onPressed: () {
+                        //todo: edit profile
+                        Navigator.of(context).pushNamed(
+                            AppRoutes.editProfilePageRoute);
+                      },
+                      title: 'الحساب',
+                      icon: CupertinoIcons.person,
+                    ),
                     CustomSettingBottom(
+                        onPressed: () {
+                          //todo: change password,
+                          Navigator.of(context).pushNamed(
+                              AppRoutes.changePasswordPageRoute);
+                        },
                         title: 'تغيير كلمة المرور', icon: CupertinoIcons.lock),
                     CustomSettingBottom(
+                        onPressed: () {
+
+                        },
                         title: 'اللغه', icon: CupertinoIcons.globe),
                   ],
                 ),
@@ -110,10 +126,20 @@ class ProfileTab extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomSettingBottom(
+                        onPressed: () {
+
+                        },
                         title: 'طلباتي', icon: CupertinoIcons.cart),
                     CustomSettingBottom(
+                        onPressed: () {
+
+                        },
                         title: 'العناوين', icon: CupertinoIcons.map),
-                    CustomSettingBottom(title: 'دعوه الاصدقاء',
+                    CustomSettingBottom(
+                        onPressed: () {
+
+                        },
+                        title: 'دعوه الاصدقاء',
                         icon: CupertinoIcons.person_add),
                   ],
                 ),
@@ -130,10 +156,21 @@ class ProfileTab extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomSettingBottom(
+                        onPressed: () {
+
+                        },
                         title: 'طلب الكاش', icon: CupertinoIcons.money_dollar),
-                    CustomSettingBottom(title: 'المحافظ الماليه',
+                    CustomSettingBottom(
+                        onPressed: () {
+
+                        },
+                        title: 'المحافظ الماليه',
                         icon: CupertinoIcons.creditcard),
-                    CustomSettingBottom(title: 'التحويلات',
+                    CustomSettingBottom(
+                        onPressed: () {
+
+                        },
+                        title: 'التحويلات',
                         icon: CupertinoIcons.arrow_right_arrow_left),
                   ],
                 ),
@@ -149,11 +186,22 @@ class ProfileTab extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    CustomSettingBottom(title: 'الشروط والاحكام',
+                    CustomSettingBottom(
+                        onPressed: () {
+
+                        },
+                        title: 'الشروط والاحكام',
                         icon: CupertinoIcons.doc_text),
-                    CustomSettingBottom(title: ' سياسه الخوصوصيه',
+                    CustomSettingBottom(
+                        onPressed: () {
+
+                        },
+                        title: ' سياسه الخوصوصيه',
                         icon: CupertinoIcons.person_crop_circle),
                     CustomSettingBottom(
+                        onPressed: () {
+
+                        },
                         title: 'تواصل معنا', icon: CupertinoIcons.chat_bubble),
                   ],
                 ),

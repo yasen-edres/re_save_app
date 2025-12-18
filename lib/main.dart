@@ -6,6 +6,8 @@ import 'package:re_save_app/core/utils/app_theme.dart';
 import 'package:re_save_app/features/ui/auth/forget_password/forget_password_screen.dart';
 import 'package:re_save_app/features/ui/auth/login/login_screen.dart';
 import 'package:re_save_app/features/ui/auth/register/register_screen.dart';
+import 'package:re_save_app/features/ui/home/tabs/add_tab/add_screen.dart';
+import 'package:re_save_app/features/ui/home/tabs/notification_tab/notification_screen.dart';
 import 'package:re_save_app/features/ui/home/tabs/profile_tab/profile_pages/change_password_page.dart';
 import 'package:re_save_app/features/ui/home/tabs/profile_tab/profile_pages/edit_profile_page.dart';
 
@@ -32,6 +34,8 @@ class MyApp extends StatelessWidget {
             AppRoutes.registerRoute: (context) => RegisterScreen(),
             AppRoutes.homeRoute: (context) => HomeScreen(),
             AppRoutes.ordersPageRoute: (context) => OrdersPage(),
+            AppRoutes.addTabRoute: (context) => AddScreen(),
+            AppRoutes.notificationTabRoute: (context) => NotificationScreen(),
 
 
             AppRoutes.forgetPasswordRoute: (context) =>

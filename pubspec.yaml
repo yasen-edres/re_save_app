@@ -44,6 +44,7 @@ dependencies:
   country_flags: ^4.1.0
   dialog: ^0.8.0
   readmore: ^3.0.0
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:

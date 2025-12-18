@@ -9,4 +9,6 @@ class AppRoutes {
   static String editProfilePageRoute = 'edit_profile_page_screen';
   static String changePasswordPageRoute = 'change_password_page_screen';
   static String ordersPageRoute = 'orders_page_screen';
+  static String addTabRoute = 'add_screen';
+  static String notificationTabRoute = 'notification_screen';
 }

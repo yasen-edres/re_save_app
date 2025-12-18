@@ -127,7 +127,8 @@ class ProfileTab extends StatelessWidget {
                   children: [
                     CustomSettingBottom(
                         onPressed: () {
-
+                          Navigator.of(context).pushNamed(
+                              AppRoutes.ordersPageRoute);
                         },
                         title: 'طلباتي', icon: CupertinoIcons.cart),
                     CustomSettingBottom(

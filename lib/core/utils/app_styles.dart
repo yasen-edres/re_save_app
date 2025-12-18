@@ -130,11 +130,7 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.blackColor,
   );
-  static TextStyle medium14Category = GoogleFonts.poppins(
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    color: AppColors.primaryDark,
-  );
+
   static TextStyle medium14LightPrimary = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w500,

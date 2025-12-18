@@ -233,7 +233,7 @@ class GetCategories extends StatelessWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: 20.h,
                 crossAxisSpacing: 18.w,
-                childAspectRatio: 1 / 1.25,
+                childAspectRatio: 1 / 1.5,
               ),
               itemBuilder: (context, index) {
                 return CategoryItem(

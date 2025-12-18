@@ -14,7 +14,7 @@ class AppTheme {
     ),
     scaffoldBackgroundColor: AppColors.lightYellowColor,
       appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.whiteColor,
+          backgroundColor: AppColors.lightYellowColor,
           centerTitle: true,
           iconTheme: IconThemeData(
               color: AppColors.blackColor

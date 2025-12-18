@@ -36,13 +36,8 @@ class MyApp extends StatelessWidget {
             AppRoutes.ordersPageRoute: (context) => OrdersPage(),
             AppRoutes.addTabRoute: (context) => AddScreen(),
             AppRoutes.notificationTabRoute: (context) => NotificationScreen(),
-
-
-            AppRoutes.forgetPasswordRoute: (context) =>
-                ForgetPasswordScreen(),
-
-            AppRoutes.editProfilePageRoute: (context) =>
-                EditProfilePage(),
+            AppRoutes.forgetPasswordRoute: (context) => ForgetPasswordScreen(),
+            AppRoutes.editProfilePageRoute: (context) => EditProfilePage(),
             AppRoutes.changePasswordPageRoute: (context) =>
                 ChangePasswordPage(),
           },

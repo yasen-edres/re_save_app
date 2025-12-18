@@ -8,8 +8,6 @@ class AppTheme {
       backgroundColor: AppColors.lightYellowColor,
       type: BottomNavigationBarType.fixed,
       selectedItemColor: AppColors.lightGreenColor,
-      // selectedItemColor: AppColor.whiteBgColor,
-      // unselectedItemColor: AppColor.whiteBgColor,
       selectedLabelStyle: AppStyles.bold16Primary,
     ),
     scaffoldBackgroundColor: AppColors.lightYellowColor,
@@ -25,13 +23,6 @@ class AppTheme {
       shape: StadiumBorder(
         side: BorderSide(color: AppColors.whiteColor, width: 6),
       ),
-      // RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.circular(35),
-      //   side: BorderSide(
-      //     width: 4,
-      //     color: AppColor.whiteColor
-      //   )
-      // )
     ),
   );
 }

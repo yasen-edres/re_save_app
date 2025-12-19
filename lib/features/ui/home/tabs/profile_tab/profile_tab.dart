@@ -40,8 +40,17 @@ class ProfileTab extends StatelessWidget {
                           ],
                         ),
                         Spacer(),
-                        Icon(CupertinoIcons.bell, color: AppColors.blackColor,
-                          size: 30,)
+                        IconButton(
+                            onPressed: () {
+                              //todo: Navigator to notification screen
+                              Navigator.of(context).pushNamed(
+                                  AppRoutes.notificationTabRoute);
+                            },
+                            icon: Icon(CupertinoIcons.bell, color: AppColors
+                                .blackColor,
+                              size: 30,)
+                        )
+
                       ],
                     ),
 

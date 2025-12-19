@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
+import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
 import 'package:readmore/readmore.dart';
 
@@ -73,12 +74,21 @@ class CategoryItem extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 10.w),
-                  CircleAvatar(
-                    backgroundColor: AppColors.greenColor,
-                    radius: 18,
-                    child: Icon(CupertinoIcons.add, color: AppColors.whiteColor,
-                        size: 17),
+                  IconButton(
+
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.addTabRoute);
+                    },
+                    icon: CircleAvatar(
+                      backgroundColor: AppColors.greenColor,
+                      radius: 18,
+                      child: Icon(
+                          CupertinoIcons.add, color: AppColors.whiteColor,
+                          size: 17),
+                    ),
                   ),
+
                 ],
               ),
             ),

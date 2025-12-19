@@ -7,7 +7,9 @@ import 'package:re_save_app/features/widget/custom_elevatedbutton.dart';
 import 'package:re_save_app/features/widget/custom_text_form_field.dart';
 
 class EditProfilePage extends StatelessWidget {
-  TextEditingController nameController = TextEditingController();
+  TextEditingController nameController = TextEditingController(
+      text: 'ياسين إدريس'
+  );
   TextEditingController emailController = TextEditingController(
     text: 'yasen.ehab.23093@gmail.com',
   );

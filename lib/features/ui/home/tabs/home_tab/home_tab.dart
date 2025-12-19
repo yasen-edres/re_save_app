@@ -187,13 +187,15 @@ class HomeTab extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("فئات", style: AppStyles.bold20PrimaryDark,),
-                      InkWell(
-                          onTap: () {
+                      TextButton(
+                          onPressed: () {
                             //todo: show all categories
-                            context.read<HomeViewModel>().changeTab(1);
+                            context.read<HomeViewModel>().changeSelectedIndex(
+                                1);
                           },
                           child: Text(
-                            "عرض المزيد", style: AppStyles.bold16Green,)),
+                            "عرض المزيد", style: AppStyles.bold16Green,)
+                      )
                     ],
                   ),
                   SizedBox(height: 20.h,),
@@ -225,13 +227,15 @@ class HomeTab extends StatelessWidget {
                     children: [
                       Text(
                         "الأكثر استخداما", style: AppStyles.bold20PrimaryDark,),
-                      InkWell(
-                          onTap: () {
+                      TextButton(
+                          onPressed: () {
                             //todo: show all electronicDevices
-                            context.read<HomeViewModel>().changeTab(1);
+                            context.read<HomeViewModel>().changeSelectedIndex(
+                                1);
                           },
                           child: Text(
-                            "عرض المزيد", style: AppStyles.bold16Green,)),
+                            "عرض المزيد", style: AppStyles.bold16Green,)
+                      )
                     ],
                   ),
                   SizedBox(height: 10.h,),
@@ -242,8 +246,8 @@ class HomeTab extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        mainAxisSpacing: 20.h,
-                        crossAxisSpacing: 18.w,
+                        mainAxisSpacing: 10.h,
+                        crossAxisSpacing: 10.w,
                         childAspectRatio: 1 / 1.25,
                       ),
                       itemBuilder: (context, index) {

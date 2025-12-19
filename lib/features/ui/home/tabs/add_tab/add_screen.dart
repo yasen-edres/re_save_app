@@ -1,9 +1,10 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:re_save_app/features/widget/custom_elevatedbutton.dart';
 import 'package:re_save_app/features/widget/custom_text_form_field.dart';
 
 class AddScreen extends StatefulWidget {
@@ -56,7 +57,7 @@ class _AddScreenState extends State<AddScreen> {
                   },
                   child: Row(
                     children: [
-                      Icon(CupertinoIcons.add, color: AppColors.greenColor),
+                      Icon(CupertinoIcons.add, color: AppColors.darkGreenColor),
                       SizedBox(width: 10.w),
                       Text('إضافة', style: AppStyles.bold18Green),
                     ],
@@ -129,6 +130,10 @@ class _AddScreenState extends State<AddScreen> {
               children: [
                 Checkbox(
                   value: isCheck,
+                  fillColor: MaterialStateProperty.all(
+                      isCheck ? AppColors.darkGreenColor : AppColors
+                          .transparentColor
+                  ),
                   onChanged: (value) {
                     isCheck = value!;
                     setState(() {});
@@ -142,6 +147,15 @@ class _AddScreenState extends State<AddScreen> {
                 ),
               ],
             ),
+            Spacer(),
+            CustomElevatedButton(
+                text: 'تأكيد',
+                onPressed: () {
+                  //todo: save order
+                },
+                backgroundColor: AppColors.darkGreenColor,
+                textStyle: AppStyles.bold24White
+            )
           ],
         ),
       ),

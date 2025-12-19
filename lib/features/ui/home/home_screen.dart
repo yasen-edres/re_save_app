@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: selectedIndex,
               onTap: (index) {
-                context.read<HomeViewModel>().changeTab(index);
+                context.read<HomeViewModel>().changeSelectedIndex(index);
               },
               items: [
                 builtBottomNavItem(

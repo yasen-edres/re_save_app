@@ -53,7 +53,7 @@ class _CategoryTabState extends State<CategoryTab> {
                     ),
 
                     DefaultTabController(
-                      length: state.categories.length,
+                      length: viewModel.categories.length,
                       child: Column(
                         children: [
                           TabBar(
@@ -66,13 +66,13 @@ class _CategoryTabState extends State<CategoryTab> {
                               viewModel.changeTabIndex(index);
                               print(index);
                             },
-                            tabs: state.categories
+                            tabs: viewModel.categories
                                 .map((e) =>
                                 Text(e, style: AppStyles.bold20Black))
                                 .toList(),
                           ),
                           GetCategories(
-                            categoryName: state.categories[state.tabIndex],
+                            categoryName: viewModel.categories[state.tabIndex],
                             searchText: searchController.text,
                           ),
                         ],
@@ -84,7 +84,6 @@ class _CategoryTabState extends State<CategoryTab> {
             ),
           );
         },
-
       ),
     );
   }

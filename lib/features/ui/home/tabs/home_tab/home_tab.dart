@@ -207,9 +207,6 @@ class HomeTab extends StatelessWidget {
                                   context
                                       .read<HomeViewModel>()
                                       .changeSelectedIndex(1);
-                                  context
-                                      .read<CategoryViewModel>()
-                                      .changeTbIndex(index + 1);
                                 },
                                 child: Column(
                                   children: [

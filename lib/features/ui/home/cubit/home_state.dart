@@ -1,5 +1,13 @@
-class HomeState {}
+abstract class HomeState {
+  final int selectedIndex;
 
-class HomeChangeIndexState extends HomeState {}
+  HomeState(this.selectedIndex);
+}
 
-class HomeInitialState extends HomeState {}
+class HomeInitialState extends HomeState {
+  HomeInitialState() : super(0);
+}
+
+class HomeChangeIndexState extends HomeState {
+  HomeChangeIndexState(int index) : super(index);
+}

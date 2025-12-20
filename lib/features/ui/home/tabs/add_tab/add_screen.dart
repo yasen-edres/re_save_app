@@ -20,170 +20,168 @@ class AddScreen extends StatefulWidget {
 
 class _AddScreenState extends State<AddScreen> {
   final ImagePicker _picker = ImagePicker();
-  String selectedOption = 'بلاستيك';
+  late TextEditingController orderNameController;
+  List<File> images = [];
   bool isCheck = false;
-  OrderViewModel viewModel = OrderViewModel();
 
-  List<String> options = [
-    'بلاستيك',
-    'الالكترونيات',
-    'أدوات منزلية',
-    'معادن',
-    'عبوات كرتون',
-    'ورقيات',
-    'قطع غيار',
-    'زيوت',
-    'اقمشه',
-  ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    orderNameController = TextEditingController(
+      text: context
+          .read<OrderViewModel>()
+          .state
+          .orderName,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => viewModel,
-      child: BlocBuilder<OrderViewModel, OrderState>(
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: AppColors.lightYellowColor,
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(CupertinoIcons.back),
-              ),
+    return BlocBuilder<OrderViewModel, OrderState>(
+      builder: (context, state) {
+        images = state.images;
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: AppColors.lightYellowColor,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(CupertinoIcons.back),
             ),
-            body: Padding(
-              padding: EdgeInsets.only(bottom: 30.h, left: 20.w, right: 20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('تفاصيل البكيا جديدة', style: AppStyles.bold22Black),
-                  SizedBox(height: 20.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('الصور', style: AppStyles.bold18Black),
-                      TextButton(
-                        onPressed: () {
-                          //todo: add photo
-                          showBottomSheet(context);
-                        },
-                        child: Row(
-                          children: [
-                            Icon(CupertinoIcons.add,
-                                color: AppColors.darkGreenColor),
-                            SizedBox(width: 10.w),
-                            Text('إضافة', style: AppStyles.bold18Green),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10.h),
-                  viewModel.images.isEmpty ?
-                  Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                        vertical: 18.w, horizontal: 100.h),
-                    decoration: BoxDecoration(
-                      color: AppColors.lightGrayColor,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Text(
-                      'لم يتم إرفاق أي صور بعد.',
-                      style: AppStyles.light16Gray,
-                    ),
-                  ) :
-                  SizedBox(
-                    height: 170.h,
-                    child: showImages(),
-                  ),
-
-                  SizedBox(height: 20.h),
-                  Text('تفاصيل البكيا', style: AppStyles.bold20Black),
-                  SizedBox(height: 10.h),
-                  Text('التصنيف', style: AppStyles.bold18Black),
-                  SizedBox(height: 10.h),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton2(
-                      isExpanded: true,
-                      items: options
-                          .map(
-                            (item) =>
-                            DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(item),
-                            ),
-                      )
-                          .toList(),
-                      value: selectedOption,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedOption = value as String;
-                        });
-                      },
-                      buttonStyleData: ButtonStyleData(
-                        height: 50,
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.grey),
-                          color: Colors.transparent,
-                        ),
-                      ),
-                      dropdownStyleData: DropdownStyleData(
-                        maxHeight: 200,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10.h),
-                  Text('اسم البكيا', style: AppStyles.bold18Black),
-                  SizedBox(height: 5.h),
-                  CustomTextFormField(
-                    filledColor: AppColors.transparentColor,
-                    borderColor: AppColors.grayColor,
-                  ),
-                  SizedBox(height: 10.h),
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: isCheck,
-                        fillColor: MaterialStateProperty.all(
-                            isCheck ? AppColors.darkGreenColor : AppColors
-                                .transparentColor
-                        ),
-                        onChanged: (value) {
-                          isCheck = value!;
-                          setState(() {});
-                        },
-                      ),
-                      Expanded(
-                        child: Text(
-                          'لقد تلقينا طلبك وسنتصل بك قريباً.',
-                          style: AppStyles.light16Black,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  CustomElevatedButton(
-                      text: 'تأكيد',
+          ),
+          body: Padding(
+            padding: EdgeInsets.only(bottom: 30.h, left: 20.w, right: 20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('تفاصيل البكيا جديدة', style: AppStyles.bold22Black),
+                SizedBox(height: 20.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('الصور', style: AppStyles.bold18Black),
+                    TextButton(
                       onPressed: () {
-                        //todo: save order
+                        //todo: add photo
+                        showBottomSheet(context);
                       },
-                      backgroundColor: AppColors.darkGreenColor,
-                      textStyle: AppStyles.bold24White
-                  )
-                ],
-              ),
+                      child: Row(
+                        children: [
+                          Icon(CupertinoIcons.add,
+                              color: AppColors.darkGreenColor),
+                          SizedBox(width: 10.w),
+                          Text('إضافة', style: AppStyles.bold18Green),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.h),
+                images.isEmpty ?
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                      vertical: 18.w, horizontal: 100.h),
+                  decoration: BoxDecoration(
+                    color: AppColors.lightGrayColor,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Text(
+                    'لم يتم إرفاق أي صور بعد.',
+                    style: AppStyles.light16Gray,
+                  ),
+                ) :
+                SizedBox(
+                  height: 170.h,
+                  child: showImages(),
+                ),
+
+                SizedBox(height: 20.h),
+                Text('تفاصيل البكيا', style: AppStyles.bold20Black),
+                SizedBox(height: 10.h),
+                Text('التصنيف', style: AppStyles.bold18Black),
+                SizedBox(height: 10.h),
+                DropdownButtonHideUnderline(
+                  child: DropdownButton2(
+                    isExpanded: true,
+                    items: state.options
+                        .map(
+                          (item) =>
+                          DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(item),
+                          ),
+                    )
+                        .toList(),
+                    value: state.selectedOption,
+                    onChanged: (value) {
+                      context.read<OrderViewModel>().changeSelectOption(
+                          value as String);
+                    },
+                    buttonStyleData: ButtonStyleData(
+                      height: 50,
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey),
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    dropdownStyleData: DropdownStyleData(
+                      maxHeight: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                Text('اسم البكيا', style: AppStyles.bold18Black),
+                SizedBox(height: 5.h),
+                CustomTextFormField(
+                  controller: orderNameController,
+                  filledColor: AppColors.transparentColor,
+                  borderColor: AppColors.grayColor,
+                ),
+                SizedBox(height: 10.h),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: isCheck,
+                      fillColor: MaterialStateProperty.all(
+                          isCheck ? AppColors.darkGreenColor : AppColors
+                              .transparentColor
+                      ),
+                      onChanged: (value) {
+                        isCheck = value!;
+                        setState(() {});
+                      },
+                    ),
+                    Expanded(
+                      child: Text(
+                        'لقد تلقينا طلبك وسنتصل بك قريباً.',
+                        style: AppStyles.light16Black,
+                      ),
+                    ),
+                  ],
+                ),
+                Spacer(),
+                CustomElevatedButton(
+                    text: 'تأكيد',
+                    onPressed: () {
+                      //todo: save order
+                    },
+                    backgroundColor: AppColors.darkGreenColor,
+                    textStyle: AppStyles.bold24White
+                )
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -246,7 +244,7 @@ class _AddScreenState extends State<AddScreen> {
     );
 
     if (image != null) {
-      viewModel.addImage(image: File(image.path));
+      context.read<OrderViewModel>().addImage(image: File(image.path));
     }
   }
 
@@ -256,7 +254,7 @@ class _AddScreenState extends State<AddScreen> {
     );
 
     if (pickedImages.isNotEmpty) {
-      viewModel.addImage(
+      context.read<OrderViewModel>().addImage(
           iterable: pickedImages.map((e) => File(e.path)).toList());
     }
   }
@@ -277,7 +275,8 @@ class _AddScreenState extends State<AddScreen> {
                 Column(
                   children: [
                     SizedBox(height: 20.h,),
-                    Image.file(viewModel.images[index], fit: BoxFit.fill,
+
+                    Image.file(images[index], fit: BoxFit.fill,
                       width: 130.w,
                       height: 110.h,),
                   ],
@@ -288,7 +287,9 @@ class _AddScreenState extends State<AddScreen> {
                     IconButton(
                       onPressed: () {
                         //todo: remove image,
-                        viewModel.removeImage(viewModel.images[index]);
+                        orderNameController.text = '';
+                        context.read<OrderViewModel>().removeImage(
+                            images[index]);
                       },
                       icon: CircleAvatar(
                         radius: 13,
@@ -307,7 +308,7 @@ class _AddScreenState extends State<AddScreen> {
           );
         },
         separatorBuilder: (context, index) => SizedBox(width: 10.w,),
-        itemCount: viewModel.images.length
+        itemCount: images.length
     );
   }
 }

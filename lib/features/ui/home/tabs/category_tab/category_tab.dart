@@ -17,15 +17,26 @@ class CategoryTab extends StatefulWidget {
   State<CategoryTab> createState() => _CategoryTabState();
 }
 
-class _CategoryTabState extends State<CategoryTab> {
+class _CategoryTabState extends State<CategoryTab>
+    with SingleTickerProviderStateMixin {
   TextEditingController searchController = TextEditingController();
-  CategoryViewModel viewModel = CategoryViewModel();
   String searchText = '';
+  late TabController tabController;
 
 
   @override
   void initState() {
     super.initState();
+
+    final categoryLength = context
+        .read<CategoryViewModel>()
+        .state
+        .categories
+        .length;
+    tabController = TabController(
+      length: categoryLength,
+      vsync: this,
+    );
     searchController.addListener(() {
       setState(() {
         searchText = searchController.text;
@@ -35,55 +46,51 @@ class _CategoryTabState extends State<CategoryTab> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => viewModel,
-      child: BlocBuilder<CategoryViewModel, CategoryState>(
-        builder: (context, state) {
-          return Scaffold(
-            body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: 40.h),
-                    CustomTextFormField(
-                      hintText: 'البحث في الفئات',
-                      prefixIcon: Icon(CupertinoIcons.search),
-                      controller: searchController,
-                    ),
+    return BlocBuilder<CategoryViewModel, CategoryState>(
+      builder: (context, state) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (tabController.index != state.tabIndex) {
+            tabController.animateTo(state.tabIndex);
+          }
+        });
 
-                    DefaultTabController(
-                      length: viewModel.categories.length,
-                      child: Column(
-                        children: [
-                          TabBar(
-                            tabAlignment: TabAlignment.start,
-                            indicatorColor: AppColors.blackColor,
-                            dividerColor: AppColors.transparentColor,
-                            isScrollable: true,
-                            onTap: (index) {
-                              viewModel.changeTbIndex(index);
-                            },
-                            tabs: viewModel.categories
-                                .map((e) =>
-                                Text(e, style: AppStyles.bold20Black))
-                                .toList(),
-                          ),
-                          GetCategories(
-                            categoryName: viewModel.categories[viewModel
-                                .tabIndex],
-                            searchText: searchController.text,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+        ///this code work after build
+        return Scaffold(
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: 40.h),
+                  CustomTextFormField(
+                    hintText: 'البحث في الفئات',
+                    prefixIcon: Icon(CupertinoIcons.search),
+                    controller: searchController,
+                  ),
+                  TabBar(
+                    controller: tabController,
+                    tabAlignment: TabAlignment.start,
+                    indicatorColor: AppColors.blackColor,
+                    dividerColor: AppColors.transparentColor,
+                    isScrollable: true,
+                    onTap: (index) {
+                      context.read<CategoryViewModel>().changeTbIndex(index);
+                    },
+                    tabs: state.categories
+                        .map((e) =>
+                        Text(e, style: AppStyles.bold20Black))
+                        .toList(),
+                  ),
+                  GetCategories(
+                    categoryName: state.categories[state.tabIndex],
+                    searchText: searchController.text,
+                  ),
+                ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

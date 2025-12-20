@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:re_save_app/features/ui/home/cubit/home_state.dart';
-import 'package:re_save_app/features/ui/home/cubit/home_view_model.dart';
+import 'package:re_save_app/features/ui/home/tabs/category_tab/cubit/category_state.dart';
+import 'package:re_save_app/features/ui/home/tabs/category_tab/cubit/category_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/category_tab/widget/get_categories.dart';
 import 'package:re_save_app/features/widget/custom_text_form_field.dart';
 
@@ -19,7 +19,7 @@ class CategoryTab extends StatefulWidget {
 
 class _CategoryTabState extends State<CategoryTab> {
   TextEditingController searchController = TextEditingController();
-  HomeViewModel viewModel = HomeViewModel();
+  CategoryViewModel viewModel = CategoryViewModel();
   String searchText = '';
 
 
@@ -37,7 +37,7 @@ class _CategoryTabState extends State<CategoryTab> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => viewModel,
-      child: BlocBuilder<HomeViewModel, HomeState>(
+      child: BlocBuilder<CategoryViewModel, CategoryState>(
         builder: (context, state) {
           return Scaffold(
             body: Padding(
@@ -61,10 +61,8 @@ class _CategoryTabState extends State<CategoryTab> {
                             indicatorColor: AppColors.blackColor,
                             dividerColor: AppColors.transparentColor,
                             isScrollable: true,
-
                             onTap: (index) {
-                              viewModel.changeTabIndex(index);
-                              print(index);
+                              viewModel.changeTbIndex(index);
                             },
                             tabs: viewModel.categories
                                 .map((e) =>
@@ -72,7 +70,8 @@ class _CategoryTabState extends State<CategoryTab> {
                                 .toList(),
                           ),
                           GetCategories(
-                            categoryName: viewModel.categories[state.tabIndex],
+                            categoryName: viewModel.categories[viewModel
+                                .tabIndex],
                             searchText: searchController.text,
                           ),
                         ],

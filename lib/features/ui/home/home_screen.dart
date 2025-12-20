@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
       create: (context) => viewModel,
       child: BlocBuilder<HomeViewModel, HomeState>(
         builder: (context, state) {
-          final selectedIndex = state.selectedIndex;
+          final selectedIndex = viewModel.selectedIndex;
           return Scaffold(
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: selectedIndex,

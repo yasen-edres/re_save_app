@@ -14,7 +14,6 @@ import 'cubit/home_state.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  HomeViewModel viewModel = HomeViewModel();
 
   final List<Widget> tabsList = [
     HomeTab(),
@@ -25,87 +24,83 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => viewModel,
-      child: BlocBuilder<HomeViewModel, HomeState>(
-        builder: (context, state) {
-          final selectedIndex = viewModel.selectedIndex;
-          return Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: selectedIndex,
-              onTap: (index) {
-                context.read<HomeViewModel>().changeSelectedIndex(index);
-              },
-              items: [
-                builtBottomNavItem(
-                  selectedIndex: selectedIndex,
-                  selectedIconName: Image.asset(
-                    AppAssets.homeIcon,
-                    color: AppColors.lightGreenColor,
-                  ),
-                  unSelectedIconName: Image.asset(
-                    AppAssets.homeIcon,
-                    color: AppColors.blackColor,
-                  ),
-                  label: 'الرئيسية',
-                  index: 0,
+    return BlocBuilder<HomeViewModel, HomeState>(
+      builder: (context, state) {
+        final selectedIndex = state.selectedIndex;
+        return Scaffold(
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: selectedIndex,
+            onTap: (index) {
+              context.read<HomeViewModel>().changeSelectedIndex(index);
+            },
+            items: [
+              builtBottomNavItem(
+                selectedIndex: selectedIndex,
+                selectedIconName: Image.asset(
+                  AppAssets.homeIcon,
+                  color: AppColors.lightGreenColor,
                 ),
-                builtBottomNavItem(
-                  selectedIndex: selectedIndex,
-                  selectedIconName: Image.asset(
-                    AppAssets.categoryIcon,
-                    color: AppColors.lightGreenColor,
-                  ),
-                  unSelectedIconName: Image.asset(
-                    AppAssets.categoryIcon,
-                    color: AppColors.blackColor,
-                  ),
-                  label: 'الفئات',
-                  index: 1,
+                unSelectedIconName: Image.asset(
+                  AppAssets.homeIcon,
+                  color: AppColors.blackColor,
                 ),
-                builtBottomNavItem(
-                  selectedIndex: selectedIndex,
-                  selectedIconName: const Icon(
-                    Icons.emoji_events_outlined,
-                    color: AppColors.lightGreenColor,
-                    size: 28,
-                  ),
-                  unSelectedIconName: const Icon(
-                    Icons.emoji_events_outlined,
-                    color: AppColors.blackColor,
-                    size: 28,
-                  ),
-                  label: 'تحدّي',
-                  index: 2,
+                label: 'الرئيسية',
+                index: 0,
+              ),
+              builtBottomNavItem(
+                selectedIndex: selectedIndex,
+                selectedIconName: Image.asset(
+                  AppAssets.categoryIcon,
+                  color: AppColors.lightGreenColor,
                 ),
-                builtBottomNavItem(
-                  selectedIndex: selectedIndex,
-                  selectedIconName: Image.asset(
-                    AppAssets.profileIcon,
-                    color: AppColors.lightGreenColor,
-                  ),
-                  unSelectedIconName: Image.asset(
-                    AppAssets.profileIcon,
-                    color: AppColors.blackColor,
-                  ),
-                  label: 'الحساب',
-                  index: 3,
+                unSelectedIconName: Image.asset(
+                  AppAssets.categoryIcon,
+                  color: AppColors.blackColor,
                 ),
-              ],
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(AppRoutes.addTabRoute);
-              },
-              child: const Icon(
-                  Icons.add, size: 30, color: AppColors.whiteColor),
-            ),
-            floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerDocked,
-            body: tabsList[selectedIndex],
-          );
-        },
-      ),
+                label: 'الفئات',
+                index: 1,
+              ),
+              builtBottomNavItem(
+                selectedIndex: selectedIndex,
+                selectedIconName: const Icon(
+                  Icons.emoji_events_outlined,
+                  color: AppColors.lightGreenColor,
+                  size: 28,
+                ),
+                unSelectedIconName: const Icon(
+                  Icons.emoji_events_outlined,
+                  color: AppColors.blackColor,
+                  size: 28,
+                ),
+                label: 'تحدّي',
+                index: 2,
+              ),
+              builtBottomNavItem(
+                selectedIndex: selectedIndex,
+                selectedIconName: Image.asset(
+                  AppAssets.profileIcon,
+                  color: AppColors.lightGreenColor,
+                ),
+                unSelectedIconName: Image.asset(
+                  AppAssets.profileIcon,
+                  color: AppColors.blackColor,
+                ),
+                label: 'الحساب',
+                index: 3,
+              ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRoutes.addTabRoute);
+            },
+            child: const Icon(Icons.add, size: 30, color: AppColors.whiteColor),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          body: tabsList[selectedIndex],
+        );
+      },
     );
   }
 

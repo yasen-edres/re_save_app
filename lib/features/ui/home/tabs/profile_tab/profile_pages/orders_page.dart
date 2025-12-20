@@ -18,32 +18,38 @@ class _OrdersPageState extends State<OrdersPage> {
       "price": "5000",
       'image': AppAssets.carton,
       "description": "هاتف ذكي بمواصفات ممتازة وكاميرا رائعة",
+      "category": "الالكترونيات",
     },
     {
       "title": "سماعات بلوتوث",
       "price": "800",
       'image': AppAssets.carton,
       "description": "سماعات لاسلكية بجودة صوت ممتازة وعمر بطارية طويل",
+      "category": "الالكترونيات",
     },
     {
       "title": "ساعة ذكية",
       "price": "1500",
       'image': AppAssets.carton,
       "description": "ساعة ذكية لمتابعة الصحة واللياقة البدنية",
+      "category": "الالكترونيات",
     },
     {
       "title": "لاب توب",
-      "price": "12000 ",
+      "price": "12000",
       'image': AppAssets.laptop,
       "description": "لاب توب للأعمال والدراسة بأداء عالي",
+      "category": "الالكترونيات",
     },
     {
       "title": "حقيبة ظهر",
       "price": "400",
       'image': AppAssets.carton,
       "description": "حقيبة ظهر قوية وعملية لجميع الاستخدامات اليومية",
+      "category": "أدوات منزلية",
     },
   ];
+
   List<String> orderReceived = [];
   List<String> orderCancelled = [];
   final List<String> orderState = ['قيد التنفيذ', 'المستلمه', 'الملغاه'];
@@ -104,6 +110,7 @@ class _OrdersPageState extends State<OrdersPage> {
                                   price: double.parse(
                                     orderProgress[index]['price']!,
                                   ),
+                                  category: orderProgress[index]['category']!,
                                   description:
                                       orderProgress[index]['description']!,
                                 );

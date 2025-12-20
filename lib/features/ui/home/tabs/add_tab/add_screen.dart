@@ -54,6 +54,7 @@ class _AddScreenState extends State<AddScreen> {
                 TextButton(
                   onPressed: () {
                     //todo: add photo
+                    showBottomSheet(context);
                   },
                   child: Row(
                     children: [
@@ -156,6 +157,76 @@ class _AddScreenState extends State<AddScreen> {
                 backgroundColor: AppColors.darkGreenColor,
                 textStyle: AppStyles.bold24White
             )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future showBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('إلتقط الصور', style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: pickItem(
+                      icon: Icons.photo_library_outlined,
+                      text: 'إلتقط من الهاتف',
+                      onTap: () {},
+                    ),
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: pickItem(
+                      icon: Icons.camera_alt_outlined,
+                      text: 'إلتقط من الكاميرا',
+                      onTap: () {},
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget pickItem(
+      {required IconData icon, required String text, required VoidCallback onTap,}) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.green, width: 2),
+        ),
+        child: Column(
+          children: [
+            Icon(icon, size: 40, color: Colors.green),
+            SizedBox(height: 10),
+            Text(
+              text,
+              style: TextStyle(
+                color: Colors.green,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ],
         ),
       ),

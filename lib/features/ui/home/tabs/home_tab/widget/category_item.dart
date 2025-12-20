@@ -75,7 +75,6 @@ class CategoryItem extends StatelessWidget {
                   ),
                   SizedBox(width: 10.w),
                   IconButton(
-
                     padding: EdgeInsets.zero,
                     onPressed: () {
                       Navigator.of(context).pushNamed(AppRoutes.addTabRoute);

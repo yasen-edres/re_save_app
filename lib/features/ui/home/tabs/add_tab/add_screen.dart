@@ -211,7 +211,7 @@ class _AddScreenState extends State<AddScreen> {
                         var order = OrderEntity(
                           name: orderNameController.text,
                           category: state.selectedOption,
-                          imageList: state.images,
+                          imageList: List<File>.from(state.images),
                         );
                         final isValid = context.read<OrderViewModel>().submit(
                             order);

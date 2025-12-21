@@ -22,7 +22,7 @@ class _AddScreenState extends State<AddScreen> {
   final ImagePicker _picker = ImagePicker();
   late TextEditingController orderNameController;
   List<File> images = [];
-  bool isCheck = false;
+
 
   @override
   void initState() {
@@ -46,6 +46,7 @@ class _AddScreenState extends State<AddScreen> {
             backgroundColor: AppColors.lightYellowColor,
             leading: IconButton(
               onPressed: () {
+                context.read<OrderViewModel>().deleteOrder();
                 Navigator.pop(context);
               },
               icon: Icon(CupertinoIcons.back),
@@ -53,131 +54,169 @@ class _AddScreenState extends State<AddScreen> {
           ),
           body: Padding(
             padding: EdgeInsets.only(bottom: 30.h, left: 20.w, right: 20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('تفاصيل البكيا جديدة', style: AppStyles.bold22Black),
-                SizedBox(height: 20.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('الصور', style: AppStyles.bold18Black),
-                    TextButton(
-                      onPressed: () {
-                        //todo: add photo
-                        showBottomSheet(context);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(CupertinoIcons.add,
-                              color: AppColors.darkGreenColor),
-                          SizedBox(width: 10.w),
-                          Text('إضافة', style: AppStyles.bold18Green),
-                        ],
+            child: Form(
+              key: context
+                  .read<OrderViewModel>()
+                  .formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('تفاصيل الطلب الجديد', style: AppStyles.bold22Black),
+                  SizedBox(height: 20.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('الصور', style: AppStyles.bold18Black),
+                      TextButton(
+                        onPressed: () {
+                          //todo: add photo
+                          showBottomSheet(context);
+                        },
+                        child: Row(
+                          children: [
+                            Icon(CupertinoIcons.add,
+                                color: AppColors.darkGreenColor),
+                            SizedBox(width: 10.w),
+                            Text('إضافة', style: AppStyles.bold18Green),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10.h),
-                images.isEmpty ?
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                      vertical: 18.w, horizontal: 100.h),
-                  decoration: BoxDecoration(
-                    color: AppColors.lightGrayColor,
-                    borderRadius: BorderRadius.circular(16),
+                    ],
                   ),
-                  child: Text(
-                    'لم يتم إرفاق أي صور بعد.',
-                    style: AppStyles.light16Gray,
+                  SizedBox(height: 10.h),
+                  images.isEmpty ?
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                        vertical: 18.w, horizontal: 100.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.lightGrayColor,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'لم يتم إرفاق أي صور بعد.',
+                      style: AppStyles.light16Gray,
+                    ),
+                  ) :
+                  SizedBox(
+                    height: 170.h,
+                    child: showImages(),
                   ),
-                ) :
-                SizedBox(
-                  height: 170.h,
-                  child: showImages(),
-                ),
-
-                SizedBox(height: 20.h),
-                Text('تفاصيل البكيا', style: AppStyles.bold20Black),
-                SizedBox(height: 10.h),
-                Text('التصنيف', style: AppStyles.bold18Black),
-                SizedBox(height: 10.h),
-                DropdownButtonHideUnderline(
-                  child: DropdownButton2(
-                    isExpanded: true,
-                    items: state.options
-                        .map(
-                          (item) =>
-                          DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(item),
-                          ),
-                    )
-                        .toList(),
-                    value: state.selectedOption,
-                    onChanged: (value) {
-                      context.read<OrderViewModel>().changeSelectOption(
-                          value as String);
-                    },
-                    buttonStyleData: ButtonStyleData(
-                      height: 50,
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.grey),
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    dropdownStyleData: DropdownStyleData(
-                      maxHeight: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10.h),
-                Text('اسم البكيا', style: AppStyles.bold18Black),
-                SizedBox(height: 5.h),
-                CustomTextFormField(
-                  controller: orderNameController,
-                  filledColor: AppColors.transparentColor,
-                  borderColor: AppColors.grayColor,
-                ),
-                SizedBox(height: 10.h),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: isCheck,
-                      fillColor: MaterialStateProperty.all(
-                          isCheck ? AppColors.darkGreenColor : AppColors
-                              .transparentColor
-                      ),
-                      onChanged: (value) {
-                        isCheck = value!;
-                        setState(() {});
-                      },
-                    ),
-                    Expanded(
+                  if (state.imageError)
+                    Padding(
+                      padding: EdgeInsets.only(top: 6.h),
                       child: Text(
-                        'لقد تلقينا طلبك وسنتصل بك قريباً.',
-                        style: AppStyles.light16Black,
+                        'من فضلك أضف صورة واحدة على الأقل',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 14.sp,
+                        ),
                       ),
                     ),
-                  ],
-                ),
-                Spacer(),
-                CustomElevatedButton(
-                    text: 'تأكيد',
-                    onPressed: () {
-                      //todo: save order
+
+                  SizedBox(height: 20.h),
+                  Text('تفاصيل الطلب', style: AppStyles.bold20Black),
+                  SizedBox(height: 10.h),
+                  Text('التصنيف', style: AppStyles.bold18Black),
+                  SizedBox(height: 10.h),
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton2(
+                      isExpanded: true,
+                      items: state.options
+                          .map(
+                            (item) =>
+                            DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(item),
+                            ),
+                      )
+                          .toList(),
+                      value: state.selectedOption,
+                      onChanged: (value) {
+                        context.read<OrderViewModel>().changeSelectOption(
+                            value as String);
+                      },
+                      buttonStyleData: ButtonStyleData(
+                        height: 50,
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.grey),
+                          color: Colors.transparent,
+                        ),
+                      ),
+                      dropdownStyleData: DropdownStyleData(
+                        maxHeight: 200,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10.h),
+                  Text('اسم الصنف', style: AppStyles.bold18Black),
+                  SizedBox(height: 5.h),
+                  CustomTextFormField(
+                    validator: (text) {
+                      if (text == null || text
+                          .trim()
+                          .isEmpty) {
+                        return "please enter title";
+                      }
+                      return null;
                     },
-                    backgroundColor: AppColors.darkGreenColor,
-                    textStyle: AppStyles.bold24White
-                )
-              ],
+                    controller: orderNameController,
+                    filledColor: AppColors.transparentColor,
+                    borderColor: AppColors.grayColor,
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: state.isCheck,
+                        fillColor: MaterialStateProperty.all(
+                            state.isCheck ? AppColors.darkGreenColor : AppColors
+                                .transparentColor
+                        ),
+                        onChanged: (value) {
+                          context.read<OrderViewModel>().toggleCheck(value!);
+                        },
+                      ),
+                      Expanded(
+                        child: Text(
+                          'لقد تلقينا طلبك وسنتصل بك قريباً.',
+                          style: AppStyles.light16Black,
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (state.checkError)
+                    Padding(
+                      padding: EdgeInsets.only(top: 6.h),
+                      child: Text(
+                        'من فضلك أضف صورة واحدة على الأقل',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                    ),
+                  Spacer(),
+                  CustomElevatedButton(
+                      text: 'تأكيد',
+                      onPressed: () {
+                        //todo: save order
+                        final isValid = context.read<OrderViewModel>().submit();
+                        if (isValid) {
+                          Navigator.pop(context);
+                        }
+                      },
+                      backgroundColor: AppColors.darkGreenColor,
+                      textStyle: AppStyles.bold24White
+                  )
+                ],
+              ),
             ),
           ),
         );
@@ -237,6 +276,7 @@ class _AddScreenState extends State<AddScreen> {
     );
   }
 
+
   Future<void> pickFromCamera() async {
     final XFile? image = await _picker.pickImage(
       source: ImageSource.camera,
@@ -255,7 +295,7 @@ class _AddScreenState extends State<AddScreen> {
 
     if (pickedImages.isNotEmpty) {
       context.read<OrderViewModel>().addImage(
-          iterable: pickedImages.map((e) => File(e.path)).toList());
+          images: pickedImages.map((e) => File(e.path)).toList());
     }
   }
 
@@ -275,7 +315,6 @@ class _AddScreenState extends State<AddScreen> {
                 Column(
                   children: [
                     SizedBox(height: 20.h,),
-
                     Image.file(images[index], fit: BoxFit.fill,
                       width: 130.w,
                       height: 110.h,),

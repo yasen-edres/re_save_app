@@ -5,87 +5,59 @@ class OrderState {
   final List<String> options;
   final String selectedOption;
   final String orderName;
+  final bool imageError;
+  final bool checkError;
+  final bool isCheck;
 
-  OrderState(this.images, this.options, this.selectedOption, this.orderName);
-}
+  OrderState({
+    required this.images,
+    required this.options,
+    required this.selectedOption,
+    required this.orderName,
+    required this.imageError,
+    required this.checkError,
+    required this.isCheck,
+  });
 
-class OrderInitialState extends OrderState {
-  OrderInitialState() :super(
-      [],
-      [
+  factory OrderState.initial() {
+    return OrderState(
+      images: [],
+      options: const [
         'بلاستيك',
         'الالكترونيات',
         'أدوات منزلية',
         'معادن',
+        'عناصر متنوعه',
         'عبوات كرتون',
         'ورقيات',
         'قطع غيار',
         'زيوت',
         'اقمشه',
       ],
-      'بلاستيك',
-      ''
-  );
-}
+      selectedOption: 'بلاستيك',
+      orderName: '',
+      imageError: false,
+      checkError: false,
+      isCheck: false,
+    );
+  }
 
-class OrderUpdateImagesState extends OrderState {
-  OrderUpdateImagesState(List<File> images, String orderName) :super(images,
-    [
-      'بلاستيك',
-      'الالكترونيات',
-      'أدوات منزلية',
-      'معادن',
-      'عبوات كرتون',
-      'ورقيات',
-      'قطع غيار',
-      'زيوت',
-      'اقمشه',
-    ],
-    'بلاستيك',
-    orderName,
-
-  );
-}
-
-class OrderUpdateOptionState extends OrderState {
-  OrderUpdateOptionState(String newOption, List<File> oldImages,
-      String orderName) :super(
-      oldImages,
-      [
-        'بلاستيك',
-        'الالكترونيات',
-        'أدوات منزلية',
-        'معادن',
-        'عبوات كرتون',
-        'ورقيات',
-        'قطع غيار',
-        'زيوت',
-        'اقمشه',
-      ],
-      newOption,
-      orderName
-
-
-  );
-}
-
-class OrderUpdateOrderNameState extends OrderState {
-  OrderUpdateOrderNameState(String oldOption, List<File> oldImages,
-      String orderName) :super(
-      oldImages,
-      [
-        'بلاستيك',
-        'الالكترونيات',
-        'أدوات منزلية',
-        'معادن',
-        'عبوات كرتون',
-        'ورقيات',
-        'قطع غيار',
-        'زيوت',
-        'اقمشه',
-      ],
-      oldOption,
-      orderName
-
-  );
+  OrderState copyWith({
+    List<File>? images,
+    String? selectedOption,
+    String? orderName,
+    bool? imageError,
+    bool? checkError,
+    bool? isCheck,
+  }) {
+    return OrderState(
+      images: images ?? this.images,
+      options: options,
+      selectedOption: selectedOption ?? this.selectedOption,
+      orderName: orderName ?? this.orderName,
+      imageError: imageError ?? this.imageError,
+      checkError: checkError ?? this.checkError,
+      isCheck: isCheck ?? this.isCheck,
+    );
+  }
 }

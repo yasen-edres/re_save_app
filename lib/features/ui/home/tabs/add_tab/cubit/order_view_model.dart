@@ -1,34 +1,84 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:re_save_app/features/ui/home/tabs/add_tab/cubit/order_states.dart';
+
+import 'order_states.dart';
+
 
 class OrderViewModel extends Cubit<OrderState> {
-  OrderViewModel() : super(OrderInitialState());
+  OrderViewModel() : super(OrderState.initial());
+
+  final formKey = GlobalKey<FormState>();
 
 
-  void addImage({File? image, Iterable<File>? iterable}) {
-    List<File> images = [];
+  void addImage({File? image, Iterable<File>? images}) {
+    //todo: add image ➕.
+    final updatedImages = List<File>.from(state.images);
+
     if (image != null) {
-      images.add(image);
-    } else {
-      images.addAll(iterable!);
+      updatedImages.add(image);
+    } else if (images != null) {
+      updatedImages.addAll(images);
     }
-    emit(OrderUpdateImagesState(images, state.orderName));
+
+    emit(state.copyWith(
+      images: updatedImages,
+      imageError: false,
+    ));
   }
+
 
   void removeImage(File image) {
-    List<File> updatedImages = List<File>.from(state.images);
-    updatedImages.remove(image);
-    emit(OrderUpdateImagesState(updatedImages, state.orderName));
+    //todo: remove image ❌.
+    final updatedImages = List<File>.from(state.images)
+      ..remove(image);
+
+    emit(state.copyWith(images: updatedImages));
   }
 
-  void changeSelectOption(String newOption) {
-    emit(OrderUpdateOptionState(newOption, state.images, state.orderName));
+  void changeSelectOption(String option) {
+    //todo: change option 🔁.
+    emit(state.copyWith(selectedOption: option));
   }
 
-  void changeOrderName(String newOrderName) {
-    emit(OrderUpdateOrderNameState(
-        state.selectedOption, state.images, newOrderName));
+
+  void changeOrderName(String name) {
+    //todo: change order name ✏️.
+    emit(state.copyWith(orderName: name));
+  }
+
+
+  void toggleCheck(bool value) {
+    //todo: Checkbox ☑️.
+    emit(state.copyWith(
+      isCheck: value,
+      checkError: false,
+    ));
+  }
+
+
+  bool submit() {
+    //todo: Validate + Submit ✅.
+    final isFormValid = formKey.currentState?.validate() ?? false;
+    final hasImages = state.images.isNotEmpty;
+    final isChecked = state.isCheck;
+
+    emit(state.copyWith(
+      imageError: !hasImages,
+      checkError: !isChecked,
+    ));
+    deleteOrder();
+
+    return isFormValid && hasImages && isChecked;
+  }
+
+  void deleteOrder() {
+    emit(state.copyWith(
+      images: [],
+      selectedOption: 'بلاستيك',
+      orderName: '',
+      isCheck: false,
+    ));
   }
 }

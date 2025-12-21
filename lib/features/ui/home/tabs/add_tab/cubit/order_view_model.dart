@@ -60,7 +60,6 @@ class OrderViewModel extends Cubit<OrderState> {
 
 
   bool submit(OrderEntity order) {
-    //todo: Validate + Submit ✅.
     final isFormValid = formKey.currentState?.validate() ?? false;
     final hasImages = state.images.isNotEmpty;
     final isChecked = state.isCheck;
@@ -69,17 +68,21 @@ class OrderViewModel extends Cubit<OrderState> {
       imageError: !hasImages,
       checkError: !isChecked,
     ));
-    addOrder(order);
-    deleteOrder();
 
-    return isFormValid && hasImages && isChecked;
+    if (isFormValid && hasImages && isChecked) {
+      addOrder(order);
+      deleteOrder();
+      return true;
+    }
+
+    return false;
   }
 
   void addOrder(OrderEntity order) {
-    final orderList = List<OrderEntity>.from(state.orderList);
+    final orderList = List<OrderEntity>.from(state.orderProgress);
     orderList.add(order);
     emit(state.copyWith(
-      orderList: orderList,
+      orderProgress: orderList,
     ));
   }
 

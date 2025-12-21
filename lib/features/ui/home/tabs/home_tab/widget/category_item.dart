@@ -108,19 +108,15 @@ class CategoryItem extends StatelessWidget {
     );
   }
 
-  /// يحوّل صورة من assets إلى File مؤقت
   Future<File> assetToFile(String assetPath) async {
-    // 1. تحميل الصورة من assets
     ByteData data = await rootBundle.load(assetPath);
     Uint8List bytes = data.buffer.asUint8List();
 
-    // 2. الحصول على مجلد مؤقت
     final tempDir = await getTemporaryDirectory();
     final file = File('${tempDir.path}/${assetPath
         .split('/')
         .last}');
 
-    // 3. كتابة الصورة كملف
     await file.writeAsBytes(bytes);
 
     return file;

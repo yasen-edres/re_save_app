@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:re_save_app/domain/entities/order_entities.dart';
 
 import 'order_states.dart';
 
@@ -58,7 +59,7 @@ class OrderViewModel extends Cubit<OrderState> {
   }
 
 
-  bool submit() {
+  bool submit(OrderEntity order) {
     //todo: Validate + Submit ✅.
     final isFormValid = formKey.currentState?.validate() ?? false;
     final hasImages = state.images.isNotEmpty;
@@ -68,9 +69,18 @@ class OrderViewModel extends Cubit<OrderState> {
       imageError: !hasImages,
       checkError: !isChecked,
     ));
+    addOrder(order);
     deleteOrder();
 
     return isFormValid && hasImages && isChecked;
+  }
+
+  void addOrder(OrderEntity order) {
+    final orderList = List<OrderEntity>.from(state.orderList);
+    orderList.add(order);
+    emit(state.copyWith(
+      orderList: orderList,
+    ));
   }
 
   void deleteOrder() {

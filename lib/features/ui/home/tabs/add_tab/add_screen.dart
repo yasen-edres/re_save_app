@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
+import 'package:re_save_app/domain/entities/order_entities.dart';
 import 'package:re_save_app/features/ui/home/tabs/add_tab/cubit/order_states.dart';
 import 'package:re_save_app/features/ui/home/tabs/add_tab/cubit/order_view_model.dart';
 import 'package:re_save_app/features/widget/custom_elevatedbutton.dart';
@@ -207,7 +208,13 @@ class _AddScreenState extends State<AddScreen> {
                       text: 'تأكيد',
                       onPressed: () {
                         //todo: save order
-                        final isValid = context.read<OrderViewModel>().submit();
+                        var order = OrderEntity(
+                          name: orderNameController.text,
+                          category: state.selectedOption,
+                          imageList: state.images,
+                        );
+                        final isValid = context.read<OrderViewModel>().submit(
+                            order);
                         if (isValid) {
                           Navigator.pop(context);
                         }

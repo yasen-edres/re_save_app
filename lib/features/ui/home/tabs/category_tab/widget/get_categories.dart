@@ -126,7 +126,12 @@ class GetCategories extends StatelessWidget {
       "image": AppAssets.wires,
       'price': '100',
     },
-    // {'name':'خشب ', 'category': "عبوات كرتون","image": AppAssets.wood,'price' : '100' },
+    {
+      'name': 'خشب ',
+      'category': "عبوات كرتون",
+      "image": AppAssets.wood,
+      'price': '100'
+    },
     {
       'name': 'ألومنيوم',
       'category': "معادن",
@@ -227,13 +232,16 @@ class GetCategories extends StatelessWidget {
         : SizedBox(
             height: 4000.h,
             child: GridView.builder(
+              padding: EdgeInsets.symmetric(
+                  vertical: 20.h
+              ),
               itemCount: filterProduct.length,
               physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 20.h,
                 crossAxisSpacing: 18.w,
-                childAspectRatio: 1 / 1.25,
+                childAspectRatio: 1 / 1.5,
               ),
               itemBuilder: (context, index) {
                 return CategoryItem(
@@ -241,6 +249,7 @@ class GetCategories extends StatelessWidget {
                   image: filterProduct[index]['image']!,
                   price: double.parse(filterProduct[index]['price']!),
                   description: filterProduct[index]['name']!,
+                  category: filterProduct[index]['category']!,
                 );
               },
             ),

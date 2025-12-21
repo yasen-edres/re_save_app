@@ -18,6 +18,7 @@ class CustomTextFormField extends StatefulWidget {
   bool isObscureText;
   bool isPassword;
   TextStyle? textStyle;
+  double borderRadius;
   bool readonly;
 
   CustomTextFormField({
@@ -26,6 +27,7 @@ class CustomTextFormField extends StatefulWidget {
     this.validator,
     this.hintText,
     this.hintStyle,
+    this.borderRadius = 16,
     this.textStyle,
     this.label,
     this.labelStyle,
@@ -78,10 +80,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               : widget.suffixIcon,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: widget.borderColor, width: 2),
+            borderSide: BorderSide(color: widget.borderColor,),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
             borderSide: BorderSide(color: widget.borderColor, width: 1),
           ),
           errorBorder: OutlineInputBorder(

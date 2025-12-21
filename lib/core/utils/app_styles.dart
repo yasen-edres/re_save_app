@@ -32,7 +32,12 @@ class AppStyles {
   static TextStyle bold16Green = GoogleFonts.poppins(
     fontSize: 16,
     fontWeight: FontWeight.w700,
-    color: AppColors.greenColor,
+    color: AppColors.lightGreenColor,
+  );
+  static TextStyle bold18Green = GoogleFonts.poppins(
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkGreenColor,
   );
   static TextStyle bold16Primary = GoogleFonts.poppins(
     fontSize: 16,
@@ -53,6 +58,11 @@ class AppStyles {
     fontSize: 20,
     fontWeight: FontWeight.w700,
     color: AppColors.whiteColor,
+  );
+  static TextStyle bold22Black = GoogleFonts.poppins(
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
   );
   static TextStyle bold16Red = GoogleFonts.poppins(
     fontSize: 16,
@@ -125,11 +135,7 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.blackColor,
   );
-  static TextStyle medium14Category = GoogleFonts.poppins(
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    color: AppColors.primaryDark,
-  );
+
   static TextStyle medium14LightPrimary = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w500,

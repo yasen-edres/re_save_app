@@ -48,6 +48,7 @@ class LoginScreen extends StatelessWidget {
             TextButton(
               onPressed: () {
                 //todo: navigator to forget password screen
+                Navigator.of(context).pushNamed(AppRoutes.forgetPasswordRoute);
               },
               child: Text(
                 'نسيت كلمة المرور؟', style: AppStyles.bold16Green,),
@@ -61,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                   Navigator.of(context).pushReplacementNamed(
                       AppRoutes.homeRoute);
                 },
-                backgroundColor: AppColors.greenColor,
+                backgroundColor: AppColors.lightGreenColor,
                 textStyle: AppStyles.regular18White,
               ),
             ),

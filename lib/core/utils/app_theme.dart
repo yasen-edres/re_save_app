@@ -7,32 +7,22 @@ class AppTheme {
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.lightYellowColor,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: AppColors.greenColor,
-      // selectedItemColor: AppColor.whiteBgColor,
-      // unselectedItemColor: AppColor.whiteBgColor,
+      selectedItemColor: AppColors.lightGreenColor,
       selectedLabelStyle: AppStyles.bold16Primary,
     ),
     scaffoldBackgroundColor: AppColors.lightYellowColor,
       appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.whiteColor,
+          backgroundColor: AppColors.lightYellowColor,
           centerTitle: true,
           iconTheme: IconThemeData(
               color: AppColors.blackColor
           )
-
       ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: AppColors.darkGreenColor,
+      backgroundColor: AppColors.greenColor,
       shape: StadiumBorder(
         side: BorderSide(color: AppColors.whiteColor, width: 6),
       ),
-      // RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.circular(35),
-      //   side: BorderSide(
-      //     width: 4,
-      //     color: AppColor.whiteColor
-      //   )
-      // )
     ),
   );
 }

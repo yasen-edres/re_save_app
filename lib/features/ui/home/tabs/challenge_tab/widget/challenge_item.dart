@@ -47,7 +47,7 @@ class ChallengeItem extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 7.h),
                 decoration: BoxDecoration(
-                  color: AppColors.greenColor,
+                  color: AppColors.lightGreenColor,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Text('انضم الآن', style: AppStyles.bold16Black),

@@ -41,6 +41,14 @@ dependencies:
   icons_plus: ^5.0.0
   flutter_localization: ^0.3.3
   carousel_slider: ^5.1.1
+  country_flags: ^4.1.0
+  dialog: ^0.8.0
+  readmore: ^3.0.0
+  dropdown_button2: ^2.3.9
+  provider: ^6.1.5+1
+  flutter_bloc: ^9.1.1
+  image_picker: ^1.2.1
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

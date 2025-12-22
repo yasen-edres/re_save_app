@@ -34,7 +34,8 @@ class LoginScreen extends StatelessWidget {
               filledColor: AppColors.transparentColor,
               borderColor: AppColors.blackColor,
               hintText: 'أدخل بريدك الإلكتروني',
-              prefixIcon: Icon(CupertinoIcons.mail),
+              prefixIcon: Icon(CupertinoIcons.mail
+              ),
             ),
             CustomTextFormField(
               isPassword: true,
@@ -43,6 +44,7 @@ class LoginScreen extends StatelessWidget {
               filledColor: AppColors.transparentColor,
               borderColor: AppColors.blackColor,
               hintText: "أدخل كلمة المرور",
+              prefixIcon: Icon(CupertinoIcons.padlock),
               controller: passwordController,
             ),
             TextButton(

@@ -38,7 +38,7 @@ class CategoryItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 122.h,
+            height: 140.h,
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(image), fit: BoxFit.fill)

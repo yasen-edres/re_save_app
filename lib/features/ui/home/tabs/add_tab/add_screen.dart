@@ -341,7 +341,7 @@ class _AddScreenState extends State<AddScreen> {
                         radius: 13,
                         backgroundColor: AppColors.redColor,
                         child: Icon(
-                          CupertinoIcons.add, color: AppColors.whiteColor,
+                          CupertinoIcons.xmark, color: AppColors.whiteColor,
                           size: 18,),
                       ),
                     ),

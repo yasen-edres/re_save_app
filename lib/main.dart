@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.homeRoute,
+          initialRoute: AppRoutes.loginRoute,
           routes: {
             AppRoutes.loginRoute: (context) => LoginScreen(),
             AppRoutes.registerRoute: (context) => RegisterScreen(),
@@ -56,7 +56,6 @@ class MyApp extends StatelessWidget {
             AppRoutes.editProfilePageRoute: (context) => EditProfilePage(),
             AppRoutes.changePasswordPageRoute: (context) =>
                 ChangePasswordPage(),
-
           },
           locale: const Locale('ar'),
           supportedLocales: const [

@@ -26,10 +26,9 @@ class HomeTab extends StatelessWidget {
     AppAssets.refrigeratorImage,
     AppAssets.refrigeratorImage,
     AppAssets.refrigeratorImage,
-    AppAssets.refrigeratorImage,
+
   ];
   List<String> electronicDevicesTitle = [
-    'ثلاجة',
     'ثلاجة',
     'ثلاجة',
     'ثلاجة',
@@ -40,14 +39,12 @@ class HomeTab extends StatelessWidget {
     'هذا هو الوصف',
     'هذا هو الوصف',
     'هذا هو الوصف',
-    'هذا هو الوصف',
   ];
   List<double> electronicDevicesPrice = [
     100,
     200,
     300,
     400,
-    500,
   ];
 
   List<String> categoriesNameList = [
@@ -259,9 +256,9 @@ class HomeTab extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        mainAxisSpacing: 10.h,
-                        crossAxisSpacing: 10.w,
-                        childAspectRatio: 1 / 1.25,
+                        mainAxisSpacing: 20.h,
+                        crossAxisSpacing: 18.w,
+                        childAspectRatio: 1 / 1.5,
                       ),
                       itemBuilder: (context, index) {
                         return CategoryItem(

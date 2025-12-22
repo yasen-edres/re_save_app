@@ -78,7 +78,7 @@ class ProfileTab extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('25 جنيه', style: AppStyles.bold24White,),
+                        Text('25 نقطة', style: AppStyles.bold24White,),
                         Text('الرصيد الحالي', style: AppStyles.bold20White,),
                       ],
                     ),

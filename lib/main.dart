@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:re_save_app/config/di.dart';
 import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/core/utils/app_theme.dart';
 import 'package:re_save_app/features/ui/auth/forget_password/forget_password_screen.dart';
@@ -19,6 +20,7 @@ import 'features/ui/home/home_screen.dart';
 import 'features/ui/home/tabs/profile_tab/profile_pages/orders_page.dart';
 
 void main() {
+  configureDependencies();
   runApp(MultiBlocProvider(
       providers: [
         BlocProvider<HomeViewModel>(

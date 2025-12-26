@@ -7,19 +7,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../domain/entities/request/login_request.dart';
 import '../../../../../domain/usecases/login_use_case.dart';
-import '../../cubit/auth_state.dart';
+import 'login_state.dart';
 
 @injectable
-class LoginViewModel extends Cubit<AuthState> {
+class LoginViewModel extends Cubit<LoginState> {
   final LoginUseCase loginUseCase;
 
   final formKey = GlobalKey<FormState>();
 
-  LoginViewModel(this.loginUseCase) : super(AuthLoading());
+  LoginViewModel(this.loginUseCase) : super(LoginInitialize());
 
   void login(String password, String email) async {
     if (!formKey.currentState!.validate()) return;
-    emit(AuthLoading());
+    emit(LoginLoading());
     LoginRequest loginRequest = LoginRequest(email: email, password: password);
 
     try {
@@ -34,23 +34,21 @@ class LoginViewModel extends Cubit<AuthState> {
       await prefs.setString('token', tokenToSave);
       await prefs.setBool('isLoggedIn', true);
 
-      print(prefs.getString('token'));
-
-      emit(AuthSuccess(loginResponse: loginResponse));
+      emit(LoginSuccess(loginResponse: loginResponse));
     } on AppException catch (e) {
-      emit(AuthError(errorMessage: e.toString()));
+      emit(LoginError(errorMessage: e.toString()));
     } on DioError catch (e) {
       final message = (e.error is AppException)
           ? (e.error as AppException).errorMessage
           : 'unExpected Error occurred';
-      emit(AuthError(errorMessage: message));
+      emit(LoginError(errorMessage: message));
     }
   }
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
-    emit(AuthInitial());
+    emit(LoginInitial());
   }
 
   static Future<bool> checkAutoLogin() async {
@@ -58,6 +56,8 @@ class LoginViewModel extends Cubit<AuthState> {
     return prefs.getBool('isLoggedIn') ?? false;
   }
 }
+
+class AuthState {}
 
 /// view => viewModel
 /// viewModel => useCase

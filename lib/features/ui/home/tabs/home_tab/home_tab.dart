@@ -13,14 +13,20 @@ import 'package:re_save_app/features/ui/home/tabs/home_tab/widget/category_item.
 
 import '../../../../../core/utils/app_colors.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   HomeTab({super.key});
 
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
   List<Widget> eventsCover = [
     Image.asset(AppAssets.learnRecycleCover),
     Image.asset(AppAssets.potelCover),
 
   ];
+
   List<String> electronicDevicesImage = [
     AppAssets.refrigeratorImage,
     AppAssets.refrigeratorImage,
@@ -28,18 +34,21 @@ class HomeTab extends StatelessWidget {
     AppAssets.refrigeratorImage,
 
   ];
+
   List<String> electronicDevicesTitle = [
     'ثلاجة',
     'ثلاجة',
     'ثلاجة',
     'ثلاجة',
   ];
+
   List<String> electronicDevicesDescription = [
     'هذا هو الوصف',
     'هذا هو الوصف',
     'هذا هو الوصف',
     'هذا هو الوصف',
   ];
+
   List<double> electronicDevicesPrice = [
     100,
     200,
@@ -57,6 +66,7 @@ class HomeTab extends StatelessWidget {
     'نحاس',
     'ورق',
   ];
+
   List<String> categoriesCategoryList = [
     'أدوات منزلية',
     'أدوات منزلية',
@@ -67,6 +77,7 @@ class HomeTab extends StatelessWidget {
     'أدوات منزلية',
     'أدوات منزلية',
   ];
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CategoryViewModel, CategoryState>(

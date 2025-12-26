@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_assets.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_routes.dart';
+import 'package:re_save_app/features/ui/auth/login/cubit/login_view_model.dart';
 import 'package:re_save_app/features/widget/custom_setting_bottom.dart';
 
 import '../../../../../core/utils/app_styles.dart';
@@ -217,22 +219,29 @@ class ProfileTab extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.h,),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 50.w,
-                  vertical: 20.h,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.transparentRedColor,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(CupertinoIcons.square_arrow_right,
-                      color: AppColors.redColor,),
-                    SizedBox(width: 10.w,),
-                    Text('تسجيل الخروج', style: AppStyles.bold16Red,)
-                  ],
+              IconButton(
+                onPressed: () {
+                  context.read<LoginViewModel>().logout();
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.loginRoute, (route) => false);
+                },
+                icon: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 50.w,
+                    vertical: 20.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.transparentRedColor,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(CupertinoIcons.square_arrow_right,
+                        color: AppColors.redColor,),
+                      SizedBox(width: 10.w,),
+                      Text('تسجيل الخروج', style: AppStyles.bold16Red,)
+                    ],
+                  ),
                 ),
               )
             ],

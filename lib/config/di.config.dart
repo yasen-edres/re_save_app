@@ -18,7 +18,7 @@ import '../api/api_services.dart' as _i124;
 import '../api/data_sources/remote/auth/auth_remote_data_source_impl.dart'
     as _i983;
 import '../api/dio/dio_module.dart' as _i223;
-import '../data/data_sources/auth_remote_data_source.dart' as _i1038;
+import '../data/data_sources/remote/auth_remote_data_source.dart' as _i354;
 import '../data/repositories/auth_repository_impl.dart' as _i74;
 import '../domain/repositories/auth_repository.dart' as _i800;
 import '../domain/usecases/login_use_case.dart' as _i646;
@@ -45,13 +45,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i124.ApiServices>(
       () => getItModule.provideWebServices(gh<_i361.Dio>()),
     );
-    gh.factory<_i1038.AuthRemoteDataSource>(
+    gh.factory<_i354.AuthRemoteDataSource>(
       () =>
           _i983.AuthRemoteDataSourceImpl(apiServices: gh<_i124.ApiServices>()),
     );
     gh.factory<_i800.AuthRepository>(
       () => _i74.AuthRepositoryImpl(
-        authRemoteDataSource: gh<_i1038.AuthRemoteDataSource>(),
+        authRemoteDataSource: gh<_i354.AuthRemoteDataSource>(),
       ),
     );
     gh.factory<_i646.LoginUseCase>(

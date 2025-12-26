@@ -4,6 +4,12 @@ abstract class AuthState {}
 
 class AuthLoading extends AuthState {}
 
+class AuthInitial extends AuthState {}
+
+class AuthAuthenticated extends AuthState {}
+
+class AuthUnAuthenticated extends AuthState {}
+
 class AuthSuccess extends AuthState {
   LoginResponse loginResponse;
 

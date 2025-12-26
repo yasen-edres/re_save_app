@@ -6,7 +6,6 @@ class User {
   final dynamic? emailVerifiedAt;
   final int? points;
   final String? level;
-  final String? token;
   final String? createdAt;
   final String? updatedAt;
   final String? role;
@@ -16,7 +15,6 @@ class User {
     this.id,
     this.name,
     this.email,
-    this.token,
     this.phone,
     this.emailVerifiedAt,
     this.points,
@@ -32,7 +30,6 @@ class User {
     name: json['name'],
     email: json['email'],
     phone: json['phone'],
-    token: json['token'],
     emailVerifiedAt: json['email_verified_at'],
     points: json['points'],
     level: json['level'],
@@ -47,7 +44,6 @@ class User {
     'name': name,
     'email': email,
     'phone': phone,
-    'token': token,
     'email_verified_at': emailVerifiedAt,
     'points': points,
     'level': level,

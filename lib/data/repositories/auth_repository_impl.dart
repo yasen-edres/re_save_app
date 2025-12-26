@@ -1,5 +1,7 @@
 import 'package:injectable/injectable.dart';
+import 'package:re_save_app/domain/entities/request/register_request.dart';
 import 'package:re_save_app/domain/entities/response/login_response.dart';
+import 'package:re_save_app/domain/entities/response/register_response.dart';
 
 import '../../domain/entities/request/login_request.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -14,5 +16,10 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<LoginResponse> login(LoginRequest request) {
     return authRemoteDataSource.login(request);
+  }
+
+  @override
+  Future<RegisterResponse> register(RegisterRequest request) {
+    return authRemoteDataSource.register(request);
   }
 }

@@ -22,7 +22,9 @@ import '../data/data_sources/remote/auth_remote_data_source.dart' as _i354;
 import '../data/repositories/auth_repository_impl.dart' as _i74;
 import '../domain/repositories/auth_repository.dart' as _i800;
 import '../domain/usecases/login_use_case.dart' as _i646;
+import '../domain/usecases/register_use_case.dart' as _i744;
 import '../features/ui/auth/login/cubit/login_view_model.dart' as _i1040;
+import '../features/ui/auth/register/cubit/register_view_model.dart' as _i586;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -57,8 +59,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i646.LoginUseCase>(
       () => _i646.LoginUseCase(repository: gh<_i800.AuthRepository>()),
     );
+    gh.factory<_i744.RegisterUseCase>(
+      () => _i744.RegisterUseCase(repository: gh<_i800.AuthRepository>()),
+    );
     gh.factory<_i1040.LoginViewModel>(
       () => _i1040.LoginViewModel(gh<_i646.LoginUseCase>()),
+    );
+    gh.factory<_i586.RegisterViewModel>(
+      () => _i586.RegisterViewModel(gh<_i744.RegisterUseCase>()),
     );
     return this;
   }

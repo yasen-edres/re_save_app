@@ -6,13 +6,13 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:re_save_app/config/di.dart';
 import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/core/utils/dialog_utils.dart';
+import 'package:re_save_app/features/ui/auth/login/cubit/login_state.dart';
 import 'package:re_save_app/features/ui/auth/login/cubit/login_view_model.dart';
 import 'package:re_save_app/features/widget/custom_elevatedbutton.dart';
 import 'package:re_save_app/features/widget/custom_text_form_field.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_styles.dart';
-import '../cubit/auth_state.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -29,15 +29,15 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginViewModel, AuthState>(
+    return BlocListener<LoginViewModel, LoginState>(
       listener: (context, state) {
-        if (state is AuthLoading) {
+        if (state is LoginLoading) {
           DialogUtils.showLoading(context: context, message: 'Loding...');
-        } else if (state is AuthError) {
+        } else if (state is LoginError) {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(
               context: context, message: state.errorMessage);
-        } else if (state is AuthSuccess) {
+        } else if (state is LoginSuccess) {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(
               context: context, message: 'Login Successfully',

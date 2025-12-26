@@ -8,6 +8,7 @@ import 'package:re_save_app/core/utils/app_theme.dart';
 import 'package:re_save_app/features/ui/auth/forget_password/forget_password_screen.dart';
 import 'package:re_save_app/features/ui/auth/login/login_screen.dart';
 import 'package:re_save_app/features/ui/auth/register/register_screen.dart';
+import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
 import 'package:re_save_app/features/ui/home/cubit/home_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/add_tab/add_screen.dart';
 import 'package:re_save_app/features/ui/home/tabs/add_tab/cubit/order_view_model.dart';
@@ -28,6 +29,9 @@ void main() async {
       providers: [
         BlocProvider<HomeViewModel>(
           create: (_) => HomeViewModel(),
+        ),
+        BlocProvider(
+          create: (_) => getIt<ProfileViewModel>(),
         ),
         BlocProvider<LoginViewModel>(
           create: (_) => getIt<LoginViewModel>(),

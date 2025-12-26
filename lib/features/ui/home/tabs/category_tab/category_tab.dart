@@ -74,7 +74,7 @@ class _CategoryTabState extends State<CategoryTab>
                     dividerColor: AppColors.transparentColor,
                     isScrollable: true,
                     onTap: (index) {
-                      context.read<CategoryViewModel>().changeTbIndex(index);
+                      context.read<CategoryViewModel>().changeTabIndex(index);
                     },
                     tabs: state.categories
                         .map((e) =>

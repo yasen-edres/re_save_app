@@ -16,15 +16,21 @@ import 'package:re_save_app/features/ui/home/tabs/notification_tab/notification_
 import 'package:re_save_app/features/ui/home/tabs/profile_tab/profile_pages/change_password_page.dart';
 import 'package:re_save_app/features/ui/home/tabs/profile_tab/profile_pages/edit_profile_page.dart';
 
+import 'features/ui/auth/login/cubit/login_view_model.dart';
 import 'features/ui/home/home_screen.dart';
 import 'features/ui/home/tabs/profile_tab/profile_pages/orders_page.dart';
 
-void main() {
+void main() async {
   configureDependencies();
+  WidgetsFlutterBinding.ensureInitialized();
+  final isLoggedIn = await LoginViewModel.checkAutoLogin();
   runApp(MultiBlocProvider(
       providers: [
         BlocProvider<HomeViewModel>(
           create: (_) => HomeViewModel(),
+        ),
+        BlocProvider<LoginViewModel>(
+          create: (_) => getIt<LoginViewModel>(),
         ),
         BlocProvider<CategoryViewModel>(
           create: (_) => CategoryViewModel(),
@@ -33,10 +39,13 @@ void main() {
           create: (_) => OrderViewModel(),
         ),
       ],
-      child: MyApp()));
+      child: MyApp(isLoggedIn: isLoggedIn,)));
 }
 
 class MyApp extends StatelessWidget {
+  final bool isLoggedIn;
+
+  const MyApp({super.key, required this.isLoggedIn});
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -46,7 +55,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.loginRoute,
+          home: isLoggedIn ? HomeScreen() : LoginScreen(),
           routes: {
             AppRoutes.loginRoute: (context) => LoginScreen(),
             AppRoutes.registerRoute: (context) => RegisterScreen(),

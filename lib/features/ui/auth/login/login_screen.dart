@@ -12,7 +12,7 @@ import 'package:re_save_app/features/widget/custom_text_form_field.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_styles.dart';
-import '../auth_state.dart';
+import '../cubit/auth_state.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});

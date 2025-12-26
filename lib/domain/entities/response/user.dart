@@ -6,6 +6,7 @@ class User {
   final dynamic? emailVerifiedAt;
   final int? points;
   final String? level;
+  final String? token;
   final String? createdAt;
   final String? updatedAt;
   final String? role;
@@ -15,6 +16,7 @@ class User {
     this.id,
     this.name,
     this.email,
+    this.token,
     this.phone,
     this.emailVerifiedAt,
     this.points,
@@ -25,5 +27,33 @@ class User {
     this.image,
   });
 
-  User toEntity() => User(id: id, name: name, email: email, role: role);
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    id: json['id'],
+    name: json['name'],
+    email: json['email'],
+    phone: json['phone'],
+    token: json['token'],
+    emailVerifiedAt: json['email_verified_at'],
+    points: json['points'],
+    level: json['level'],
+    createdAt: json['created_at'],
+    updatedAt: json['updated_at'],
+    role: json['role'],
+    image: json['image'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'email': email,
+    'phone': phone,
+    'token': token,
+    'email_verified_at': emailVerifiedAt,
+    'points': points,
+    'level': level,
+    'created_at': createdAt,
+    'updated_at': updatedAt,
+    'role': role,
+    'image': image,
+  };
 }

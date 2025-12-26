@@ -1,17 +1,21 @@
 import '../../../../../../core/utils/app_assets.dart';
 
 class CategoryState {
+  final int tabIndex;
   final List<String> categories;
   final List<String> categoriesImageList;
-  final int tabIndex;
 
-  CategoryState(
-      {required this.tabIndex, required this.categoriesImageList, required this.categories});
+  CategoryState({
+    required this.tabIndex,
+    required this.categories,
+    required this.categoriesImageList,
+  });
 }
 
 class CategoryInitialState extends CategoryState {
-  CategoryInitialState() :super(
-    tabIndex: 0,
+  CategoryInitialState()
+    : super(
+        tabIndex: 0,
     categories: [
       'الكل',
       'الالكترونيات',
@@ -36,13 +40,13 @@ class CategoryInitialState extends CategoryState {
       AppAssets.cloths,
     ],
   );
-
 }
 
 class CategoryChangeTabIndex extends CategoryState {
-  CategoryChangeTabIndex(int newTabIndex) :super(
-    tabIndex: newTabIndex,
-    categories: [
+  CategoryChangeTabIndex(int tabIndex)
+    : super(
+        tabIndex: tabIndex,
+        categories: [
       'الكل',
       'الالكترونيات',
       'أدوات منزلية',

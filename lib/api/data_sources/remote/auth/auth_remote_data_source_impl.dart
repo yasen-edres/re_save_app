@@ -27,9 +27,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<RegisterResponse> register(RegisterRequest registerRequest) async {
+    //todo: registerRequest => registerRequestDto
     var registerResponse = await apiServices.register(
         registerRequestDto: registerRequest.toRegisterRequestDto()
     );
+    //todo:
     return registerResponse.toRegisterResponse();
   }
 }

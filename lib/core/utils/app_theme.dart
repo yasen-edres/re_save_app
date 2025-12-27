@@ -21,7 +21,7 @@ class AppTheme {
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColors.greenColor,
       shape: StadiumBorder(
-        side: BorderSide(color: AppColors.whiteColor, width: 6),
+        side: BorderSide(color: AppColors.whiteColor, width: 3),
       ),
     ),
   );

@@ -12,6 +12,7 @@ import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
 import 'package:re_save_app/features/ui/home/cubit/home_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/add_tab/add_screen.dart';
 import 'package:re_save_app/features/ui/home/tabs/add_tab/cubit/order_view_model.dart';
+import 'package:re_save_app/features/ui/home/tabs/cart_tab/cart_screen.dart';
 import 'package:re_save_app/features/ui/home/tabs/category_tab/cubit/category_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/notification_tab/notification_screen.dart';
 import 'package:re_save_app/features/ui/home/tabs/profile_tab/profile_pages/change_password_page.dart';
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
             AppRoutes.homeRoute: (context) => HomeScreen(),
             AppRoutes.ordersPageRoute: (context) => OrdersPage(),
             AppRoutes.addTabRoute: (context) => AddScreen(),
+            AppRoutes.cartTabRoute: (context) => CartScreen(),
             AppRoutes.notificationTabRoute: (context) => NotificationScreen(),
             AppRoutes.forgetPasswordRoute: (context) => ForgetPasswordScreen(),
             AppRoutes.editProfilePageRoute: (context) => EditProfilePage(),

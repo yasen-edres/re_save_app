@@ -39,6 +39,12 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.darkGreenColor,
   );
+  static TextStyle bold20Green = GoogleFonts.poppins(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.darkGreenColor,
+  );
+
   static TextStyle bold16Primary = GoogleFonts.poppins(
     fontSize: 16,
     fontWeight: FontWeight.w700,

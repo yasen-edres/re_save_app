@@ -126,11 +126,14 @@ class CategoryItem extends StatelessWidget {
   void showCustomBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // مهم للتحكم في الارتفاع
-      backgroundColor: Colors.transparent, // علشان نعمل شكل مخصص
+      isScrollControlled: true,
+      isDismissible: true,
+      backgroundColor: Colors.transparent,
       builder: (context) {
         return CustomBottomSheetContent(
-          image: AppAssets.paper, name: 'كانز', description: 'بالو',);
+          image: AppAssets.paper,
+          name: 'كانز',
+          description: 'بالوزن 7.5 جنيها/كيلو',);
       },
     );
   }

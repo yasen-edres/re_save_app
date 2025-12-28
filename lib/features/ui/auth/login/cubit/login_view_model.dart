@@ -31,6 +31,7 @@ class LoginViewModel extends Cubit<LoginState> {
           : fullToken;
 
       final prefs = await SharedPreferences.getInstance();
+      print(tokenToSave);
       await prefs.setString('token', tokenToSave);
       await prefs.setBool('isLoggedIn', true);
       print(prefs.getString('token'));

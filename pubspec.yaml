@@ -58,6 +58,7 @@ dependencies:
   pretty_dio_logger: ^1.2.0-beta-1
   dio: ^4.0.6
   shared_preferences: ^2.5.3
+  cloudinary_public: ^0.20.0
 
 dev_dependencies:
   flutter_test:

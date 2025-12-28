@@ -8,6 +8,8 @@ part of 'login_response_dto.dart';
 
 LoginResponseDto _$LoginResponseDtoFromJson(Map<String, dynamic> json) =>
     LoginResponseDto(
+      status: json['status'] as String?,
+      message: json['message'] as String?,
       token: json['token'] as String?,
       user: json['user'] == null
           ? null
@@ -15,4 +17,9 @@ LoginResponseDto _$LoginResponseDtoFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$LoginResponseDtoToJson(LoginResponseDto instance) =>
-    <String, dynamic>{'token': instance.token, 'user': instance.user};
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+      'token': instance.token,
+      'user': instance.user,
+    };

@@ -36,7 +36,9 @@ class LoginScreen extends StatelessWidget {
         } else if (state is LoginError) {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(
-              context: context, message: state.errorMessage);
+            context: context, message: state.errorMessage,
+            posActionName: 'Ok',
+          );
         } else if (state is LoginSuccess) {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(

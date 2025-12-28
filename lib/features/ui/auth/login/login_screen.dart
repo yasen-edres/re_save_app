@@ -18,10 +18,10 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   TextEditingController emailController = TextEditingController(
-      text: 'yassinn@gmail.com'
+      text: 'yassin@gmail.com'
   );
   TextEditingController passwordController = TextEditingController(
-      text: '1234567'
+      text: '123456789'
   );
 
   LoginViewModel viewModel = getIt<LoginViewModel>();

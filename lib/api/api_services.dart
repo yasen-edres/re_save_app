@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:re_save_app/api/end_points.dart';
 import 'package:re_save_app/api/model/request/login_request_dto.dart';
+import 'package:re_save_app/api/model/response/change_password_response_dto.dart';
 import 'package:re_save_app/api/model/response/register_response_dto.dart';
+import 'package:re_save_app/domain/entities/request/change_password_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'model/request/change_password_request_dto.dart';
 import 'model/request/register_request_dto.dart';
 import 'model/request/updata_profile_request_dto.dart';
 import 'model/response/login_response_dto.dart';
@@ -70,5 +73,23 @@ class ApiServices {
       ),
     );
     return UpdateProfileResponseDto.fromJson(response.data);
+  }
+  }
+
+  Future<ChangePasswordResponseDto> changePassword(
+    ChangePasswordRequestDto changePasswordRequestDto,
+  ) async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+
+    if (token == null || token.isEmpty) {
+      throw Exception('User is not logged in');
+    }
+    final response = await dio.put(
+      EndPoints.changePasswordEndPoint,
+      data: changePasswordRequestDto.toJson(),
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+    return ChangePasswordResponseDto.fromJson(response.data);
   }
 }

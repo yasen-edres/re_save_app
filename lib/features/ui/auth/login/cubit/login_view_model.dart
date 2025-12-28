@@ -24,6 +24,10 @@ class LoginViewModel extends Cubit<LoginState> {
 
     try {
       final loginResponse = await loginUseCase.invoke(loginRequest);
+      if (loginResponse.status == 'error') {
+        emit(LoginError(errorMessage: loginResponse.message!));
+        return;
+      }
 
       String fullToken = loginResponse.token!;
       String tokenToSave = fullToken.contains('|')

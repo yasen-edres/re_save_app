@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:re_save_app/api/api_services.dart';
 import 'package:re_save_app/api/mappers/change_password_request_mappers.dart';
+import 'package:re_save_app/api/mappers/change_password_response_mappers.dart';
 import 'package:re_save_app/domain/entities/request/change_password_request.dart';
 import 'package:re_save_app/domain/entities/response/change_password_response.dart';
 

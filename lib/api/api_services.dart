@@ -3,7 +3,6 @@ import 'package:re_save_app/api/end_points.dart';
 import 'package:re_save_app/api/model/request/login_request_dto.dart';
 import 'package:re_save_app/api/model/response/change_password_response_dto.dart';
 import 'package:re_save_app/api/model/response/register_response_dto.dart';
-import 'package:re_save_app/domain/entities/request/change_password_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/request/change_password_request_dto.dart';
@@ -74,7 +73,7 @@ class ApiServices {
     );
     return UpdateProfileResponseDto.fromJson(response.data);
   }
-  }
+
 
   Future<ChangePasswordResponseDto> changePassword(
     ChangePasswordRequestDto changePasswordRequestDto,

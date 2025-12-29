@@ -56,7 +56,6 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ],
           ),
-
           body: items.isNotEmpty?
           Column(
             children: [
@@ -64,7 +63,7 @@ class _CartScreenState extends State<CartScreen> {
                 flex: 3,
                 child: ListView.builder(
                   padding: EdgeInsets.fromLTRB(20.w, 30.h, 20.w, 30.h),
-                  itemCount: 4,
+                  itemCount: items.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.only(bottom: 16.h),

@@ -7,6 +7,7 @@ import 'package:re_save_app/api/model/response/change_password_response_dto.dart
 import 'package:re_save_app/api/model/response/get_cart_response_dto.dart';
 import 'package:re_save_app/api/model/response/get_items_response_dto.dart';
 import 'package:re_save_app/api/model/response/register_response_dto.dart';
+import 'package:re_save_app/api/model/response/remove_item_response_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/request/change_password_request_dto.dart';
@@ -136,5 +137,24 @@ class ApiServices {
       )
     );
     return GetCartResponseDto.fromJson(response.data);
+  }
+
+  Future<RemoveItemResponseDto> removeItem(int itemId) async{
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+
+    if (token == null || token.isEmpty) {
+      throw Exception('User is not logged in');
+    }
+    final response = await dio.delete(
+        '${EndPoints.removeItemEndPoint}/$itemId',
+        options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            }
+        )
+    );
+    return RemoveItemResponseDto.fromJson(response.data);
+
   }
 }

@@ -1,31 +1,20 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:re_save_app/core/utils/app_assets.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
+import 'package:re_save_app/domain/entities/response/item.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../../../../widget/custom_bootom_sheet.dart';
 
 class CategoryItem extends StatelessWidget {
-  String image;
-  String title;
-  String description;
-  double price;
-  String category;
+  Item item;
 
   CategoryItem({
     super.key,
-    required this.title,
-    required this.image,
-    required this.price,
-    required this.description,
-    required this.category,
+    required this.item
   });
 
   @override
@@ -38,15 +27,15 @@ class CategoryItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 140.h,
+            height: 120.h,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(image), fit: BoxFit.fill)
+                    image: NetworkImage(item.image!), fit: BoxFit.fill)
             ),
           ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
               width: double.infinity,
               decoration: BoxDecoration(color: AppColors.whiteColor),
               child: Row(
@@ -56,12 +45,12 @@ class CategoryItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(title, style: AppStyles.bold20Black,
+                        Text(item.name!, style: AppStyles.bold20Black,
                           maxLines: 2,
                           softWrap: true,
                           overflow: TextOverflow.visible,),
                         ReadMoreText(
-                          description,
+                          item.description!,
                           trimLines: 2,
                           colorClickableText: AppColors.greenColor,
                           trimMode: TrimMode.Line,
@@ -71,8 +60,8 @@ class CategoryItem extends StatelessWidget {
                           moreStyle: AppStyles.semi14TextBlack.copyWith(
                               fontWeight: FontWeight.bold),
                         ),
-                        Spacer(),
-                        Text('${price.toInt()} جنيه/القطعه',
+                        SizedBox(height: 10.h,),
+                        Text('${item.price} جنيه/القطعه',
                           style: AppStyles.semi14TextBlack,
                           softWrap: true,
                           overflow: TextOverflow.visible,),
@@ -109,19 +98,19 @@ class CategoryItem extends StatelessWidget {
     );
   }
 
-  Future<File> assetToFile(String assetPath) async {
-    ByteData data = await rootBundle.load(assetPath);
-    Uint8List bytes = data.buffer.asUint8List();
-
-    final tempDir = await getTemporaryDirectory();
-    final file = File('${tempDir.path}/${assetPath
-        .split('/')
-        .last}');
-
-    await file.writeAsBytes(bytes);
-
-    return file;
-  }
+  // Future<File> assetToFile(String assetPath) async {
+  //   ByteData data = await rootBundle.load(assetPath);
+  //   Uint8List bytes = data.buffer.asUint8List();
+  //
+  //   final tempDir = await getTemporaryDirectory();
+  //   final file = File('${tempDir.path}/${assetPath
+  //       .split('/')
+  //       .last}');
+  //
+  //   await file.writeAsBytes(bytes);
+  //
+  //   return file;
+  // }
 
   void showCustomBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -130,10 +119,27 @@ class CategoryItem extends StatelessWidget {
       isDismissible: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return CustomBottomSheetContent(
-          image: AppAssets.paper,
-          name: 'كانز',
-          description: 'بالوزن 7.5 جنيها/كيلو',);
+        switch (item.pricingType) {
+          case 'kg':
+            return CustomBottomSheetContent(
+              image: AppAssets.paper,
+              name: item.name!,
+              pricingType: item.pricingType!,
+              price: double.parse(item.price!),
+              description: 'بالوزن ${double
+                  .parse(item.price!)
+                  .toInt()} جنيها/كيلو',);
+          default :
+            return CustomBottomSheetContent(
+              image: AppAssets.paper,
+              pricingType: item.pricingType!,
+              price: double.parse(item.price!),
+              name: item.name!,
+              description: 'بالقطعة ${double
+                  .parse(item.price!)
+                  .toInt()} جنيها/القطعة',);
+        }
+
       },
     );
   }

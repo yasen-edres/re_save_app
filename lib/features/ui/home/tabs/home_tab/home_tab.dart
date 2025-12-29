@@ -10,7 +10,6 @@ import 'package:re_save_app/features/ui/cubit/profile_state.dart';
 import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
 import 'package:re_save_app/features/ui/home/cubit/home_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/category_tab/cubit/category_view_model.dart';
-import 'package:re_save_app/features/ui/home/tabs/home_tab/widget/category_item.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 
@@ -29,10 +28,10 @@ class _HomeTabState extends State<HomeTab> {
   ];
 
   List<String> electronicDevicesImage = [
-    AppAssets.refrigeratorImage,
-    AppAssets.refrigeratorImage,
-    AppAssets.refrigeratorImage,
-    AppAssets.refrigeratorImage,
+    'https://res.cloudinary.com/dobrjr0sc/image/upload/v1765817353/fridge_xrlxa2.jpg',
+    'https://res.cloudinary.com/dobrjr0sc/image/upload/v1765817353/fridge_xrlxa2.jpg',
+    'https://res.cloudinary.com/dobrjr0sc/image/upload/v1765817353/fridge_xrlxa2.jpg',
+    'https://res.cloudinary.com/dobrjr0sc/image/upload/v1765817353/fridge_xrlxa2.jpg',
 
   ];
 
@@ -269,7 +268,7 @@ class _HomeTabState extends State<HomeTab> {
                             },
                             separatorBuilder: (context, index) =>
                                 SizedBox(width: 20.w,),
-                            itemCount: 5
+                            itemCount: 4
                         )
                     ),
                     Row(
@@ -302,13 +301,14 @@ class _HomeTabState extends State<HomeTab> {
                           childAspectRatio: 1 / 1.5,
                         ),
                         itemBuilder: (context, index) {
-                          return CategoryItem(
-                            title: electronicDevicesTitle[index],
-                            image: electronicDevicesImage[index],
-                            price: electronicDevicesPrice[index],
-                            description: electronicDevicesDescription[index],
-                            category: categoriesCategoryList[index],
-                          );
+                          // return CategoryItem(
+                          //   title: electronicDevicesTitle[index],
+                          //   image: electronicDevicesImage[index],
+                          //   price: electronicDevicesPrice[index],
+                          //   description: electronicDevicesDescription[index],
+                          //   category: categoriesCategoryList[index],
+                          // );
+                          return Container();
                         },
                       ),
                     ),

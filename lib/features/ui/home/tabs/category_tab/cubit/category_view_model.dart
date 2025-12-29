@@ -1,42 +1,55 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:re_save_app/domain/entities/response/item.dart';
+import 'package:re_save_app/domain/usecases/get_items_use_case.dart';
 
 import '../../../../../../core/utils/app_assets.dart';
 import 'category_state.dart';
 
+@injectable
 class CategoryViewModel extends Cubit<CategoryState> {
-  // Variables directly in ViewModel
+  GetItemsUseCase getItemsUseCase;
   List<String> categories = [
     'الكل',
-    'الالكترونيات',
-    'أدوات منزلية',
     'معادن',
     'بلاستيك',
-    'عبوات كرتون',
     'ورقيات',
-    'قطع غيار',
-    'زيوت',
-    'اقمشه',
+    'اجهزه',
+    'اخري'
   ];
+  List<Item> items = [];
+
 
   List<String> categoriesImageList = [
-    AppAssets.laptop,
-    AppAssets.fridge,
     AppAssets.iron,
     AppAssets.plastic,
-    AppAssets.carton,
     AppAssets.paper,
-    AppAssets.carBattery,
-    AppAssets.carOil,
-    AppAssets.cloths,
+    AppAssets.fridge,
+
   ];
 
   int tabIndex = 0;
 
-  CategoryViewModel() : super(CategoryInitialState());
+  CategoryViewModel({required this.getItemsUseCase})
+      : super(CategoryInitialState());
 
-  // Update tab index
   void changeTabIndex(int newTabIndex) {
+    emit(CategoryLoadingState());
     tabIndex = newTabIndex;
-    emit(CategoryChangeTabIndex(tabIndex));
+    emit(CategoryChangeTabIndexState(tabIndex));
+  }
+
+  Future<void> getItems() async {
+    emit(CategoryInitialState());
+
+    try {
+      final response = await getItemsUseCase.invoke();
+
+      items = response.items ?? [];
+
+      emit(CategorySuccessState(items: items, tabIndex: tabIndex));
+    } catch (e) {
+      emit(CategoryErrorState(e.toString()));
+    }
   }
 }

@@ -19,10 +19,14 @@ class CustomBottomSheetContent extends StatefulWidget {
   final String name;
   final String description;
   final String image;
+  final String pricingType;
+  final double price;
 
   const CustomBottomSheetContent({
     required this.image,
     required this.name,
+    required this.price,
+    required this.pricingType,
     required this.description,
     Key? key,
   }) : super(key: key);
@@ -34,8 +38,8 @@ class CustomBottomSheetContent extends StatefulWidget {
 
 class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   final TextEditingController quantityController = TextEditingController(
-      text: '0.5');
-  double quantity = 0.5;
+      text: '0');
+  double quantity = 0;
   final ImagePicker _picker = ImagePicker();
   final cloudinary = CloudinaryPublic(
     'dd2gpv170',
@@ -44,18 +48,30 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   );
 
   void increaseQuantity() {
+    widget.pricingType == 'kg' ?
     setState(() {
       quantity += 0.5;
+      quantityController.text = quantity.toString();
+    }) :
+    setState(() {
+      quantity += 1;
       quantityController.text = quantity.toString();
     });
   }
 
   void decreaseQuantity() {
+
     if (quantity > 0.5) {
+      widget.pricingType == 'kg' ?
       setState(() {
         quantity -= 0.5;
         quantityController.text = quantity.toString();
-      });
+      }) :
+      setState(() {
+        quantity -= 1;
+        quantityController.text = quantity.toString();
+      })
+      ;
     }
   }
 
@@ -76,8 +92,13 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('أضف الكمية بالولزن', style: AppStyles.bold24Black),
-              Text('الوزن يقاس بالكيلوجرام', style: AppStyles.light16Gray),
+              widget.pricingType == 'kg' ?
+              Text('أضف الكمية بالوزن', style: AppStyles.bold24Black) :
+              Text('أضف العدد', style: AppStyles.bold24Black),
+              widget.pricingType == 'kg' ?
+              Text('الوزن يقاس بالكيلوجرام', style: AppStyles.light16Gray) :
+              Text('الوزن يقاس بالقطعه', style: AppStyles.light16Gray),
+              SizedBox(height: 5.h,),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50.w),
                 child: Column(
@@ -93,7 +114,7 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                       )
                           : InkWell(
                         onTap: () {
-                          showBottomSheet(context);
+                          pickFromCamera();
                         },
                         child: Container(
                           width: 180.w,
@@ -170,7 +191,7 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                         color: AppColors.whiteColor,
                         border: Border.all(color: AppColors.lightGrayColor),
                       ),
-                      child: Text('${quantity * 7.5} جنيه',
+                      child: Text('${quantity * widget.price} جنيه',
                           style: AppStyles.bold16Black),
                     ),
                   ],
@@ -206,51 +227,6 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
     );
   }
 
-  Future showBottomSheet(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-              bottom: 50.h, top: 10.h, left: 20.w, right: 20.w),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  pickFromGallery();
-                },
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.photo, color: AppColors.blackColor,
-                        size: 25),
-                    SizedBox(width: 20.w),
-                    Text('من الهاتف', style: AppStyles.bold22Black),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10.h),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  pickFromCamera();
-                },
-                child: Row(
-                  children: [
-                    Icon(CupertinoIcons.camera, color: AppColors.blackColor,
-                        size: 25),
-                    SizedBox(width: 20.w),
-                    Text('إلتقط الصور', style: AppStyles.bold22Black),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
   Future<void> pickFromCamera() async {
     final XFile? image = await _picker.pickImage(
@@ -262,17 +238,6 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
     }
   }
 
-  Future<void> pickFromGallery() async {
-    final List<XFile> pickedImages = await _picker.pickMultiImage(
-        imageQuality: 70);
-
-    if (pickedImages.isNotEmpty) {
-      for (var image in pickedImages) {
-        File file = File(image.path);
-        await uploadImageToCloudinary(file);
-      }
-    }
-  }
 
   Future<void> uploadImageToCloudinary(File file) async {
     try {
@@ -282,7 +247,6 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
       );
       print('تم رفع الصورة بنجاح: ${response.secureUrl}');
 
-      // أضف الصورة للCubit
       context.read<OrderViewModel>().addImage(response.secureUrl);
     } on CloudinaryException catch (e) {
       print('Cloudinary Error: ${e.message}');

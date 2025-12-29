@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:re_save_app/api/end_points.dart';
 import 'package:re_save_app/api/model/request/login_request_dto.dart';
 import 'package:re_save_app/api/model/response/change_password_response_dto.dart';
+import 'package:re_save_app/api/model/response/get_items_response_dto.dart';
 import 'package:re_save_app/api/model/response/register_response_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -90,5 +91,11 @@ class ApiServices {
       options: Options(headers: {'Authorization': 'Bearer $token'}),
     );
     return ChangePasswordResponseDto.fromJson(response.data);
+  }
+  }
+
+  Future<GetItemsResponseDto> getItems() async {
+    final response = await dio.get(EndPoints.getItemsEndPoint);
+    return GetItemsResponseDto.fromJson(response.data);
   }
 }

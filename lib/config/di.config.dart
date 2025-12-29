@@ -17,6 +17,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 import '../api/api_services.dart' as _i124;
 import '../api/data_sources/remote/auth/auth_remote_data_source_impl.dart'
     as _i983;
+import '../api/data_sources/remote/item/get_items_remote_data_source_impl.dart'
+    as _i517;
 import '../api/data_sources/remote/profile/change_password_remote_data_source_impl.dart'
     as _i346;
 import '../api/data_sources/remote/profile/update_profile_remote_data_source_impl.dart'
@@ -27,18 +29,22 @@ import '../api/dio/dio_module.dart' as _i223;
 import '../data/data_sources/remote/auth_remote_data_source.dart' as _i354;
 import '../data/data_sources/remote/change_password_remote_data_source.dart'
     as _i574;
+import '../data/data_sources/remote/get_items_remote_data_source.dart' as _i919;
 import '../data/data_sources/remote/update_profile_remote_data_source.dart'
     as _i491;
 import '../data/data_sources/remote/user_data_remote_data_source.dart' as _i893;
 import '../data/repositories/auth_repository_impl.dart' as _i74;
 import '../data/repositories/change_password_repository_impl.dart' as _i194;
+import '../data/repositories/get_items_repository_impl.dart' as _i1052;
 import '../data/repositories/update_profile_repository_impl.dart' as _i491;
 import '../data/repositories/user_data_repository_impl.dart' as _i392;
 import '../domain/repositories/auth_repository.dart' as _i800;
 import '../domain/repositories/change_password_repository.dart' as _i682;
+import '../domain/repositories/get_items_repository.dart' as _i380;
 import '../domain/repositories/update_profile_repository.dart' as _i56;
 import '../domain/repositories/user_data_repository.dart' as _i181;
 import '../domain/usecases/change_password_use_case.dart' as _i482;
+import '../domain/usecases/get_items_use_case.dart' as _i336;
 import '../domain/usecases/login_use_case.dart' as _i646;
 import '../domain/usecases/register_use_case.dart' as _i744;
 import '../domain/usecases/update_profile_use_case.dart' as _i68;
@@ -46,6 +52,8 @@ import '../domain/usecases/user_data_use_case.dart' as _i897;
 import '../features/ui/auth/login/cubit/login_view_model.dart' as _i1040;
 import '../features/ui/auth/register/cubit/register_view_model.dart' as _i586;
 import '../features/ui/cubit/profile_view_model.dart' as _i83;
+import '../features/ui/home/tabs/category_tab/cubit/category_view_model.dart'
+    as _i87;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -77,6 +85,11 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i983.AuthRemoteDataSourceImpl(apiServices: gh<_i124.ApiServices>()),
     );
+    gh.factory<_i919.GetItemsRemoteDataSource>(
+      () => _i517.GetItemsRemoteDataSourceImpl(
+        apiServices: gh<_i124.ApiServices>(),
+      ),
+    );
     gh.factory<_i491.UpdateProfileRemoteDataSource>(
       () => _i289.UpdateProfileRemoteDataSourceImpl(
         apiServices: gh<_i124.ApiServices>(),
@@ -85,6 +98,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i893.UserDataRemoteDataSource>(
       () => _i851.UserDataRemoteDataSourceImpl(
         apiServices: gh<_i124.ApiServices>(),
+      ),
+    );
+    gh.factory<_i380.GetItemsRepository>(
+      () => _i1052.GetItemsRepositoryImpl(
+        getItemsRemoteDataSource: gh<_i919.GetItemsRemoteDataSource>(),
       ),
     );
     gh.factory<_i800.AuthRepository>(
@@ -107,6 +125,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i491.UpdateProfileRepositoryImpl(
         updateProfileRemoteDataSource:
             gh<_i491.UpdateProfileRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i336.GetItemsUseCase>(
+      () => _i336.GetItemsUseCase(
+        getItemsRepository: gh<_i380.GetItemsRepository>(),
       ),
     );
     gh.factory<_i646.LoginUseCase>(
@@ -135,6 +158,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i68.UpdateProfileUseCase(
         updateProfileRepository: gh<_i56.UpdateProfileRepository>(),
       ),
+    );
+    gh.factory<_i87.CategoryViewModel>(
+      () =>
+          _i87.CategoryViewModel(getItemsUseCase: gh<_i336.GetItemsUseCase>()),
     );
     gh.factory<_i83.ProfileViewModel>(
       () => _i83.ProfileViewModel(

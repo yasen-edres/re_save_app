@@ -8,4 +8,8 @@ class OrderError extends OrderState {
   OrderError({required this.errorMessage});
 }
 
-class OrderSuccess extends OrderState {}
+class OrderSuccess extends OrderState {
+  String? messageSuccess;
+  OrderSuccess({this.messageSuccess});
+}
+class OrderLoading extends OrderState {}

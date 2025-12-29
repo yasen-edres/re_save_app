@@ -40,7 +40,7 @@ void main() async {
           create: (_) => getIt<CategoryViewModel>(),
         ),
         BlocProvider<OrderViewModel>(
-          create: (_) => OrderViewModel(),
+          create: (_) => getIt<OrderViewModel>(),
         ),
       ],
       child: MyApp(isLoggedIn: isLoggedIn,)));

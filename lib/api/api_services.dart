@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:re_save_app/api/end_points.dart';
+import 'package:re_save_app/api/model/request/add_item_to_cart_request_dto.dart';
 import 'package:re_save_app/api/model/request/login_request_dto.dart';
+import 'package:re_save_app/api/model/response/add_item_to_cart_response_dto.dart';
 import 'package:re_save_app/api/model/response/change_password_response_dto.dart';
 import 'package:re_save_app/api/model/response/get_items_response_dto.dart';
 import 'package:re_save_app/api/model/response/register_response_dto.dart';
@@ -92,10 +94,28 @@ class ApiServices {
     );
     return ChangePasswordResponseDto.fromJson(response.data);
   }
-  }
+
 
   Future<GetItemsResponseDto> getItems() async {
     final response = await dio.get(EndPoints.getItemsEndPoint);
     return GetItemsResponseDto.fromJson(response.data);
+  }
+  Future<AddItemToCartResponseDto> addItemToCart(AddItemToCartRequestDto addItemToCartRequestDto) async{
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+
+    if (token == null || token.isEmpty) {
+      throw Exception('User is not logged in');
+    }
+    final response = await dio.post(
+      EndPoints.addItemToCartEndPoint,
+      data: addItemToCartRequestDto.toJson(),
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      ),
+    );
+    return AddItemToCartResponseDto.fromJson(response.data);
   }
 }

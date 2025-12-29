@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:re_save_app/core/utils/app_assets.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
 import 'package:re_save_app/domain/entities/response/item.dart';
@@ -119,28 +118,12 @@ class CategoryItem extends StatelessWidget {
       isDismissible: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        switch (item.pricingType) {
-          case 'kg':
-            return CustomBottomSheetContent(
-              image: AppAssets.paper,
-              name: item.name!,
-              pricingType: item.pricingType!,
-              price: double.parse(item.price!),
-              description: 'بالوزن ${double
-                  .parse(item.price!)
-                  .toInt()} جنيها/كيلو',);
-          default :
-            return CustomBottomSheetContent(
-              image: AppAssets.paper,
-              pricingType: item.pricingType!,
-              price: double.parse(item.price!),
-              name: item.name!,
-              description: 'بالقطعة ${double
-                  .parse(item.price!)
-                  .toInt()} جنيها/القطعة',);
+          return CustomBottomSheetContent(item: item,);
         }
-
-      },
     );
   }
 }
+/*
+'بالوزن ${double.parse(item.price!).toInt()} جنيها/كيلو',
+'بالقطعة ${double.parse(item.price!).toInt()} جنيها/القطعة',
+ */

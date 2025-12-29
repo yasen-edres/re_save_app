@@ -8,6 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
+import 'package:re_save_app/domain/entities/request/add_item_to_cart_request.dart';
+import 'package:re_save_app/domain/entities/response/item.dart';
 import 'package:re_save_app/features/widget/custom_elevatedbutton.dart';
 import 'package:re_save_app/features/widget/custom_text_form_field.dart';
 
@@ -16,20 +18,9 @@ import '../ui/home/tabs/add_tab/cubit/order_view_model.dart';
 
 
 class CustomBottomSheetContent extends StatefulWidget {
-  final String name;
-  final String description;
-  final String image;
-  final String pricingType;
-  final double price;
+  Item item;
 
-  const CustomBottomSheetContent({
-    required this.image,
-    required this.name,
-    required this.price,
-    required this.pricingType,
-    required this.description,
-    Key? key,
-  }) : super(key: key);
+  CustomBottomSheetContent({required this.item});
 
   @override
   State<CustomBottomSheetContent> createState() =>
@@ -39,7 +30,7 @@ class CustomBottomSheetContent extends StatefulWidget {
 class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   final TextEditingController quantityController = TextEditingController(
       text: '0');
-  double quantity = 0;
+  int quantity = 0;
   final ImagePicker _picker = ImagePicker();
   final cloudinary = CloudinaryPublic(
     'dd2gpv170',
@@ -48,30 +39,21 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   );
 
   void increaseQuantity() {
-    widget.pricingType == 'kg' ?
-    setState(() {
-      quantity += 0.5;
-      quantityController.text = quantity.toString();
-    }) :
+
     setState(() {
       quantity += 1;
       quantityController.text = quantity.toString();
-    });
+    }) ;
   }
 
   void decreaseQuantity() {
 
-    if (quantity > 0.5) {
-      widget.pricingType == 'kg' ?
-      setState(() {
-        quantity -= 0.5;
-        quantityController.text = quantity.toString();
-      }) :
+    if (quantity > 1) {
+
       setState(() {
         quantity -= 1;
         quantityController.text = quantity.toString();
-      })
-      ;
+      });
     }
   }
 
@@ -92,10 +74,10 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              widget.pricingType == 'kg' ?
+              widget.item.pricingType == 'kg' ?
               Text('أضف الكمية بالوزن', style: AppStyles.bold24Black) :
               Text('أضف العدد', style: AppStyles.bold24Black),
-              widget.pricingType == 'kg' ?
+              widget.item.pricingType == 'kg' ?
               Text('الوزن يقاس بالكيلوجرام', style: AppStyles.light16Gray) :
               Text('الوزن يقاس بالقطعه', style: AppStyles.light16Gray),
               SizedBox(height: 5.h,),
@@ -136,9 +118,9 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                     Center(
                       child: Column(
                         children: [
-                          Text(widget.name, style: AppStyles.bold20Black),
+                          Text(widget.item.name!, style: AppStyles.bold20Black),
                           SizedBox(height: 5.h),
-                          Text(widget.description, style: AppStyles
+                          Text(widget.item.description!, style: AppStyles
                               .light16Gray),
                           SizedBox(height: 10.h),
                           Text('الحد الادني للطلب هو 25 جنيهًا'),
@@ -191,7 +173,7 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                         color: AppColors.whiteColor,
                         border: Border.all(color: AppColors.lightGrayColor),
                       ),
-                      child: Text('${quantity * widget.price} جنيه',
+                      child: Text('${quantity * double.parse(widget.item.price!).toInt()} جنيه',
                           style: AppStyles.bold16Black),
                     ),
                   ],
@@ -212,7 +194,16 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                   Expanded(
                     child: CustomElevatedButton(
                       text: 'اتمام الطلب',
-                      onPressed: () {},
+                      onPressed: () {
+                        final addItemToCartRequest = AddItemToCartRequest(
+                          estimatedQuantity: quantity,
+                          itemId: widget.item.id,
+                        );
+                        context.read<OrderViewModel>().addItemToCart(addItemToCartRequest);
+                        if(state is OrderSuccess){
+                          print('yassin');
+                        }
+                      },
                       backgroundColor: AppColors.whiteColor,
                       textStyle: AppStyles.bold20Green,
                       borderColor: AppColors.darkGreenColor,

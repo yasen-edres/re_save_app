@@ -24,6 +24,7 @@ class OrderViewModel extends Cubit<OrderState> {
   void addItemToCart(AddItemToCartRequest addItemToCartRequest) async{
     emit(OrderLoading());
     final response = await addItemToCartUseCase.invoke(addItemToCartRequest);
+    cloudImageUrls.clear();
     emit(OrderSuccess(messageSuccess: response.message));
   }
 

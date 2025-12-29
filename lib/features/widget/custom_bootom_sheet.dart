@@ -31,6 +31,9 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   final TextEditingController quantityController = TextEditingController(
       text: '0');
   int quantity = 0;
+  bool checkPrice = false;
+  int minPrice = 100;
+  bool checkImage = false ;
   final ImagePicker _picker = ImagePicker();
   final cloudinary = CloudinaryPublic(
     'dd2gpv170',
@@ -38,29 +41,14 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
     cache: false,
   );
 
-  void increaseQuantity() {
 
-    setState(() {
-      quantity += 1;
-      quantityController.text = quantity.toString();
-    }) ;
-  }
-
-  void decreaseQuantity() {
-
-    if (quantity > 1) {
-
-      setState(() {
-        quantity -= 1;
-        quantityController.text = quantity.toString();
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrderViewModel, OrderState>(
       builder: (context, state) {
+        final price = double.parse(widget.item.price!);
+        double totalPrice = quantity * double.parse(widget.item.price!);
         final cloudImages = context
             .read<OrderViewModel>()
             .cloudImageUrls;
@@ -80,7 +68,7 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
               widget.item.pricingType == 'kg' ?
               Text('الوزن يقاس بالكيلوجرام', style: AppStyles.light16Gray) :
               Text('الوزن يقاس بالقطعه', style: AppStyles.light16Gray),
-              SizedBox(height: 5.h,),
+              SizedBox(height: 10.h,),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50.w),
                 child: Column(
@@ -114,6 +102,10 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 10.h,),
+                    !checkImage?
+                        Text('يجب إضافة صورة',style: AppStyles.bold16Red,)
+                        :SizedBox.shrink(),
                     SizedBox(height: 10.h),
                     Center(
                       child: Column(
@@ -173,9 +165,13 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                         color: AppColors.whiteColor,
                         border: Border.all(color: AppColors.lightGrayColor),
                       ),
-                      child: Text('${quantity * double.parse(widget.item.price!).toInt()} جنيه',
+
+                      child: Text('${totalPrice.toStringAsFixed(2)} جنيه',
                           style: AppStyles.bold16Black),
                     ),
+                    checkPrice
+                        ? Text('السعر أقل من الحد الأدنى! ${minPrice}', style: AppStyles.bold16Red)
+                        : SizedBox.shrink(),
                   ],
                 ),
               ),
@@ -195,14 +191,25 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                     child: CustomElevatedButton(
                       text: 'اتمام الطلب',
                       onPressed: () {
+                        if (quantity * price < minPrice) {
+                          setState(() {
+                            checkPrice = true;
+                          });
+                          return;
+                        } else {
+                          setState(() {
+                            checkPrice = false;
+                          });
+                        }
+                        if(!checkImage){
+                          return;
+                        }
                         final addItemToCartRequest = AddItemToCartRequest(
                           estimatedQuantity: quantity,
                           itemId: widget.item.id,
                         );
                         context.read<OrderViewModel>().addItemToCart(addItemToCartRequest);
-                        if(state is OrderSuccess){
-                          print('yassin');
-                        }
+                        Navigator.pop(context);
                       },
                       backgroundColor: AppColors.whiteColor,
                       textStyle: AppStyles.bold20Green,
@@ -237,10 +244,28 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
             file.path, resourceType: CloudinaryResourceType.Image),
       );
       print('تم رفع الصورة بنجاح: ${response.secureUrl}');
-
+      checkImage = true;
       context.read<OrderViewModel>().addImage(response.secureUrl);
+
     } on CloudinaryException catch (e) {
       print('Cloudinary Error: ${e.message}');
+    }
+  }
+  void increaseQuantity() {
+    setState(() {
+      quantity += 1;
+      quantityController.text = quantity.toString();
+    }) ;
+  }
+
+  void decreaseQuantity() {
+
+    if (quantity > 1) {
+
+      setState(() {
+        quantity -= 1;
+        quantityController.text = quantity.toString();
+      });
     }
   }
 }

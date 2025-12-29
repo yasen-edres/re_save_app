@@ -37,10 +37,10 @@ void main() async {
           create: (_) => getIt<LoginViewModel>(),
         ),
         BlocProvider<CategoryViewModel>(
-          create: (_) => CategoryViewModel(),
+          create: (_) => getIt<CategoryViewModel>(),
         ),
         BlocProvider<OrderViewModel>(
-          create: (_) => OrderViewModel(),
+          create: (_) => getIt<OrderViewModel>(),
         ),
       ],
       child: MyApp(isLoggedIn: isLoggedIn,)));

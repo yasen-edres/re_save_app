@@ -27,10 +27,8 @@ class _CategoryTabState extends State<CategoryTab>
   @override
   void initState() {
     super.initState();
-
     final categoryLength = context
         .read<CategoryViewModel>()
-        .state
         .categories
         .length;
     tabController = TabController(
@@ -49,12 +47,16 @@ class _CategoryTabState extends State<CategoryTab>
     return BlocBuilder<CategoryViewModel, CategoryState>(
       builder: (context, state) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (tabController.index != state.tabIndex) {
-            tabController.animateTo(state.tabIndex);
+          if (tabController.index != context
+              .read<CategoryViewModel>()
+              .tabIndex) {
+            tabController.animateTo(context
+                .read<CategoryViewModel>()
+                .tabIndex);
+            context.read<CategoryViewModel>().getItems();
           }
         });
 
-        ///this code work after build
         return Scaffold(
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -76,13 +78,19 @@ class _CategoryTabState extends State<CategoryTab>
                     onTap: (index) {
                       context.read<CategoryViewModel>().changeTabIndex(index);
                     },
-                    tabs: state.categories
+                    tabs: context
+                        .read<CategoryViewModel>()
+                        .categories
                         .map((e) =>
                         Text(e, style: AppStyles.bold20Black))
                         .toList(),
                   ),
                   GetCategories(
-                    categoryName: state.categories[state.tabIndex],
+                    categoryName: context
+                        .read<CategoryViewModel>()
+                        .categories[context
+                        .read<CategoryViewModel>()
+                        .tabIndex],
                     searchText: searchController.text,
                   ),
                 ],

@@ -4,6 +4,7 @@ import 'package:re_save_app/api/model/request/add_item_to_cart_request_dto.dart'
 import 'package:re_save_app/api/model/request/login_request_dto.dart';
 import 'package:re_save_app/api/model/response/add_item_to_cart_response_dto.dart';
 import 'package:re_save_app/api/model/response/change_password_response_dto.dart';
+import 'package:re_save_app/api/model/response/get_cart_response_dto.dart';
 import 'package:re_save_app/api/model/response/get_items_response_dto.dart';
 import 'package:re_save_app/api/model/response/register_response_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -117,5 +118,23 @@ class ApiServices {
       ),
     );
     return AddItemToCartResponseDto.fromJson(response.data);
+  }
+
+  Future<GetCartResponseDto> getCart()async{
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+
+    if (token == null || token.isEmpty) {
+      throw Exception('User is not logged in');
+    }
+    final response = await dio.get(
+      EndPoints.getCartEndPoint,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+        }
+      )
+    );
+    return GetCartResponseDto.fromJson(response.data);
   }
 }

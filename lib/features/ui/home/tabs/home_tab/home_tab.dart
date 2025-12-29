@@ -10,6 +10,7 @@ import 'package:re_save_app/features/ui/cubit/profile_state.dart';
 import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
 import 'package:re_save_app/features/ui/home/cubit/home_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/category_tab/cubit/category_view_model.dart';
+import 'package:re_save_app/features/ui/home/tabs/home_tab/widget/category_item.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 
@@ -82,6 +83,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    context.read<CategoryViewModel>().getItems();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ProfileViewModel>().getUserData();
     });
@@ -296,19 +298,13 @@ class _HomeTabState extends State<HomeTab> {
                         physics: NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          mainAxisSpacing: 20.h,
-                          crossAxisSpacing: 18.w,
+                          mainAxisSpacing: 10.h,
+                          crossAxisSpacing: 5.w,
                           childAspectRatio: 1 / 1.5,
                         ),
                         itemBuilder: (context, index) {
-                          // return CategoryItem(
-                          //   title: electronicDevicesTitle[index],
-                          //   image: electronicDevicesImage[index],
-                          //   price: electronicDevicesPrice[index],
-                          //   description: electronicDevicesDescription[index],
-                          //   category: categoriesCategoryList[index],
-                          // );
-                          return Container();
+                          return CategoryItem(
+                            item: context.read<CategoryViewModel>().items[index],);
                         },
                       ),
                     ),

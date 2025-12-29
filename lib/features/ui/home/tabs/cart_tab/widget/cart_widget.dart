@@ -2,12 +2,48 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../../core/utils/app_assets.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/app_styles.dart';
+import '../../../../../../domain/entities/response/get_cart_response.dart';
 
-class CartWidget extends StatelessWidget {
-  CartWidget({super.key});
+class CartWidget extends StatefulWidget {
+  final Item item;
+  final Items itemDetails;
+
+  const CartWidget({
+    super.key,
+    required this.item,
+    required this.itemDetails,
+  });
+
+  @override
+  State<CartWidget> createState() => _CartWidgetState();
+}
+
+class _CartWidgetState extends State<CartWidget> {
+  late int quantity;
+
+  @override
+  void initState() {
+    super.initState();
+    quantity = double
+        .parse(widget.itemDetails.estimatedQuantity!)
+        .toInt();
+  }
+
+  void increment() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void decrement() {
+    if (quantity > 1) {
+      setState(() {
+        quantity--;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +55,11 @@ class CartWidget extends StatelessWidget {
             border: Border.all(color: AppColors.lightGrayColor),
             borderRadius: BorderRadius.circular(16),
           ),
-          padding: EdgeInsets.all(12),
+          padding:  EdgeInsets.all(12),
           child: Row(
             children: [
               Expanded(
-                child: Image.asset(AppAssets.keyboard, fit: BoxFit.fill),
+                child: Image.network(widget.item.image!, fit: BoxFit.fill),
               ),
               SizedBox(width: 20.w),
               Expanded(
@@ -31,37 +67,51 @@ class CartWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('car oil', style: AppStyles.bold16Black),
-                    Text('asdadasdsd', style: AppStyles.light16Gray),
+                    Text(widget.item.name!, style: AppStyles.bold16Black),
+                    Text(widget.item.description!,
+                        style: AppStyles.light16Gray),
                     SizedBox(
                       width: 300.w,
                       child: Row(
                         children: [
-                          Container(
-                            padding: EdgeInsets.all(4),
-                            color: AppColors.lightGrayColor,
-                            child: Icon(CupertinoIcons.minus, size: 20),
-                          ),
-                          SizedBox(width: 20.w),
-                          Text('1.5'),
-                          SizedBox(width: 20.w),
-                          Container(
-                            padding: EdgeInsets.all(4),
-                            color: AppColors.darkGreenColor,
-                            child: Icon(
-                              CupertinoIcons.add,
-                              color: AppColors.whiteColor,
-                              size: 20,
+                          GestureDetector(
+                            onTap: decrement,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              color: AppColors.lightGrayColor,
+                              child: const Icon(
+                                CupertinoIcons.minus,
+                                size: 20,
+                              ),
                             ),
                           ),
-                          Spacer(),
+                          SizedBox(width: 20.w),
+                          Text('$quantity',
+                              style: AppStyles.bold14Black),
+                          SizedBox(width: 20.w),
+                          GestureDetector(
+                            onTap: increment,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              color: AppColors.darkGreenColor,
+                              child: const Icon(
+                                CupertinoIcons.add,
+                                color: AppColors.whiteColor,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: 5.h,
                               horizontal: 20.w,
                             ),
                             color: AppColors.lightGrayColor,
-                            child: Text('132.', style: AppStyles.bold14Black),
+                            child: Text(
+                              '${quantity * double.parse(widget.itemDetails.price!)}',
+                              style: AppStyles.bold14Black,
+                            ),
                           ),
                         ],
                       ),
@@ -72,14 +122,13 @@ class CartWidget extends StatelessWidget {
             ],
           ),
         ),
-
         Align(
           alignment: Alignment.topLeft,
           child: Transform.translate(
             offset: const Offset(-8, -8),
             child: CircleAvatar(
               radius: 14,
-              backgroundColor: AppColors.lightGrayColor,
+              backgroundColor: AppColors.redColor,
               child: IconButton(
                 onPressed: () {
                   //todo: remove order from cart
@@ -87,7 +136,7 @@ class CartWidget extends StatelessWidget {
                 icon: Icon(
                   CupertinoIcons.xmark,
                   size: 14,
-                  color: AppColors.grayColor,
+                  color: AppColors.whiteColor,
                 ),
               ),
             ),

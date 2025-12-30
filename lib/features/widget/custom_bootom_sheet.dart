@@ -34,6 +34,7 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   bool checkPrice = false;
   int minPrice = 100;
   bool checkImage = false ;
+  String imageUrl = '';
   final ImagePicker _picker = ImagePicker();
   final cloudinary = CloudinaryPublic(
     'dd2gpv170',
@@ -207,6 +208,7 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                         final addItemToCartRequest = AddItemToCartRequest(
                           estimatedQuantity: quantity,
                           itemId: widget.item.id,
+                          image: imageUrl,
                         );
                         context.read<OrderViewModel>().addItemToCart(addItemToCartRequest);
                         Navigator.pop(context);
@@ -241,10 +243,16 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
     try {
       CloudinaryResponse response = await cloudinary.uploadFile(
         CloudinaryFile.fromFile(
-            file.path, resourceType: CloudinaryResourceType.Image),
+          file.path,
+          resourceType: CloudinaryResourceType.Image,
+        ),
       );
-      print('تم رفع الصورة بنجاح: ${response.secureUrl}');
-      checkImage = true;
+
+      setState(() {
+        checkImage = true;
+        imageUrl = response.secureUrl;
+      });
+
       context.read<OrderViewModel>().addImage(response.secureUrl);
 
     } on CloudinaryException catch (e) {

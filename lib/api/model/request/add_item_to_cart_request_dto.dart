@@ -8,9 +8,13 @@ class AddItemToCartRequestDto {
   final int? itemId;
   @JsonKey(name: "estimated_quantity")
   final int? estimatedQuantity;
+  @JsonKey(name: "image")
+  final String? image;
+
 
   AddItemToCartRequestDto ({
     this.itemId,
+    this.image,
     this.estimatedQuantity,
   });
 

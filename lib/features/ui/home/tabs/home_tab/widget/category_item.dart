@@ -71,12 +71,6 @@ class CategoryItem extends StatelessWidget {
                   IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      // final file = await assetToFile(image);
-                      // context.read<OrderViewModel>().addImage(image: file);
-                      // context.read<OrderViewModel>().changeOrderName(title);
-                      // context.read<OrderViewModel>().changeSelectOption(
-                      //     category);
-                      // Navigator.of(context).pushNamed(AppRoutes.addTabRoute);
                       showCustomBottomSheet(context);
                     },
                     icon: CircleAvatar(
@@ -97,19 +91,7 @@ class CategoryItem extends StatelessWidget {
     );
   }
 
-  // Future<File> assetToFile(String assetPath) async {
-  //   ByteData data = await rootBundle.load(assetPath);
-  //   Uint8List bytes = data.buffer.asUint8List();
-  //
-  //   final tempDir = await getTemporaryDirectory();
-  //   final file = File('${tempDir.path}/${assetPath
-  //       .split('/')
-  //       .last}');
-  //
-  //   await file.writeAsBytes(bytes);
-  //
-  //   return file;
-  // }
+
 
   void showCustomBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -123,7 +105,3 @@ class CategoryItem extends StatelessWidget {
     );
   }
 }
-/*
-'بالوزن ${double.parse(item.price!).toInt()} جنيها/كيلو',
-'بالقطعة ${double.parse(item.price!).toInt()} جنيها/القطعة',
- */

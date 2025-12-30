@@ -18,9 +18,10 @@ extension LoginResponseMappers on LoginResponseDto {
 extension RegisterResponseMappers on RegisterResponseDto {
   RegisterResponse toRegisterResponse() {
     return RegisterResponse(
-      user: user,
+      user: user?.toUser(),
       token: token,
       message: message,
+      status: status,
     );
   }
 }

@@ -38,15 +38,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocListener<RegisterViewModel, RegisterState>(
       listener: (context, state) {
         if (state is RegisterLoading) {
-          DialogUtils.showLoading(context: context, message: 'Loding...');
+          DialogUtils.showLoading(context: context, message: 'تحميل...');
         } else if (state is RegisterError) {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(
-              context: context, message: state.errorMessage);
+              context: context, message: state.errorMessage,
+          posActionName: 'OK');
         } else if (state is RegisterSuccess) {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(
-              context: context, message: 'register Successfully',
+              context: context, message: 'تم التسجيل بنجاح',
               posActionName: 'Ok',
               posAction: () {
                 Navigator.pushReplacementNamed(context, AppRoutes.homeRoute);

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:re_save_app/domain/entities/request/update_item_request.dart';
 import 'package:re_save_app/features/ui/home/tabs/cart_tab/cubit/cart_state.dart';
 import 'package:re_save_app/features/ui/home/tabs/cart_tab/cubit/cart_view_model.dart';
 
@@ -38,6 +39,13 @@ class _CartWidgetState extends State<CartWidget> {
     setState(() {
       quantity++;
     });
+    final updateItemRequest = UpdateItemRequest(
+      estimatedQuantity: quantity++,
+    );
+
+    context
+        .read<CartViewModel>()
+        .updateItem(updateItemRequest, widget.itemDetails.id!);
   }
 
   void decrement() {
@@ -45,8 +53,16 @@ class _CartWidgetState extends State<CartWidget> {
       setState(() {
         quantity--;
       });
+      final updateItemRequest = UpdateItemRequest(
+        estimatedQuantity: quantity,
+      );
+
+      context
+          .read<CartViewModel>()
+          .updateItem(updateItemRequest, widget.itemDetails.id!);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

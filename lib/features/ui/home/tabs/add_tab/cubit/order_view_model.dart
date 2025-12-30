@@ -1,84 +1,31 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:re_save_app/domain/entities/request/add_item_to_cart_request.dart';
+import 'package:re_save_app/domain/usecases/add_item_to_cart_use_case.dart';
 
 import 'order_states.dart';
 
-
+@injectable
 class OrderViewModel extends Cubit<OrderState> {
-  OrderViewModel() : super(OrderState.initial());
+  AddItemToCartUseCase addItemToCartUseCase;
+
+
+  OrderViewModel({required this.addItemToCartUseCase}) : super(OrderInitialize());
 
   final formKey = GlobalKey<FormState>();
+  List<String> cloudImageUrls = [];
 
 
-  void addImage({File? image, Iterable<File>? images}) {
-    //todo: add image ➕.
-    final updatedImages = List<File>.from(state.images);
-
-    if (image != null) {
-      updatedImages.add(image);
-    } else if (images != null) {
-      updatedImages.addAll(images);
-    }
-
-    emit(state.copyWith(
-      images: updatedImages,
-      imageError: false,
-    ));
+  void addImage(String url) {
+    cloudImageUrls.add(url);
+    emit(OrderSuccess());
+  }
+  void addItemToCart(AddItemToCartRequest addItemToCartRequest) async{
+    emit(OrderLoading());
+    final response = await addItemToCartUseCase.invoke(addItemToCartRequest);
+    cloudImageUrls.clear();
+    emit(OrderSuccess(messageSuccess: response.message));
   }
 
-
-  void removeImage(File image) {
-    //todo: remove image ❌.
-    final updatedImages = List<File>.from(state.images)
-      ..remove(image);
-
-    emit(state.copyWith(images: updatedImages));
-  }
-
-  void changeSelectOption(String option) {
-    //todo: change option 🔁.
-    emit(state.copyWith(selectedOption: option));
-  }
-
-
-  void changeOrderName(String name) {
-    //todo: change order name ✏️.
-    emit(state.copyWith(orderName: name));
-  }
-
-
-  void toggleCheck(bool value) {
-    //todo: Checkbox ☑️.
-    emit(state.copyWith(
-      isCheck: value,
-      checkError: false,
-    ));
-  }
-
-
-  bool submit() {
-    //todo: Validate + Submit ✅.
-    final isFormValid = formKey.currentState?.validate() ?? false;
-    final hasImages = state.images.isNotEmpty;
-    final isChecked = state.isCheck;
-
-    emit(state.copyWith(
-      imageError: !hasImages,
-      checkError: !isChecked,
-    ));
-    deleteOrder();
-
-    return isFormValid && hasImages && isChecked;
-  }
-
-  void deleteOrder() {
-    emit(state.copyWith(
-      images: [],
-      selectedOption: 'بلاستيك',
-      orderName: '',
-      isCheck: false,
-    ));
-  }
 }

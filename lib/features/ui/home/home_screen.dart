@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:re_save_app/core/utils/app_assets.dart';
@@ -92,9 +93,10 @@ class HomeScreen extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(AppRoutes.addTabRoute);
+              Navigator.of(context).pushNamed(AppRoutes.cartTabRoute);
             },
-            child: const Icon(Icons.add, size: 30, color: AppColors.whiteColor),
+            child: const Icon(CupertinoIcons.cart_fill, size: 25,
+                color: AppColors.whiteColor),
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,

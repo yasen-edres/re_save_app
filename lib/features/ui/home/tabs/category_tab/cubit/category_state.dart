@@ -1,69 +1,29 @@
-import '../../../../../../core/utils/app_assets.dart';
+import 'package:re_save_app/domain/entities/response/item.dart';
 
-class CategoryState {
-  final List<String> categories;
-  final List<String> categoriesImageList;
+abstract class CategoryState {}
+
+class CategoryInitialState extends CategoryState {}
+
+class CategoryLoadingState extends CategoryState {}
+
+class CategorySuccessState extends CategoryState {
+  final List<Item> items;
   final int tabIndex;
 
-  CategoryState(
-      {required this.tabIndex, required this.categoriesImageList, required this.categories});
+  CategorySuccessState({
+    required this.items,
+    required this.tabIndex,
+  });
 }
 
-class CategoryInitialState extends CategoryState {
-  CategoryInitialState() :super(
-    tabIndex: 0,
-    categories: [
-      'الكل',
-      'الالكترونيات',
-      'أدوات منزلية',
-      'معادن',
-      'بلاستيك',
-      'عبوات كرتون',
-      'ورقيات',
-      'قطع غيار',
-      'زيوت',
-      'اقمشه',
-    ],
-    categoriesImageList: [
-      AppAssets.laptop,
-      AppAssets.fridge,
-      AppAssets.iron,
-      AppAssets.plastic,
-      AppAssets.carton,
-      AppAssets.paper,
-      AppAssets.carBattery,
-      AppAssets.carOil,
-      AppAssets.cloths,
-    ],
-  );
+class CategoryErrorState extends CategoryState {
+  final String message;
 
+  CategoryErrorState(this.message);
 }
 
-class CategoryChangeTabIndex extends CategoryState {
-  CategoryChangeTabIndex(int newTabIndex) :super(
-    tabIndex: newTabIndex,
-    categories: [
-      'الكل',
-      'الالكترونيات',
-      'أدوات منزلية',
-      'معادن',
-      'بلاستيك',
-      'عبوات كرتون',
-      'ورقيات',
-      'قطع غيار',
-      'زيوت',
-      'اقمشه',
-    ],
-    categoriesImageList: [
-      AppAssets.laptop,
-      AppAssets.fridge,
-      AppAssets.iron,
-      AppAssets.plastic,
-      AppAssets.carton,
-      AppAssets.paper,
-      AppAssets.carBattery,
-      AppAssets.carOil,
-      AppAssets.cloths,
-    ],
-  );
+class CategoryChangeTabIndexState extends CategoryState {
+  final int tabIndex;
+
+  CategoryChangeTabIndexState(this.tabIndex);
 }

@@ -1,0 +1,170 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:re_save_app/core/utils/app_styles.dart';
+import 'package:re_save_app/domain/entities/response/get_cart_response.dart';
+import 'package:re_save_app/features/ui/home/tabs/cart_tab/cubit/cart_state.dart';
+import 'package:re_save_app/features/ui/home/tabs/cart_tab/cubit/cart_view_model.dart';
+import 'package:re_save_app/features/ui/home/tabs/cart_tab/widget/cart_widget.dart';
+import 'package:re_save_app/features/widget/custom_elevatedbutton.dart';
+import 'package:re_save_app/features/widget/custom_text_form_field.dart';
+
+import '../../../../../core/utils/app_colors.dart';
+
+class CartScreen extends StatefulWidget {
+  const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  TextEditingController addressController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<CartViewModel>().getCart();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<CartViewModel, CartState>(
+      builder: (context, state) {
+        List<Items> items = context.read<CartViewModel>().items;
+
+        if(state is CartLoading){
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }else if(state is CartError){
+          return Center(
+            child: Text(state.errorMessage,style: AppStyles.bold22Black,),
+          );
+        }else{
+          String? message =  context.read<CartViewModel>().cartMessage;
+          double totalPoints = 0.0;
+          for (var item in items) {
+            final price = double.parse(item.price ?? '0');
+            final quantity = double.parse(item.estimatedQuantity ?? '1');
+            totalPoints += price * quantity;
+          }
+          return Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(CupertinoIcons.back),
+            ),
+            actionsPadding: EdgeInsets.symmetric(horizontal: 20.w),
+            actions: [
+              CircleAvatar(
+                backgroundColor: AppColors.darkGreenColor,
+                child: Icon(CupertinoIcons.qrcode, color: AppColors.whiteColor),
+              ),
+            ],
+          ),
+          body: message == 'Cart has items'?
+          Column(
+            children: [
+              Expanded(
+                flex: 3,
+                child: ListView.builder(
+                  padding: EdgeInsets.fromLTRB(20.w, 30.h, 20.w, 30.h),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 16.h),
+                      child: CartWidget(
+                        item: items[index].item!,
+                        itemDetails: items[index],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 20.h,
+                    left: 20.w,
+                    right: 20.w,
+                    bottom: 30.h,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('السعر الإجمالي', style: AppStyles.light16Gray),
+                          Text('${totalPoints}نقطة', style: AppStyles.light16Gray),
+                        ],
+                      ),
+                      CustomElevatedButton(
+                        text: 'أضف عنوانك',
+                        onPressed: () {
+                          showBottomSheet(context);
+                        },
+                        backgroundColor: AppColors.darkGreenColor,
+                        textStyle: AppStyles.bold24White,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ):
+          Center(
+              child: Text('لم يتم العثور على طلبات',style: AppStyles.bold22Black,)
+          ),
+        );
+        }
+      },
+    );
+  }
+   showBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.w,
+            vertical: 30.h
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('أضف عنوانك',style: AppStyles.bold20Black,),
+              CustomTextFormField(
+                filledColor: AppColors.whiteColor,
+                controller: addressController,
+                hintText: 'أضف عنوانك',
+              ),
+              addressController.text.trim() == ''?
+                  Text('يجب إضافة عنوان',style: AppStyles.bold16Red,):
+                  SizedBox.shrink(),
+              SizedBox(height: 30.h,),
+              CustomElevatedButton(
+                text: 'اتمام الطلب',
+                onPressed: () async {
+                  if (addressController.text.trim() != '') {
+                    Navigator.pop(context);
+                    context.read<CartViewModel>().confirm(addressController.text);
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  }
+                },
+                backgroundColor: AppColors.darkGreenColor,
+                textStyle: AppStyles.bold24White,
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+}

@@ -1,48 +1,44 @@
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_dto.g.dart';
-
 @JsonSerializable()
 class UserDto {
-  @JsonKey(name: "id")
-  final int? id;
   @JsonKey(name: "name")
   final String? name;
   @JsonKey(name: "email")
   final String? email;
   @JsonKey(name: "phone")
   final dynamic? phone;
-  @JsonKey(name: "email_verified_at")
-  final dynamic? emailVerifiedAt;
+  @JsonKey(name: "image")
+  final String? image;
   @JsonKey(name: "points")
   final int? points;
   @JsonKey(name: "level")
   final String? level;
-  @JsonKey(name: "created_at")
-  final String? createdAt;
   @JsonKey(name: "updated_at")
   final String? updatedAt;
-  @JsonKey(name: "role")
-  final String? role;
-  @JsonKey(name: "image")
-  final dynamic? image;
+  @JsonKey(name: "created_at")
+  final String? createdAt;
+  @JsonKey(name: "id")
+  final int? id;
 
-  UserDto({
-    this.id,
+  UserDto ({
     this.name,
     this.email,
     this.phone,
-    this.emailVerifiedAt,
+    this.image,
     this.points,
     this.level,
-    this.createdAt,
     this.updatedAt,
-    this.role,
-    this.image,
+    this.createdAt,
+    this.id,
   });
 
-  factory UserDto.fromJson(Map<String, dynamic> json) =>
-      _$UserDtoFromJson(json);
+  factory UserDto.fromJson(Map<String, dynamic> json) {
+    return _$UserDtoFromJson(json);
+  }
 
-  Map<String, dynamic> toJson() => _$UserDtoToJson(this);
+  Map<String, dynamic> toJson() {
+    return _$UserDtoToJson(this);
+  }
 }

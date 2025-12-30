@@ -7,29 +7,25 @@ part of 'user_dto.dart';
 // **************************************************************************
 
 UserDto _$UserDtoFromJson(Map<String, dynamic> json) => UserDto(
-  id: (json['id'] as num?)?.toInt(),
   name: json['name'] as String?,
   email: json['email'] as String?,
   phone: json['phone'],
-  emailVerifiedAt: json['email_verified_at'],
+  image: json['image'] as String?,
   points: (json['points'] as num?)?.toInt(),
   level: json['level'] as String?,
-  createdAt: json['created_at'] as String?,
   updatedAt: json['updated_at'] as String?,
-  role: json['role'] as String?,
-  image: json['image'],
+  createdAt: json['created_at'] as String?,
+  id: (json['id'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
-  'id': instance.id,
   'name': instance.name,
   'email': instance.email,
   'phone': instance.phone,
-  'email_verified_at': instance.emailVerifiedAt,
+  'image': instance.image,
   'points': instance.points,
   'level': instance.level,
-  'created_at': instance.createdAt,
   'updated_at': instance.updatedAt,
-  'role': instance.role,
-  'image': instance.image,
+  'created_at': instance.createdAt,
+  'id': instance.id,
 };

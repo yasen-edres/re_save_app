@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:re_save_app/domain/entities/request/update_item_request.dart';
 import 'package:re_save_app/domain/entities/response/get_cart_response.dart';
 import 'package:re_save_app/domain/usecases/get_cart_use_case.dart';
 import 'package:re_save_app/domain/usecases/remove_item_use_case.dart';
+import 'package:re_save_app/domain/usecases/update_item_use_case.dart';
 import 'package:re_save_app/features/ui/home/tabs/cart_tab/cubit/cart_state.dart';
 
 import '../../../../../../core/exceptions/app_exception.dart';
@@ -12,8 +14,9 @@ import '../../../../../../core/exceptions/app_exception.dart';
 class CartViewModel extends Cubit<CartState>{
   final GetCartUseCase getCartUseCase;
   RemoveItemUseCase removeItemUseCase;
+  UpdateItemUseCase updateItemUseCase;
   List<Items> items = [];
-  CartViewModel({required this.getCartUseCase, required this.removeItemUseCase}):super(CartInitialize());
+  CartViewModel({required this.getCartUseCase, required this.removeItemUseCase, required this.updateItemUseCase}):super(CartInitialize());
 
   void getCart() async{
     emit(CartLoading());
@@ -37,8 +40,21 @@ class CartViewModel extends Cubit<CartState>{
       final message = (e.error is AppException)
           ? (e.error as AppException).errorMessage
           : 'unExpected Error occurred';
-      emit(CartError(errorMessage: e.toString()));
+      emit(CartError(errorMessage: message));
     }
-
+  }
+  void updateItem(UpdateItemRequest updateItemRequest,int itemId) async {
+    emit(CartLoading());
+    try {
+      await updateItemUseCase.invoke(updateItemRequest, itemId);
+      emit(CartSuccess());
+    }  on AppException catch (e) {
+      emit(CartError(errorMessage: e.toString()));
+    } on DioError catch (e) {
+      final message = (e.error is AppException)
+          ? (e.error as AppException).errorMessage
+          : 'unExpected Error occurred';
+      emit(CartError(errorMessage: message));
+    }
   }
 }

@@ -23,6 +23,8 @@ import '../api/data_sources/remote/cart/get_cart_remote_data_source_impl.dart'
     as _i865;
 import '../api/data_sources/remote/cart/remove_item_remote_data_source_impl.dart'
     as _i94;
+import '../api/data_sources/remote/cart/update_item_remote_data_source_impl.dart'
+    as _i304;
 import '../api/data_sources/remote/item/get_items_remote_data_source_impl.dart'
     as _i517;
 import '../api/data_sources/remote/profile/change_password_remote_data_source_impl.dart'
@@ -41,6 +43,8 @@ import '../data/data_sources/remote/get_cart_remote_data_source.dart' as _i78;
 import '../data/data_sources/remote/get_items_remote_data_source.dart' as _i919;
 import '../data/data_sources/remote/remove_item_remote_data_source.dart'
     as _i164;
+import '../data/data_sources/remote/update_item_remote_data_source.dart'
+    as _i1030;
 import '../data/data_sources/remote/update_profile_remote_data_source.dart'
     as _i491;
 import '../data/data_sources/remote/user_data_remote_data_source.dart' as _i893;
@@ -50,6 +54,7 @@ import '../data/repositories/change_password_repository_impl.dart' as _i194;
 import '../data/repositories/get_cart_repository_impl.dart' as _i334;
 import '../data/repositories/get_items_repository_impl.dart' as _i1052;
 import '../data/repositories/remove_item_repository_impl.dart' as _i824;
+import '../data/repositories/update_item_repository_impl.dart' as _i842;
 import '../data/repositories/update_profile_repository_impl.dart' as _i491;
 import '../data/repositories/user_data_repository_impl.dart' as _i392;
 import '../domain/repositories/add_item_to_cart_repository.dart' as _i777;
@@ -58,6 +63,7 @@ import '../domain/repositories/change_password_repository.dart' as _i682;
 import '../domain/repositories/get_cart_repository.dart' as _i443;
 import '../domain/repositories/get_items_repository.dart' as _i380;
 import '../domain/repositories/remove_item_respository.dart' as _i242;
+import '../domain/repositories/update_item_repository.dart' as _i825;
 import '../domain/repositories/update_profile_repository.dart' as _i56;
 import '../domain/repositories/user_data_repository.dart' as _i181;
 import '../domain/usecases/add_item_to_cart_use_case.dart' as _i361;
@@ -67,6 +73,7 @@ import '../domain/usecases/get_items_use_case.dart' as _i336;
 import '../domain/usecases/login_use_case.dart' as _i646;
 import '../domain/usecases/register_use_case.dart' as _i744;
 import '../domain/usecases/remove_item_use_case.dart' as _i636;
+import '../domain/usecases/update_item_use_case.dart' as _i319;
 import '../domain/usecases/update_profile_use_case.dart' as _i68;
 import '../domain/usecases/user_data_use_case.dart' as _i897;
 import '../features/ui/auth/login/cubit/login_view_model.dart' as _i1040;
@@ -110,6 +117,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i574.ChangePasswordRemoteDataSource>(
       () => _i346.ChangePasswordRemoteDataSourceImpl(
+        apiServices: gh<_i124.ApiServices>(),
+      ),
+    );
+    gh.factory<_i1030.UpdateItemRemoteDataSource>(
+      () => _i304.UpdateItemRemoteDataSourceImpl(
         apiServices: gh<_i124.ApiServices>(),
       ),
     );
@@ -169,6 +181,11 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i574.ChangePasswordRemoteDataSource>(),
       ),
     );
+    gh.factory<_i825.UpdateItemRepository>(
+      () => _i842.UpdateItemRepositoryImpl(
+        updateItemRemoteDataSource: gh<_i1030.UpdateItemRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i482.ChangePasswordUseCase>(
       () => _i482.ChangePasswordUseCase(
         changePasswordRepository: gh<_i682.ChangePasswordRepository>(),
@@ -217,10 +234,16 @@ extension GetItInjectableX on _i174.GetIt {
         getCartRepository: gh<_i443.GetCartRepository>(),
       ),
     );
+    gh.factory<_i319.UpdateItemUseCase>(
+      () => _i319.UpdateItemUseCase(
+        updateItemRepository: gh<_i825.UpdateItemRepository>(),
+      ),
+    );
     gh.factory<_i548.CartViewModel>(
       () => _i548.CartViewModel(
         getCartUseCase: gh<_i121.GetCartUseCase>(),
         removeItemUseCase: gh<_i636.RemoveItemUseCase>(),
+        updateItemUseCase: gh<_i319.UpdateItemUseCase>(),
       ),
     );
     gh.factory<_i897.UserDataUseCase>(

@@ -8,6 +8,7 @@ extension GetCartMappers on GetCartResponseDto{
     return GetCartResponse(
       status: status,
       data: data?.toData(),
+      message: message
     );
   }
 }

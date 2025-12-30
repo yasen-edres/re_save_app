@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
     return BlocListener<LoginViewModel, LoginState>(
       listener: (context, state) {
         if (state is LoginLoading) {
-          DialogUtils.showLoading(context: context, message: 'Loding...');
+          DialogUtils.showLoading(context: context, message: 'تحميل...');
         } else if (state is LoginError) {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
         } else if (state is LoginSuccess) {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(
-              context: context, message: 'Login Successfully',
+              context: context, message: 'تم تسجيل الدخول بنجاح',
               posActionName: 'Ok',
               posAction: () {
                 Navigator.pushReplacementNamed(context, AppRoutes.homeRoute);

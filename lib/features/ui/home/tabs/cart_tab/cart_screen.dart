@@ -34,6 +34,7 @@ class _CartScreenState extends State<CartScreen> {
     return BlocBuilder<CartViewModel, CartState>(
       builder: (context, state) {
         List<Items> items = context.read<CartViewModel>().items;
+
         if(state is CartLoading){
           return Center(
             child: CircularProgressIndicator(),
@@ -43,7 +44,9 @@ class _CartScreenState extends State<CartScreen> {
             child: Text(state.errorMessage,style: AppStyles.bold22Black,),
           );
         }else{
-        return Scaffold(
+          String? message =  context.read<CartViewModel>().cartMessage;
+          print('this is message :$message');///why not print when make confirm and open screen agin
+          return Scaffold(
           appBar: AppBar(
             leading: IconButton(
               onPressed: () {
@@ -59,7 +62,7 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ],
           ),
-          body: items.isNotEmpty?
+          body: message == 'Cart has items'?
           Column(
             children: [
               Expanded(
@@ -142,15 +145,16 @@ class _CartScreenState extends State<CartScreen> {
                   SizedBox.shrink(),
               SizedBox(height: 30.h,),
               CustomElevatedButton(
-                  text: 'اتمام الطلب',
-                  onPressed: (){
-                    if(addressController.text.trim() != '' ){
-                      context.read<CartViewModel>().confirm(addressController.text);
-                      Navigator.popUntil(context, (route) => route.isFirst);                    }
-
-                  },
-                  backgroundColor: AppColors.darkGreenColor,
-                  textStyle: AppStyles.bold24White,
+                text: 'اتمام الطلب',
+                onPressed: () async {
+                  if (addressController.text.trim() != '') {
+                    Navigator.pop(context);
+                    context.read<CartViewModel>().confirm(addressController.text);
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  }
+                },
+                backgroundColor: AppColors.darkGreenColor,
+                textStyle: AppStyles.bold24White,
               )
             ],
           ),

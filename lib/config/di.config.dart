@@ -19,6 +19,8 @@ import '../api/data_sources/remote/auth/auth_remote_data_source_impl.dart'
     as _i983;
 import '../api/data_sources/remote/cart/add_item_to_cart_remote_data_source_impl.dart'
     as _i105;
+import '../api/data_sources/remote/cart/confirm_remote_data_source_impl.dart'
+    as _i395;
 import '../api/data_sources/remote/cart/get_cart_remote_data_source_impl.dart'
     as _i865;
 import '../api/data_sources/remote/cart/remove_item_remote_data_source_impl.dart'
@@ -39,6 +41,7 @@ import '../data/data_sources/remote/add_item_to_cart_remote_data_source.dart'
 import '../data/data_sources/remote/auth_remote_data_source.dart' as _i354;
 import '../data/data_sources/remote/change_password_remote_data_source.dart'
     as _i574;
+import '../data/data_sources/remote/confirm_remote_dtata_source.dart' as _i283;
 import '../data/data_sources/remote/get_cart_remote_data_source.dart' as _i78;
 import '../data/data_sources/remote/get_items_remote_data_source.dart' as _i919;
 import '../data/data_sources/remote/remove_item_remote_data_source.dart'
@@ -51,6 +54,7 @@ import '../data/data_sources/remote/user_data_remote_data_source.dart' as _i893;
 import '../data/repositories/add_item_to_cart_repository_impl.dart' as _i854;
 import '../data/repositories/auth_repository_impl.dart' as _i74;
 import '../data/repositories/change_password_repository_impl.dart' as _i194;
+import '../data/repositories/confirm_repository_impl.dart' as _i861;
 import '../data/repositories/get_cart_repository_impl.dart' as _i334;
 import '../data/repositories/get_items_repository_impl.dart' as _i1052;
 import '../data/repositories/remove_item_repository_impl.dart' as _i824;
@@ -60,6 +64,7 @@ import '../data/repositories/user_data_repository_impl.dart' as _i392;
 import '../domain/repositories/add_item_to_cart_repository.dart' as _i777;
 import '../domain/repositories/auth_repository.dart' as _i800;
 import '../domain/repositories/change_password_repository.dart' as _i682;
+import '../domain/repositories/confirm_repository.dart' as _i717;
 import '../domain/repositories/get_cart_repository.dart' as _i443;
 import '../domain/repositories/get_items_repository.dart' as _i380;
 import '../domain/repositories/remove_item_respository.dart' as _i242;
@@ -68,6 +73,7 @@ import '../domain/repositories/update_profile_repository.dart' as _i56;
 import '../domain/repositories/user_data_repository.dart' as _i181;
 import '../domain/usecases/add_item_to_cart_use_case.dart' as _i361;
 import '../domain/usecases/change_password_use_case.dart' as _i482;
+import '../domain/usecases/confirm_use_cse.dart' as _i735;
 import '../domain/usecases/get_cart_use_case.dart' as _i121;
 import '../domain/usecases/get_items_use_case.dart' as _i336;
 import '../domain/usecases/login_use_case.dart' as _i646;
@@ -115,6 +121,16 @@ extension GetItInjectableX on _i174.GetIt {
         apiServices: gh<_i124.ApiServices>(),
       ),
     );
+    gh.factory<_i283.ConfirmRemoteDataSource>(
+      () => _i395.ConfirmRemoteDataSourceImpl(
+        apiServices: gh<_i124.ApiServices>(),
+      ),
+    );
+    gh.factory<_i717.ConfirmRepository>(
+      () => _i861.ConfirmRepositoryImpl(
+        confirmRemoteDataSource: gh<_i283.ConfirmRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i574.ChangePasswordRemoteDataSource>(
       () => _i346.ChangePasswordRemoteDataSourceImpl(
         apiServices: gh<_i124.ApiServices>(),
@@ -158,6 +174,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i443.GetCartRepository>(
       () => _i334.GetCartRepositoryImpl(
         getCartRemoteDataSource: gh<_i78.GetCartRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i735.ConfirmUseCase>(
+      () => _i735.ConfirmUseCase(
+        confirmRepository: gh<_i717.ConfirmRepository>(),
       ),
     );
     gh.factory<_i242.RemoveItemRepository>(
@@ -239,13 +260,6 @@ extension GetItInjectableX on _i174.GetIt {
         updateItemRepository: gh<_i825.UpdateItemRepository>(),
       ),
     );
-    gh.factory<_i548.CartViewModel>(
-      () => _i548.CartViewModel(
-        getCartUseCase: gh<_i121.GetCartUseCase>(),
-        removeItemUseCase: gh<_i636.RemoveItemUseCase>(),
-        updateItemUseCase: gh<_i319.UpdateItemUseCase>(),
-      ),
-    );
     gh.factory<_i897.UserDataUseCase>(
       () => _i897.UserDataUseCase(
         userDataRepository: gh<_i181.UserDataRepository>(),
@@ -254,6 +268,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i68.UpdateProfileUseCase>(
       () => _i68.UpdateProfileUseCase(
         updateProfileRepository: gh<_i56.UpdateProfileRepository>(),
+      ),
+    );
+    gh.factory<_i548.CartViewModel>(
+      () => _i548.CartViewModel(
+        getCartUseCase: gh<_i121.GetCartUseCase>(),
+        removeItemUseCase: gh<_i636.RemoveItemUseCase>(),
+        updateItemUseCase: gh<_i319.UpdateItemUseCase>(),
+        confirmUseCase: gh<_i735.ConfirmUseCase>(),
       ),
     );
     gh.factory<_i87.CategoryViewModel>(

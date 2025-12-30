@@ -20,18 +20,16 @@ class CartViewModel extends Cubit<CartState>{
   ConfirmUseCase confirmUseCase;
   List<Items> items = [];
   String? cartMessage;
-  Data? data;
   CartViewModel({required this.getCartUseCase, required this.removeItemUseCase, required this.updateItemUseCase, required this.confirmUseCase}):super(CartInitialize());
 
-  void getCart() async{
+  void getCart() async {
     emit(CartLoading());
-    try{
+    try {
       final response = await getCartUseCase.getCart();
-      items = response.data!.items!;
-      data = response.data;
+      items = response.data?.items ?? [];
       cartMessage = response.message;
       emit(CartSuccess());
-    }catch(e){
+    } catch (e) {
       emit(CartError(errorMessage: e.toString()));
     }
   }
@@ -64,13 +62,20 @@ class CartViewModel extends Cubit<CartState>{
       emit(CartError(errorMessage: message));
     }
   }
-  void confirm(String address)async{
+  void confirm(String address) async {
     emit(CartLoading());
-    final confirmRequest =ConfirmRequest(
-      address: address
-    );
-    await confirmUseCase.invoke(confirmRequest);
-    emit(CartSuccess());
-
+    try {
+      final confirmRequest = ConfirmRequest(address: address);
+      await confirmUseCase.invoke(confirmRequest);
+      getCart();
+    } on AppException catch (e) {
+      emit(CartError(errorMessage: e.toString()));
+    } on DioError catch (e) {
+      final message = (e.error is AppException)
+          ? (e.error as AppException).errorMessage
+          : 'unExpected Error occurred';
+      emit(CartError(errorMessage: message));
+    }
   }
+
 }

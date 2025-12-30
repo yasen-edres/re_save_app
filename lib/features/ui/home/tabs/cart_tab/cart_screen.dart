@@ -45,7 +45,12 @@ class _CartScreenState extends State<CartScreen> {
           );
         }else{
           String? message =  context.read<CartViewModel>().cartMessage;
-          print('this is message :$message');///why not print when make confirm and open screen agin
+          double totalPoints = 0.0;
+          for (var item in items) {
+            final price = double.parse(item.price ?? '0');
+            final quantity = double.parse(item.estimatedQuantity ?? '1');
+            totalPoints += price * quantity;
+          }
           return Scaffold(
           appBar: AppBar(
             leading: IconButton(
@@ -96,7 +101,7 @@ class _CartScreenState extends State<CartScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('السعر الإجمالي', style: AppStyles.light16Gray),
-                          Text('100.5جنيه', style: AppStyles.light16Gray),
+                          Text('${totalPoints}نقطة', style: AppStyles.light16Gray),
                         ],
                       ),
                       CustomElevatedButton(

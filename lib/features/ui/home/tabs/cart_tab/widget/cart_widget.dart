@@ -35,16 +35,15 @@ class _CartWidgetState extends State<CartWidget> {
   }
 
   void increment() {
-    setState(() {
+
       quantity++;
-    });
+
     final updateItemRequest = UpdateItemRequest(
-      estimatedQuantity: quantity++,
+      estimatedQuantity: quantity,
     );
 
-    context
-        .read<CartViewModel>()
-        .updateItem(updateItemRequest, widget.itemDetails.id!);
+    context.read<CartViewModel>().updateItem(updateItemRequest, widget.itemDetails.id!);
+
   }
 
   void decrement() {
@@ -59,6 +58,7 @@ class _CartWidgetState extends State<CartWidget> {
       context
           .read<CartViewModel>()
           .updateItem(updateItemRequest, widget.itemDetails.id!);
+      context.read<CartViewModel>().getCart();
     }
   }
 

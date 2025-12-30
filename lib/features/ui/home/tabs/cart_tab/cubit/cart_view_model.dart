@@ -52,7 +52,9 @@ class CartViewModel extends Cubit<CartState>{
     emit(CartLoading());
     try {
       await updateItemUseCase.invoke(updateItemRequest, itemId);
+
       emit(CartSuccess());
+      getCart();
     }  on AppException catch (e) {
       emit(CartError(errorMessage: e.toString()));
     } on DioError catch (e) {

@@ -7,7 +7,8 @@ extension AddItemToCartRequestMappers on AddItemToCartRequest{
   AddItemToCartRequestDto toAddItemToCartRequestDto(){
     return AddItemToCartRequestDto(
       estimatedQuantity: estimatedQuantity,
-      itemId: itemId
+      itemId: itemId,
+      image: image,
     );
   }
 }

@@ -294,7 +294,7 @@ class _HomeTabState extends State<HomeTab> {
                     SizedBox(
                       height: 730.h,
                       child: GridView.builder(
-                        itemCount: electronicDevicesDescription.length,
+                        itemCount: 4,
                         physics: NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,

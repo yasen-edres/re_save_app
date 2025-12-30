@@ -8,6 +8,7 @@ import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/features/ui/auth/login/cubit/login_view_model.dart';
 import 'package:re_save_app/features/ui/cubit/profile_state.dart';
 import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
+import 'package:re_save_app/features/ui/home/cubit/home_view_model.dart';
 import 'package:re_save_app/features/widget/custom_setting_bottom.dart';
 
 import '../../../../../core/utils/app_styles.dart';
@@ -175,8 +176,7 @@ class _ProfileTabState extends State<ProfileTab> {
                         children: [
                           CustomSettingBottom(
                               onPressed: () {
-                                Navigator.of(context).pushNamed(
-                                    AppRoutes.ordersPageRoute);
+
                               },
                               title: 'طلباتي', icon: CupertinoIcons.cart),
                           CustomSettingBottom(
@@ -262,6 +262,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     IconButton(
                       onPressed: () {
                         context.read<LoginViewModel>().logout();
+                        context.read<HomeViewModel>().changeSelectedIndex(0);
                         Navigator.of(context).pushNamedAndRemoveUntil(
                             AppRoutes.loginRoute, (route) => false);
                       },

@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:re_save_app/domain/entities/request/confirm_request.dart';
 import 'package:re_save_app/domain/entities/request/update_item_request.dart';
 import 'package:re_save_app/domain/entities/response/get_cart_response.dart';
+import 'package:re_save_app/domain/usecases/confirm_use_cse.dart';
 import 'package:re_save_app/domain/usecases/get_cart_use_case.dart';
 import 'package:re_save_app/domain/usecases/remove_item_use_case.dart';
 import 'package:re_save_app/domain/usecases/update_item_use_case.dart';
@@ -15,14 +17,19 @@ class CartViewModel extends Cubit<CartState>{
   final GetCartUseCase getCartUseCase;
   RemoveItemUseCase removeItemUseCase;
   UpdateItemUseCase updateItemUseCase;
+  ConfirmUseCase confirmUseCase;
   List<Items> items = [];
-  CartViewModel({required this.getCartUseCase, required this.removeItemUseCase, required this.updateItemUseCase}):super(CartInitialize());
+  String? cartMessage;
+  Data? data;
+  CartViewModel({required this.getCartUseCase, required this.removeItemUseCase, required this.updateItemUseCase, required this.confirmUseCase}):super(CartInitialize());
 
   void getCart() async{
     emit(CartLoading());
     try{
       final response = await getCartUseCase.getCart();
       items = response.data!.items!;
+      data = response.data;
+      cartMessage = response.message;
       emit(CartSuccess());
     }catch(e){
       emit(CartError(errorMessage: e.toString()));
@@ -31,7 +38,7 @@ class CartViewModel extends Cubit<CartState>{
   void removeItem(int itemId)async{
     emit(CartLoading());
     try{
-      await removeItemUseCase.invoke(itemId);
+       await removeItemUseCase.invoke(itemId);
       emit(CartSuccess());
       getCart();
     } on AppException catch (e) {
@@ -56,5 +63,14 @@ class CartViewModel extends Cubit<CartState>{
           : 'unExpected Error occurred';
       emit(CartError(errorMessage: message));
     }
+  }
+  void confirm(String address)async{
+    emit(CartLoading());
+    final confirmRequest =ConfirmRequest(
+      address: address
+    );
+    await confirmUseCase.invoke(confirmRequest);
+    emit(CartSuccess());
+
   }
 }

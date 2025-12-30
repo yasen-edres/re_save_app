@@ -12,10 +12,15 @@ GetCartResponseDto _$GetCartResponseDtoFromJson(Map<String, dynamic> json) =>
       data: json['data'] == null
           ? null
           : DataDto.fromJson(json['data'] as Map<String, dynamic>),
+      message: json['message'] as String?,
     );
 
 Map<String, dynamic> _$GetCartResponseDtoToJson(GetCartResponseDto instance) =>
-    <String, dynamic>{'status': instance.status, 'data': instance.data};
+    <String, dynamic>{
+      'status': instance.status,
+      'data': instance.data,
+      'message': instance.message,
+    };
 
 DataDto _$DataDtoFromJson(Map<String, dynamic> json) => DataDto(
   id: (json['id'] as num?)?.toInt(),

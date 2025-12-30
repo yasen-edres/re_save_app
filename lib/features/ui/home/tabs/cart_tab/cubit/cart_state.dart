@@ -5,4 +5,6 @@ class CartError extends CartState{
   String errorMessage;
   CartError({required this.errorMessage});
 }
-class CartSuccess extends CartState{}
+class CartSuccess extends CartState{
+
+}

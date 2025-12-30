@@ -8,6 +8,7 @@ import 'package:re_save_app/features/ui/home/tabs/cart_tab/cubit/cart_state.dart
 import 'package:re_save_app/features/ui/home/tabs/cart_tab/cubit/cart_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/cart_tab/widget/cart_widget.dart';
 import 'package:re_save_app/features/widget/custom_elevatedbutton.dart';
+import 'package:re_save_app/features/widget/custom_text_form_field.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 
@@ -19,6 +20,8 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  TextEditingController addressController = TextEditingController();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -94,8 +97,10 @@ class _CartScreenState extends State<CartScreen> {
                         ],
                       ),
                       CustomElevatedButton(
-                        text: 'اتمام الطلب',
-                        onPressed: () {},
+                        text: 'أضف عنوانك',
+                        onPressed: () {
+                          showBottomSheet(context);
+                        },
                         backgroundColor: AppColors.darkGreenColor,
                         textStyle: AppStyles.bold24White,
                       ),
@@ -110,6 +115,46 @@ class _CartScreenState extends State<CartScreen> {
           ),
         );
         }
+      },
+    );
+  }
+   showBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.w,
+            vertical: 30.h
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('أضف عنوانك',style: AppStyles.bold20Black,),
+              CustomTextFormField(
+                filledColor: AppColors.whiteColor,
+                controller: addressController,
+                hintText: 'أضف عنوانك',
+              ),
+              addressController.text.trim() == ''?
+                  Text('يجب إضافة عنوان',style: AppStyles.bold16Red,):
+                  SizedBox.shrink(),
+              SizedBox(height: 30.h,),
+              CustomElevatedButton(
+                  text: 'اتمام الطلب',
+                  onPressed: (){
+                    if(addressController.text.trim() != '' ){
+                      context.read<CartViewModel>().confirm(addressController.text);
+                      Navigator.popUntil(context, (route) => route.isFirst);                    }
+
+                  },
+                  backgroundColor: AppColors.darkGreenColor,
+                  textStyle: AppStyles.bold24White,
+              )
+            ],
+          ),
+        );
       },
     );
   }

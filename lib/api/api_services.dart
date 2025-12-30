@@ -5,6 +5,7 @@ import 'package:re_save_app/api/model/request/login_request_dto.dart';
 import 'package:re_save_app/api/model/request/update_item_request_dto.dart';
 import 'package:re_save_app/api/model/response/add_item_to_cart_response_dto.dart';
 import 'package:re_save_app/api/model/response/change_password_response_dto.dart';
+import 'package:re_save_app/api/model/response/confirm_response_dto.dart';
 import 'package:re_save_app/api/model/response/get_cart_response_dto.dart';
 import 'package:re_save_app/api/model/response/get_items_response_dto.dart';
 import 'package:re_save_app/api/model/response/register_response_dto.dart';
@@ -13,6 +14,7 @@ import 'package:re_save_app/api/model/response/update_item_response_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/request/change_password_request_dto.dart';
+import 'model/request/confirm_request_dto.dart';
 import 'model/request/register_request_dto.dart';
 import 'model/request/updata_profile_request_dto.dart';
 import 'model/response/login_response_dto.dart';
@@ -179,4 +181,23 @@ class ApiServices {
     );
     return UpdateItemResponseDto.fromJson(response.data);
   }
+  Future<ConfirmResponseDto> confirm(ConfirmRequestDto confirmRequestDto) async{
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+
+    if (token == null || token.isEmpty) {
+      throw Exception('User is not logged in');
+    }
+    final response = await dio.post(
+      EndPoints.confirmEndPoint,
+        data: confirmRequestDto.toJson(),
+        options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            }
+        )
+    );
+    return ConfirmResponseDto.fromJson(response.data);
+  }
+
 }

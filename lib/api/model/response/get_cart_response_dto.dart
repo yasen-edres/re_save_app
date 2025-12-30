@@ -8,10 +8,14 @@ class GetCartResponseDto {
   final String? status;
   @JsonKey(name: "data")
   final DataDto? data;
+  @JsonKey(name: "message")
+  final String? message;
+
 
   GetCartResponseDto ({
     this.status,
     this.data,
+    this.message,
   });
 
   factory GetCartResponseDto.fromJson(Map<String, dynamic> json) {

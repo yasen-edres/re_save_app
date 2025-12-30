@@ -2,9 +2,11 @@
 class GetCartResponse {
   final String? status;
   final Data? data;
+  final String? message;
 
   GetCartResponse ({
     this.status,
+    this.message,
     this.data,
   });
 

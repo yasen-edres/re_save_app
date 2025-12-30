@@ -4,6 +4,7 @@ class EndPoints {
   static const String profileDataEndPoint = "api/user/profile";
   static const String updateProfileEndPoint = "api/user/profile";
   static const String getItemsEndPoint = "api/items";
+  static const String confirmEndPoint = "api/cart/confirm";
   static const String getCartEndPoint = "api/cart";
   static const String updateItemEndPoint = "api/cart/update-item";
   static const String removeItemEndPoint = "api/cart/remove-item";

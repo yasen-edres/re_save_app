@@ -60,7 +60,7 @@ class CategoryItem extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 10.h,),
-                        Text('${item.price} جنيه/القطعه',
+                        Text('${item.price} نقطة/القطعه',
                           style: AppStyles.semi14TextBlack,
                           softWrap: true,
                           overflow: TextOverflow.visible,),

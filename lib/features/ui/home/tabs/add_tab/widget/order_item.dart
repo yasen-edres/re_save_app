@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
 
-import '../../../../../../domain/entities/order_entities.dart';
+import '../../../../../../domain/entities/response/cart/order_entities.dart';
 
 class OrderItem extends StatelessWidget {
   final OrderEntity order;

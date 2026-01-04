@@ -1,4 +1,4 @@
-import '../../../../../domain/entities/response/register_response.dart';
+import '../../../../../domain/entities/response/auth/register_response.dart';
 
 abstract class RegisterState {}
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:re_save_app/domain/entities/request/add_item_to_cart_request.dart';
-import 'package:re_save_app/domain/usecases/add_item_to_cart_use_case.dart';
+import 'package:re_save_app/domain/entities/request/cart/add_item_to_cart_request.dart';
+import 'package:re_save_app/domain/usecases/cart/add_item_to_cart_use_case.dart';
 
 import 'order_states.dart';
 

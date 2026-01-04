@@ -1,25 +1,25 @@
 import 'package:dio/dio.dart';
 import 'package:re_save_app/api/end_points.dart';
-import 'package:re_save_app/api/model/request/add_item_to_cart_request_dto.dart';
-import 'package:re_save_app/api/model/request/login_request_dto.dart';
-import 'package:re_save_app/api/model/request/update_item_request_dto.dart';
-import 'package:re_save_app/api/model/response/add_item_to_cart_response_dto.dart';
-import 'package:re_save_app/api/model/response/change_password_response_dto.dart';
-import 'package:re_save_app/api/model/response/confirm_response_dto.dart';
-import 'package:re_save_app/api/model/response/get_cart_response_dto.dart';
-import 'package:re_save_app/api/model/response/get_items_response_dto.dart';
-import 'package:re_save_app/api/model/response/register_response_dto.dart';
-import 'package:re_save_app/api/model/response/remove_item_response_dto.dart';
-import 'package:re_save_app/api/model/response/update_item_response_dto.dart';
+import 'package:re_save_app/api/model/request/auth/login_request_dto.dart';
+import 'package:re_save_app/api/model/request/cart/add_item_to_cart_request_dto.dart';
+import 'package:re_save_app/api/model/request/cart/update_item_request_dto.dart';
+import 'package:re_save_app/api/model/response/auth/register_response_dto.dart';
+import 'package:re_save_app/api/model/response/cart/add_item_to_cart_response_dto.dart';
+import 'package:re_save_app/api/model/response/cart/confirm_response_dto.dart';
+import 'package:re_save_app/api/model/response/cart/get_cart_response_dto.dart';
+import 'package:re_save_app/api/model/response/cart/remove_item_response_dto.dart';
+import 'package:re_save_app/api/model/response/cart/update_item_response_dto.dart';
+import 'package:re_save_app/api/model/response/profile/change_password_response_dto.dart';
+import 'package:re_save_app/api/model/response/public/get_items_response_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'model/request/change_password_request_dto.dart';
-import 'model/request/confirm_request_dto.dart';
-import 'model/request/register_request_dto.dart';
-import 'model/request/updata_profile_request_dto.dart';
-import 'model/response/login_response_dto.dart';
-import 'model/response/update_profile_response_dto.dart';
-import 'model/response/user_data_response_dto.dart';
+import 'model/request/auth/register_request_dto.dart';
+import 'model/request/cart/confirm_request_dto.dart';
+import 'model/request/profile/change_password_request_dto.dart';
+import 'model/request/profile/updata_profile_request_dto.dart';
+import 'model/response/auth/login_response_dto.dart';
+import 'model/response/auth/user_data_response_dto.dart';
+import 'model/response/profile/update_profile_response_dto.dart';
 
 class ApiServices {
   final Dio dio;

@@ -41,7 +41,6 @@ dependencies:
   icons_plus: ^5.0.0
   flutter_localization: ^0.3.3
   carousel_slider: ^5.1.1
-  country_flags: ^4.1.0
   dialog: ^0.8.0
   readmore: ^3.0.0
   dropdown_button2: ^2.3.9
@@ -60,6 +59,9 @@ dependencies:
   shared_preferences: ^2.5.3
   cloudinary_public: ^0.20.0
   flutter_image_slideshow: ^0.1.6
+  shimmer: ^3.0.0
+  cached_network_image: ^3.4.1
+  fluttertoast: ^9.0.0
 
 dev_dependencies:
   flutter_test:

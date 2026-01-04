@@ -10,6 +10,7 @@ import 'package:re_save_app/features/ui/cubit/profile_state.dart';
 import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
 import 'package:re_save_app/features/ui/home/cubit/home_view_model.dart';
 import 'package:re_save_app/features/widget/custom_setting_bottom.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/utils/app_styles.dart';
 
@@ -36,8 +37,161 @@ class _ProfileTabState extends State<ProfileTab> {
         final viewModel = context.read<ProfileViewModel>();
         final user = viewModel.user;
         if (state is ProfileLoading) {
-          return Center(
-            child: CircularProgressIndicator(),
+          //todo: loading
+          return Shimmer.fromColors(
+            baseColor: AppColors.lightGrayColor,
+            highlightColor: AppColors.whiteColor,
+            child: Padding(
+              padding: EdgeInsetsGeometry.symmetric(horizontal: 30.w),
+              child: Column(
+                children: [
+                  SizedBox(height: 40.h,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 35,
+                            backgroundColor: AppColors.whiteColor,
+                          ),
+                          SizedBox(width: 10.w,),
+                          Column(
+                            children: [
+                              Container(
+                                width: 100.w,
+                                height: 10.h,
+                                color: AppColors.whiteColor,
+                              ),
+                              SizedBox(height: 5.h,),
+                              Container(
+                                width: 100.w,
+                                height: 10.h,
+                                color: AppColors.whiteColor,
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundColor: AppColors.whiteColor,
+                      ),
+                    ],
+
+                  ),
+                  SizedBox(height: 10.h,),
+                  Container(
+                    width: double.infinity,
+                    height: 100.h,
+                    color: AppColors.whiteColor,
+                  ),
+                  SizedBox(height: 10.h,),
+                  Expanded(
+                      child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 15.h,
+                                  width: 100.w,
+                                  color: AppColors.whiteColor,
+                                ),
+                                SizedBox(height: 10.h,),
+                                Container(
+                                  width: double.infinity,
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 15,
+                                                backgroundColor: AppColors.whiteColor,
+                                              ),
+                                              SizedBox(width: 10.w,),
+                                              Container(
+                                                width: 80.w,
+                                                height: 10.h,
+                                                color: AppColors.whiteColor,
+                                              )
+                                            ],
+                                          ),
+                                          CircleAvatar(
+                                            radius: 15,
+                                            backgroundColor: AppColors.whiteColor,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 15,
+                                                backgroundColor: AppColors.whiteColor,
+                                              ),
+                                              SizedBox(width: 10.w,),
+                                              Container(
+                                                width: 80.w,
+                                                height: 10.h,
+                                                color: AppColors.whiteColor,
+                                              )
+                                            ],
+                                          ),
+                                          CircleAvatar(
+                                            radius: 15,
+                                            backgroundColor: AppColors.whiteColor,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 20.h,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 15,
+                                                backgroundColor: AppColors.whiteColor,
+                                              ),
+                                              SizedBox(width: 10.w,),
+                                              Container(
+                                                width: 80.w,
+                                                height: 10.h,
+                                                color: AppColors.whiteColor,
+                                              )
+                                            ],
+                                          ),
+                                          CircleAvatar(
+                                            radius: 15,
+                                            backgroundColor: AppColors.whiteColor,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                          separatorBuilder: (context, index) => SizedBox(height: 35.h,),
+                          itemCount: 3
+                      )
+                  )
+                ],
+              ),
+            ),
+
           );
         } else if (state is ProfileError) {
           return Center(
@@ -292,7 +446,6 @@ class _ProfileTabState extends State<ProfileTab> {
           );
         }
       },
-
     );
   }
 }

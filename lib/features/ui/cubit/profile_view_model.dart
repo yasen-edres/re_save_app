@@ -2,12 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:re_save_app/domain/entities/request/change_password_request.dart';
-import 'package:re_save_app/domain/entities/request/update_profile_request.dart';
-import 'package:re_save_app/domain/entities/response/user_data_response.dart';
-import 'package:re_save_app/domain/usecases/change_password_use_case.dart';
-import 'package:re_save_app/domain/usecases/update_profile_use_case.dart';
-import 'package:re_save_app/domain/usecases/user_data_use_case.dart';
+import 'package:re_save_app/domain/entities/request/profile/change_password_request.dart';
+import 'package:re_save_app/domain/entities/request/profile/update_profile_request.dart';
+import 'package:re_save_app/domain/entities/response/profile/user_data_response.dart';
+import 'package:re_save_app/domain/usecases/profile/change_password_use_case.dart';
+import 'package:re_save_app/domain/usecases/profile/update_profile_use_case.dart';
+import 'package:re_save_app/domain/usecases/profile/user_data_use_case.dart';
 import 'package:re_save_app/features/ui/cubit/profile_state.dart';
 
 import '../../../core/exceptions/app_exception.dart';

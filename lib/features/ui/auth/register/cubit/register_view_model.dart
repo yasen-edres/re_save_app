@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:re_save_app/domain/entities/request/register_request.dart';
-import 'package:re_save_app/domain/usecases/register_use_case.dart';
+import 'package:re_save_app/domain/entities/request/auth/register_request.dart';
+import 'package:re_save_app/domain/usecases/auth/register_use_case.dart';
 import 'package:re_save_app/features/ui/auth/register/cubit/register_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

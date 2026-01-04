@@ -1,10 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
-import 'package:re_save_app/domain/entities/response/item.dart';
+import 'package:re_save_app/domain/entities/response/public/item.dart';
 import 'package:readmore/readmore.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../widget/custom_bootom_sheet.dart';
 
@@ -27,9 +29,23 @@ class CategoryItem extends StatelessWidget {
         children: [
           Container(
             height: 120.h,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(item.image!), fit: BoxFit.fill)
+            child: CachedNetworkImage(
+              imageUrl: item.image ?? '',
+              fit: BoxFit.fill,
+              width: double.infinity,
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: AppColors.lightGrayColor,
+                highlightColor: AppColors.whiteColor,
+                child: Container(
+                  width: double.infinity,
+                  height: 120.h,
+                  color: AppColors.whiteColor,
+                ),
+              ),
+              errorWidget: (context, url, error) => Icon(
+                Icons.error,
+                color: Colors.red,
+              ),
             ),
           ),
           Expanded(
@@ -81,6 +97,7 @@ class CategoryItem extends StatelessWidget {
                           size: 17),
                     ),
                   ),
+
 
                 ],
               ),

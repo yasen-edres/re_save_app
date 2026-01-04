@@ -36,52 +36,52 @@ import '../api/data_sources/remote/profile/update_profile_remote_data_source_imp
 import '../api/data_sources/remote/profile/user_data_remote_data_source_impl.dart'
     as _i851;
 import '../api/dio/dio_module.dart' as _i223;
-import '../data/data_sources/remote/add_item_to_cart_remote_data_source.dart'
+import '../data/data_sources/remote/auth/auth_remote_data_source.dart' as _i354;
+import '../data/data_sources/remote/cart/add_item_to_cart_remote_data_source.dart'
     as _i226;
-import '../data/data_sources/remote/auth_remote_data_source.dart' as _i354;
-import '../data/data_sources/remote/change_password_remote_data_source.dart'
-    as _i574;
-import '../data/data_sources/remote/confirm_remote_dtata_source.dart' as _i283;
-import '../data/data_sources/remote/get_cart_remote_data_source.dart' as _i78;
-import '../data/data_sources/remote/get_items_remote_data_source.dart' as _i919;
-import '../data/data_sources/remote/remove_item_remote_data_source.dart'
+import '../data/data_sources/remote/cart/confirm_remote_dtata_source.dart' as _i283;
+import '../data/data_sources/remote/cart/get_cart_remote_data_source.dart' as _i78;
+import '../data/data_sources/remote/cart/remove_item_remote_data_source.dart'
     as _i164;
-import '../data/data_sources/remote/update_item_remote_data_source.dart'
+import '../data/data_sources/remote/cart/update_item_remote_data_source.dart'
     as _i1030;
-import '../data/data_sources/remote/update_profile_remote_data_source.dart'
+import '../data/data_sources/remote/profile/change_password_remote_data_source.dart'
+    as _i574;
+import '../data/data_sources/remote/profile/update_profile_remote_data_source.dart'
     as _i491;
-import '../data/data_sources/remote/user_data_remote_data_source.dart' as _i893;
-import '../data/repositories/add_item_to_cart_repository_impl.dart' as _i854;
-import '../data/repositories/auth_repository_impl.dart' as _i74;
-import '../data/repositories/change_password_repository_impl.dart' as _i194;
-import '../data/repositories/confirm_repository_impl.dart' as _i861;
-import '../data/repositories/get_cart_repository_impl.dart' as _i334;
-import '../data/repositories/get_items_repository_impl.dart' as _i1052;
-import '../data/repositories/remove_item_repository_impl.dart' as _i824;
-import '../data/repositories/update_item_repository_impl.dart' as _i842;
-import '../data/repositories/update_profile_repository_impl.dart' as _i491;
-import '../data/repositories/user_data_repository_impl.dart' as _i392;
-import '../domain/repositories/add_item_to_cart_repository.dart' as _i777;
-import '../domain/repositories/auth_repository.dart' as _i800;
-import '../domain/repositories/change_password_repository.dart' as _i682;
-import '../domain/repositories/confirm_repository.dart' as _i717;
-import '../domain/repositories/get_cart_repository.dart' as _i443;
-import '../domain/repositories/get_items_repository.dart' as _i380;
-import '../domain/repositories/remove_item_respository.dart' as _i242;
-import '../domain/repositories/update_item_repository.dart' as _i825;
-import '../domain/repositories/update_profile_repository.dart' as _i56;
-import '../domain/repositories/user_data_repository.dart' as _i181;
-import '../domain/usecases/add_item_to_cart_use_case.dart' as _i361;
-import '../domain/usecases/change_password_use_case.dart' as _i482;
-import '../domain/usecases/confirm_use_cse.dart' as _i735;
-import '../domain/usecases/get_cart_use_case.dart' as _i121;
-import '../domain/usecases/get_items_use_case.dart' as _i336;
-import '../domain/usecases/login_use_case.dart' as _i646;
-import '../domain/usecases/register_use_case.dart' as _i744;
-import '../domain/usecases/remove_item_use_case.dart' as _i636;
-import '../domain/usecases/update_item_use_case.dart' as _i319;
-import '../domain/usecases/update_profile_use_case.dart' as _i68;
-import '../domain/usecases/user_data_use_case.dart' as _i897;
+import '../data/data_sources/remote/profile/user_data_remote_data_source.dart' as _i893;
+import '../data/data_sources/remote/public/get_items_remote_data_source.dart' as _i919;
+import '../data/repositories/auth/auth_repository_impl.dart' as _i74;
+import '../data/repositories/cart/add_item_to_cart_repository_impl.dart' as _i854;
+import '../data/repositories/cart/confirm_repository_impl.dart' as _i861;
+import '../data/repositories/cart/get_cart_repository_impl.dart' as _i334;
+import '../data/repositories/cart/remove_item_repository_impl.dart' as _i824;
+import '../data/repositories/cart/update_item_repository_impl.dart' as _i842;
+import '../data/repositories/profile/change_password_repository_impl.dart' as _i194;
+import '../data/repositories/profile/update_profile_repository_impl.dart' as _i491;
+import '../data/repositories/profile/user_data_repository_impl.dart' as _i392;
+import '../data/repositories/public/get_items_repository_impl.dart' as _i1052;
+import '../domain/repositories/auth/auth_repository.dart' as _i800;
+import '../domain/repositories/cart/add_item_to_cart_repository.dart' as _i777;
+import '../domain/repositories/cart/confirm_repository.dart' as _i717;
+import '../domain/repositories/cart/get_cart_repository.dart' as _i443;
+import '../domain/repositories/cart/remove_item_respository.dart' as _i242;
+import '../domain/repositories/cart/update_item_repository.dart' as _i825;
+import '../domain/repositories/profile/change_password_repository.dart' as _i682;
+import '../domain/repositories/profile/update_profile_repository.dart' as _i56;
+import '../domain/repositories/profile/user_data_repository.dart' as _i181;
+import '../domain/repositories/public/get_items_repository.dart' as _i380;
+import '../domain/usecases/auth/login_use_case.dart' as _i646;
+import '../domain/usecases/auth/register_use_case.dart' as _i744;
+import '../domain/usecases/cart/add_item_to_cart_use_case.dart' as _i361;
+import '../domain/usecases/cart/confirm_use_cse.dart' as _i735;
+import '../domain/usecases/cart/get_cart_use_case.dart' as _i121;
+import '../domain/usecases/cart/remove_item_use_case.dart' as _i636;
+import '../domain/usecases/cart/update_item_use_case.dart' as _i319;
+import '../domain/usecases/profile/change_password_use_case.dart' as _i482;
+import '../domain/usecases/profile/update_profile_use_case.dart' as _i68;
+import '../domain/usecases/profile/user_data_use_case.dart' as _i897;
+import '../domain/usecases/public/get_items_use_case.dart' as _i336;
 import '../features/ui/auth/login/cubit/login_view_model.dart' as _i1040;
 import '../features/ui/auth/register/cubit/register_view_model.dart' as _i586;
 import '../features/ui/cubit/profile_view_model.dart' as _i83;

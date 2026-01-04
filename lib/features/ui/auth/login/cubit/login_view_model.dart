@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 import 'package:re_save_app/core/exceptions/app_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../../domain/entities/request/login_request.dart';
-import '../../../../../domain/usecases/login_use_case.dart';
+import '../../../../../domain/entities/request/auth/login_request.dart';
+import '../../../../../domain/usecases/auth/login_use_case.dart';
 import 'login_state.dart';
 
 @injectable

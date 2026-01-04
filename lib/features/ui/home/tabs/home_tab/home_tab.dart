@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +11,7 @@ import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
 import 'package:re_save_app/features/ui/home/cubit/home_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/category_tab/cubit/category_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/home_tab/widget/category_item.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 
@@ -48,8 +48,59 @@ class _HomeTabState extends State<HomeTab> {
         final viewModel = context.read<ProfileViewModel>();
         final user = viewModel.user;
         if (state is ProfileLoading) {
+          //todo:loading
           return Center(
-            child: CircularProgressIndicator(),
+            child: Shimmer.fromColors(
+                baseColor: AppColors.lightGrayColor,
+                highlightColor: AppColors.whiteColor,
+                child: Column(
+                  children: [
+                    SizedBox(height: 20.h,),
+                    Container(
+                      width: double.infinity,
+                      height: 190.h,
+                      color: AppColors.whiteColor,
+                    ),
+                    SizedBox(height: 20.h,),
+                    SizedBox(
+                      height: 150.h,
+                      child: ListView.separated(
+                        padding: EdgeInsets.zero,
+                        scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return CircleAvatar(
+                                  radius: 40,
+                                  backgroundColor: AppColors.whiteColor,
+                                );
+                          },
+                          separatorBuilder: (context, index) => SizedBox(width: 25.w,),
+                          itemCount: 5
+                      ),
+                    ),
+                    SizedBox(height: 10.h,),
+                    Expanded(
+                        child: GridView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: 4,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10.h,
+                            crossAxisSpacing: 5.w,
+                            childAspectRatio: 1 / 1.5,
+                          ),
+                          itemBuilder: (context, index) {
+                            return Container(
+                              width: double.infinity,
+                              height: 75.h,
+                              color: AppColors.whiteColor,
+                            );
+                          },
+                        ),
+                    )
+                  ],
+                )
+            ),
           );
         } else if (state is ProfileError) {
           return Center(
@@ -146,29 +197,8 @@ class _HomeTabState extends State<HomeTab> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 20.h,),
                     _buildAnnouncement(images: eventsCover),
-                    // CarouselSlider(
-                    //     items: eventsCover,
-                    //     options: CarouselOptions(
-                    //       onPageChanged: (index, reason) {
-                    //         //todo: show all details
-                    //       },
-                    //       height: 200.h,
-                    //       aspectRatio: 16 / 9,
-                    //       viewportFraction: 0.8,
-                    //       initialPage: 0,
-                    //       enableInfiniteScroll: true,
-                    //       reverse: false,
-                    //       autoPlay: true,
-                    //       autoPlayInterval: Duration(seconds: 3),
-                    //       autoPlayAnimationDuration: Duration(
-                    //           milliseconds: 800),
-                    //       autoPlayCurve: Curves.fastOutSlowIn,
-                    //       enlargeCenterPage: true,
-                    //       enlargeFactor: 0.3,
-                    //       scrollDirection: Axis.horizontal,
-                    //     )
-                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -243,7 +273,7 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                     SizedBox(height: 10.h,),
                     SizedBox(
-                      height: 730.h,
+                      height: 600.h,
                       child: GridView.builder(
                         itemCount: 4,
                         physics: NeverScrollableScrollPhysics(),
@@ -271,24 +301,19 @@ class _HomeTabState extends State<HomeTab> {
       },
     );
   }
-  ImageSlideshow _buildAnnouncement({
-    required List<String> images,
-  }) {
+  ImageSlideshow _buildAnnouncement({ required List<String> images,}) {
     return ImageSlideshow(
-        indicatorColor: AppColors.primaryColor,
+        indicatorColor: AppColors.darkGreenColor,
         initialPage: 0,
         indicatorBottomPadding: 15.h,
         indicatorPadding: 8.w,
         indicatorRadius: 5,
         indicatorBackgroundColor: AppColors.whiteColor,
         isLoop: true,
-        autoPlayInterval: 3000,
+        // autoPlayInterval: 5000,
         height: 190.h,
         children: images.map((url) {
-          return Image.asset(
-            url,
-            fit: BoxFit.fill,
-          );
+          return Image.asset(url, fit: BoxFit.fill,);
         }).toList());
   }
 }

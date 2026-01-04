@@ -1,4 +1,4 @@
-import 'package:re_save_app/domain/entities/response/item.dart';
+import 'package:re_save_app/domain/entities/response/public/item.dart';
 
 abstract class CategoryState {}
 

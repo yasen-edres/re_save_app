@@ -1,13 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:re_save_app/domain/entities/request/update_item_request.dart';
+import 'package:re_save_app/domain/entities/request/cart/update_item_request.dart';
 import 'package:re_save_app/features/ui/home/tabs/cart_tab/cubit/cart_view_model.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/app_styles.dart';
-import '../../../../../../domain/entities/response/get_cart_response.dart';
+import '../../../../../../domain/entities/response/cart/get_cart_response.dart';
 
 class CartWidget extends StatefulWidget {
   final Item item;
@@ -77,7 +79,25 @@ class _CartWidgetState extends State<CartWidget> {
           child: Row(
             children: [
               Expanded(
-                child: Image.network(widget.item.image!, fit: BoxFit.fill),
+                child: CachedNetworkImage(
+                  imageUrl: widget.item.image ?? '',
+                  fit: BoxFit.fill,
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      color: Colors.white,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Container(
+                    color: Colors.grey[200],
+                    child: Icon(
+                      Icons.broken_image,
+                      color: Colors.grey,
+                      size: 30,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(width: 20.w),
               Expanded(

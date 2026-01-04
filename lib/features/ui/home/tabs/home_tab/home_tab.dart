@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_assets.dart';
 import 'package:re_save_app/core/utils/app_routes.dart';
@@ -22,61 +23,10 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  List<Widget> eventsCover = [
-    Image.asset(AppAssets.learnRecycleCover),
-    Image.asset(AppAssets.potelCover),
+  List<String> eventsCover = [
+    AppAssets.learnRecycleCover,
+    AppAssets.potelCover,
 
-  ];
-
-  List<String> electronicDevicesImage = [
-    'https://res.cloudinary.com/dobrjr0sc/image/upload/v1765817353/fridge_xrlxa2.jpg',
-    'https://res.cloudinary.com/dobrjr0sc/image/upload/v1765817353/fridge_xrlxa2.jpg',
-    'https://res.cloudinary.com/dobrjr0sc/image/upload/v1765817353/fridge_xrlxa2.jpg',
-    'https://res.cloudinary.com/dobrjr0sc/image/upload/v1765817353/fridge_xrlxa2.jpg',
-
-  ];
-
-  List<String> electronicDevicesTitle = [
-    'ثلاجة',
-    'ثلاجة',
-    'ثلاجة',
-    'ثلاجة',
-  ];
-
-  List<String> electronicDevicesDescription = [
-    'هذا هو الوصف',
-    'هذا هو الوصف',
-    'هذا هو الوصف',
-    'هذا هو الوصف',
-  ];
-
-  List<double> electronicDevicesPrice = [
-    100,
-    200,
-    300,
-    400,
-  ];
-
-  List<String> categoriesNameList = [
-    'حديد',
-    'كرتون',
-    'بلاستيك',
-    'نحاس',
-    'ورق',
-    'بلاستيك',
-    'نحاس',
-    'ورق',
-  ];
-
-  List<String> categoriesCategoryList = [
-    'أدوات منزلية',
-    'أدوات منزلية',
-    'أدوات منزلية',
-    'أدوات منزلية',
-    'أدوات منزلية',
-    'أدوات منزلية',
-    'أدوات منزلية',
-    'أدوات منزلية',
   ];
 
   @override
@@ -196,28 +146,29 @@ class _HomeTabState extends State<HomeTab> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CarouselSlider(
-                        items: eventsCover,
-                        options: CarouselOptions(
-                          onPageChanged: (index, reason) {
-                            //todo: show all details
-                          },
-                          height: 200.h,
-                          aspectRatio: 16 / 9,
-                          viewportFraction: 0.8,
-                          initialPage: 0,
-                          enableInfiniteScroll: true,
-                          reverse: false,
-                          autoPlay: true,
-                          autoPlayInterval: Duration(seconds: 3),
-                          autoPlayAnimationDuration: Duration(
-                              milliseconds: 800),
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enlargeCenterPage: true,
-                          enlargeFactor: 0.3,
-                          scrollDirection: Axis.horizontal,
-                        )
-                    ),
+                    _buildAnnouncement(images: eventsCover),
+                    // CarouselSlider(
+                    //     items: eventsCover,
+                    //     options: CarouselOptions(
+                    //       onPageChanged: (index, reason) {
+                    //         //todo: show all details
+                    //       },
+                    //       height: 200.h,
+                    //       aspectRatio: 16 / 9,
+                    //       viewportFraction: 0.8,
+                    //       initialPage: 0,
+                    //       enableInfiniteScroll: true,
+                    //       reverse: false,
+                    //       autoPlay: true,
+                    //       autoPlayInterval: Duration(seconds: 3),
+                    //       autoPlayAnimationDuration: Duration(
+                    //           milliseconds: 800),
+                    //       autoPlayCurve: Curves.fastOutSlowIn,
+                    //       enlargeCenterPage: true,
+                    //       enlargeFactor: 0.3,
+                    //       scrollDirection: Axis.horizontal,
+                    //     )
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -319,5 +270,25 @@ class _HomeTabState extends State<HomeTab> {
 
       },
     );
+  }
+  ImageSlideshow _buildAnnouncement({
+    required List<String> images,
+  }) {
+    return ImageSlideshow(
+        indicatorColor: AppColors.primaryColor,
+        initialPage: 0,
+        indicatorBottomPadding: 15.h,
+        indicatorPadding: 8.w,
+        indicatorRadius: 5,
+        indicatorBackgroundColor: AppColors.whiteColor,
+        isLoop: true,
+        autoPlayInterval: 3000,
+        height: 190.h,
+        children: images.map((url) {
+          return Image.asset(
+            url,
+            fit: BoxFit.fill,
+          );
+        }).toList());
   }
 }

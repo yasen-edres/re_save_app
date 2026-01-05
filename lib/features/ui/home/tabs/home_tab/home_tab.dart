@@ -6,14 +6,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_assets.dart';
 import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
-import 'package:re_save_app/features/ui/cubit/profile_state.dart';
-import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
 import 'package:re_save_app/features/ui/home/cubit/home_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/category_tab/cubit/category_view_model.dart';
-import 'package:re_save_app/features/ui/home/tabs/home_tab/widget/category_item.dart';
+import 'package:re_save_app/features/ui/home/tabs/category_tab/widget/category_item.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/utils/app_colors.dart';
+import '../profile_tab/cubit/profile_state.dart';
+import '../profile_tab/cubit/profile_view_model.dart';
 
 class HomeTab extends StatefulWidget {
   HomeTab({super.key});

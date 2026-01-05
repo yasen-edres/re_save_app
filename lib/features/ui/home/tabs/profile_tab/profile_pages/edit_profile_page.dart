@@ -8,12 +8,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
-import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
 import 'package:re_save_app/features/widget/custom_elevatedbutton.dart';
 import 'package:re_save_app/features/widget/custom_text_form_field.dart';
 
 import '../../../../../../core/utils/flutter_toast.dart';
-import '../../../../cubit/profile_state.dart';
+import '../cubit/profile_state.dart';
+import '../cubit/profile_view_model.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override

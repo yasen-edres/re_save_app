@@ -8,9 +8,10 @@ import 'package:re_save_app/domain/entities/response/profile/user_data_response.
 import 'package:re_save_app/domain/usecases/profile/change_password_use_case.dart';
 import 'package:re_save_app/domain/usecases/profile/update_profile_use_case.dart';
 import 'package:re_save_app/domain/usecases/profile/user_data_use_case.dart';
-import 'package:re_save_app/features/ui/cubit/profile_state.dart';
+import 'package:re_save_app/features/ui/home/tabs/profile_tab/cubit/profile_state.dart';
 
-import '../../../core/exceptions/app_exception.dart';
+import '../../../../../../core/exceptions/app_exception.dart';
+
 
 @injectable
 class ProfileViewModel extends Cubit<ProfileState> {

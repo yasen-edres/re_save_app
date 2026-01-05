@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/features/ui/auth/login/cubit/login_view_model.dart';
-import 'package:re_save_app/features/ui/cubit/profile_state.dart';
-import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
 import 'package:re_save_app/features/ui/home/cubit/home_view_model.dart';
 import 'package:re_save_app/features/widget/custom_setting_bottom.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/utils/app_styles.dart';
+import 'cubit/profile_state.dart';
+import 'cubit/profile_view_model.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});

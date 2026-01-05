@@ -34,8 +34,8 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   int quantity = 0;
   bool checkPrice = false;
   int minPrice = 100;
-  bool checkImage = false;
   String imageUrl = '';
+  bool checkImage = false;
   bool isUploading = false;
   final ImagePicker _picker = ImagePicker();
   final cloudinary = CloudinaryPublic(
@@ -63,12 +63,8 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.item.pricingType == 'kg'
-                    ? Text('أضف الكمية بالوزن', style: AppStyles.bold24Black)
-                    : Text('أضف العدد', style: AppStyles.bold24Black),
-                widget.item.pricingType == 'kg'
-                    ? Text('الوزن يقاس بالكيلوجرام', style: AppStyles.light16Gray)
-                    : Text('الوزن يقاس بالقطعه', style: AppStyles.light16Gray),
+                widget.item.pricingType == 'kg' ? Text('أضف الكمية بالوزن', style: AppStyles.bold24Black) : Text('أضف العدد', style: AppStyles.bold24Black),
+                widget.item.pricingType == 'kg'? Text('الوزن يقاس بالكيلوجرام', style: AppStyles.light16Gray) : Text('الوزن يقاس بالقطعه', style: AppStyles.light16Gray),
                 SizedBox(height: 10.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50.w),
@@ -76,12 +72,52 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                        child: cloudImages.isNotEmpty
+                        child: isUploading
+                            ? Container(
+                          width: 180.w,
+                          height: 150.h,
+                          decoration: BoxDecoration(
+                            color: AppColors.lightGrayColor.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: AppColors.darkGreenColor.withOpacity(0.3),
+                              width: 2,
+                            ),
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(
+                                  color: AppColors.darkGreenColor,
+                                  strokeWidth: 3,
+                                ),
+                                SizedBox(height: 12.h),
+                                Text(
+                                  'جاري رفع الصورة...',
+                                  style: AppStyles.semi14TextBlack.copyWith(
+                                    color: AppColors.darkGreenColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                            : cloudImages.isNotEmpty
                             ? CachedNetworkImage(
                           imageUrl: cloudImages[0],
                           width: 180.w,
                           height: 150.h,
                           fit: BoxFit.cover,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                           placeholder: (context, url) => Shimmer.fromColors(
                             baseColor: Colors.grey[300]!,
                             highlightColor: Colors.grey[100]!,
@@ -107,41 +143,36 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                               size: 40,
                             ),
                           ),
-                        ) : InkWell(
-                          onTap: isUploading ? null : pickFromCamera,
+                        )
+                            : InkWell(
+                          onTap: pickFromCamera,
                           child: Container(
                             width: 180.w,
                             height: 150.h,
                             decoration: BoxDecoration(
                               color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: AppColors.darkGreenColor.withOpacity(0.3),
+                                width: 2,
+                                style: BorderStyle.solid,
+                              ),
                             ),
                             child: Center(
-                              child: isUploading
-                                  ? Shimmer.fromColors(
-                                baseColor: Colors.grey[300]!,
-                                highlightColor: Colors.grey[100]!,
-                                child: Container(
-                                  width: 180.w,
-                                  height: 150.h,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                ),
-                              )
-                                  : Column(
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
                                     CupertinoIcons.camera,
                                     size: 40,
-                                    color: Colors.grey,
+                                    color: AppColors.darkGreenColor,
                                   ),
                                   SizedBox(height: 8.h),
                                   Text(
                                     'إضافة صورة',
-                                    style: AppStyles.light16Gray,
+                                    style: AppStyles.light16Gray.copyWith(
+                                      color: AppColors.darkGreenColor,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -239,7 +270,7 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                     Expanded(
                       child: CustomElevatedButton(
                         text: 'اتمام الطلب',
-                        onPressed: () {
+                        onPressed:isUploading?null: () {
                           if (quantity * price < minPrice) {
                             setState(() {
                               checkPrice = true;

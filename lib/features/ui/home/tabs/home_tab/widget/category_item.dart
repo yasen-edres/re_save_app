@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,26 +28,46 @@ class CategoryItem extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            height: 120.h,
-            child: CachedNetworkImage(
-              imageUrl: item.image ?? '',
-              fit: BoxFit.fill,
-              width: double.infinity,
-              placeholder: (context, url) => Shimmer.fromColors(
-                baseColor: AppColors.lightGrayColor,
-                highlightColor: AppColors.whiteColor,
-                child: Container(
+          Stack(
+            children: [
+              Container(
+                height: 120.h,
+                child: CachedNetworkImage(
+                  imageUrl: item.image ?? '',
+                  fit: BoxFit.fill,
                   width: double.infinity,
-                  height: 120.h,
-                  color: AppColors.whiteColor,
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: AppColors.lightGrayColor,
+                    highlightColor: AppColors.whiteColor,
+                    child: Container(
+                      width: double.infinity,
+                      height: 120.h,
+                      color: AppColors.whiteColor,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Icon(
+                    Icons.error,
+                    color: Colors.red,
+                  ),
                 ),
               ),
-              errorWidget: (context, url, error) => Icon(
-                Icons.error,
-                color: Colors.red,
+              Positioned(
+                top: 8.h,
+                right: 8.w,
+                child: Container(
+                  padding: EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: AppColors.lightYellowColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    CupertinoIcons.arrow_up,
+                    color: AppColors.darkGreenColor,
+                    size: 22,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
           Expanded(
             child: Container(
@@ -76,10 +97,15 @@ class CategoryItem extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 10.h,),
-                        Text('${item.price} نقطة/القطعه',
-                          style: AppStyles.semi14TextBlack,
-                          softWrap: true,
-                          overflow: TextOverflow.visible,),
+                        Flexible(
+                          child: AutoSizeText(
+                            '${item.price} نقطة/القطعه',
+                            style: AppStyles.semi14TextBlack,
+                            maxLines: 1,
+                            minFontSize: 8,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -97,8 +123,6 @@ class CategoryItem extends StatelessWidget {
                           size: 17),
                     ),
                   ),
-
-
                 ],
               ),
             ),
@@ -112,11 +136,11 @@ class CategoryItem extends StatelessWidget {
 
   void showCustomBottomSheet(BuildContext context) {
     showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      isDismissible: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
+        context: context,
+        isScrollControlled: true,
+        isDismissible: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
           return CustomBottomSheetContent(item: item,);
         }
     );

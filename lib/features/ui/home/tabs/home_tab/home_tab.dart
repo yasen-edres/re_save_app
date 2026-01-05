@@ -138,10 +138,20 @@ class _HomeTabState extends State<HomeTab> {
                         children: [
                           Row(
                             children: [
-                              CircleAvatar(
+                              user?.image == null || user!.image!.isEmpty
+                                  ? CircleAvatar(
                                 radius: 30,
-                                backgroundImage: AssetImage(
-                                    AppAssets.yassinImage),
+                                backgroundColor: AppColors.lightGrayColor,
+                                child: Icon(
+                                  CupertinoIcons.person_fill,
+                                  color: AppColors.whiteColor,
+                                  size: 30,
+                                ),
+                              )
+                                  : CircleAvatar(
+                                radius: 30,
+                                backgroundImage: NetworkImage(user.image!),
+                                backgroundColor: AppColors.lightGrayColor,
                               ),
                               SizedBox(width: 15.w,),
                               Column(
@@ -157,20 +167,7 @@ class _HomeTabState extends State<HomeTab> {
                               ),
                             ],
                           ),
-
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-
-                                },
-                                icon: Icon(
-                                  CupertinoIcons.cart,
-                                  color: AppColors.whiteColor,
-                                  size: 30,),
-                              ),
-
-                              IconButton(
+                          IconButton(
                                 onPressed: () {
                                   Navigator.of(context).pushNamed(
                                       AppRoutes.notificationTabRoute);
@@ -180,9 +177,6 @@ class _HomeTabState extends State<HomeTab> {
                                   color: AppColors.whiteColor,
                                   size: 30,),
                               )
-
-                            ],
-                          )
                         ],
                       ),
                     ],
@@ -273,7 +267,7 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                     SizedBox(height: 10.h,),
                     SizedBox(
-                      height: 600.h,
+                      height: 530.h,
                       child: GridView.builder(
                         itemCount: 4,
                         physics: NeverScrollableScrollPhysics(),
@@ -281,7 +275,7 @@ class _HomeTabState extends State<HomeTab> {
                           crossAxisCount: 2,
                           mainAxisSpacing: 10.h,
                           crossAxisSpacing: 5.w,
-                          childAspectRatio: 1 / 1.5,
+                          childAspectRatio: 1 / 1.4,
                         ),
                         itemBuilder: (context, index) {
                           return CategoryItem(

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:re_save_app/core/utils/app_assets.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/features/ui/auth/login/cubit/login_view_model.dart';
@@ -212,10 +211,20 @@ class _ProfileTabState extends State<ProfileTab> {
                           SizedBox(height: 40.h,),
                           Row(
                             children: [
-                              CircleAvatar(
-                                radius: 35,
-                                backgroundImage: AssetImage(
-                                    AppAssets.yassinImage),
+                              user?.image == null || user!.image!.isEmpty
+                                  ? CircleAvatar(
+                                radius: 30,
+                                backgroundColor: AppColors.lightGrayColor,
+                                child: Icon(
+                                  CupertinoIcons.person_fill,
+                                  color: AppColors.whiteColor,
+                                  size: 30,
+                                ),
+                              )
+                                  : CircleAvatar(
+                                radius: 30,
+                                backgroundImage: NetworkImage(user.image!),
+                                backgroundColor: AppColors.lightGrayColor,
                               ),
                               SizedBox(width: 20.w,),
                               Column(

@@ -16,16 +16,24 @@ import 'package:re_save_app/features/ui/home/tabs/category_tab/cubit/category_vi
 import 'package:re_save_app/features/ui/home/tabs/notification_tab/notification_screen.dart';
 import 'package:re_save_app/features/ui/home/tabs/profile_tab/profile_pages/change_password_page.dart';
 import 'package:re_save_app/features/ui/home/tabs/profile_tab/profile_pages/edit_profile_page.dart';
+import 'package:re_save_app/firebase_options.dart';
 
+import 'core/utils/firebase_cloud_msg.dart';
 import 'features/ui/auth/login/cubit/login_view_model.dart';
 import 'features/ui/home/home_screen.dart';
 import 'features/ui/home/tabs/profile_tab/cubit/profile_view_model.dart';
 import 'features/ui/home/tabs/profile_tab/profile_pages/orders_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 void main() async {
-  configureDependencies();
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  configureDependencies();
   final isLoggedIn = await LoginViewModel.checkAutoLogin();
+  FirebaseCloudMsg.init();
   runApp(MultiBlocProvider(
       providers: [
         BlocProvider<HomeViewModel>(

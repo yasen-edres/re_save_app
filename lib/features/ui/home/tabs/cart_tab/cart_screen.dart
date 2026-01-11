@@ -5,12 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
 import 'package:re_save_app/core/utils/flutter_toast.dart';
 import 'package:re_save_app/domain/entities/response/cart/get_cart_response.dart';
+import 'package:re_save_app/features/ui/home/tabs/cart_tab/cart_location.dart';
 import 'package:re_save_app/features/ui/home/tabs/cart_tab/cubit/cart_state.dart';
 import 'package:re_save_app/features/ui/home/tabs/cart_tab/cubit/cart_view_model.dart';
 import 'package:re_save_app/features/ui/home/tabs/cart_tab/widget/cart_widget.dart';
 import 'package:re_save_app/features/widget/custom_elevatedbutton.dart';
-import 'package:re_save_app/features/widget/custom_text_form_field.dart';
-import 'package:shimmer/shimmer.dart'; // أضف هذا
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 
@@ -22,7 +22,9 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  TextEditingController addressController = TextEditingController();
+  String? _selectedAddress;
+  double? _latitude;
+  double? _longitude;
 
   @override
   void initState() {
@@ -213,9 +215,9 @@ class _CartScreenState extends State<CartScreen> {
                           ],
                         ),
                         CustomElevatedButton(
-                          text: 'أضف عنوانك',
+                          text: 'اختر موقع التوصيل',
                           onPressed: () {
-                            showBottomSheet(context);
+                            _openLocationPicker();
                           },
                           backgroundColor: AppColors.darkGreenColor,
                           textStyle: AppStyles.bold24White,
@@ -235,49 +237,156 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  showBottomSheet(BuildContext context) {
-    return showModalBottomSheet(
+  // فتح شاشة اختيار الموقع
+  Future<void> _openLocationPicker() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CartLocationPickerScreen(),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        _latitude = result['latitude'];
+        _longitude = result['longitude'];
+        _selectedAddress = result['address'];
+      });
+
+      // عرض Bottom Sheet للتأكيد
+      _showConfirmationBottomSheet();
+    }
+  }
+
+  // Bottom Sheet للتأكيد النهائي
+  void _showConfirmationBottomSheet() {
+    showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+      ),
       builder: (context) {
         return Padding(
-          padding: EdgeInsets.only(
-            left: 20.w,
-            right: 20.w,
-            top: 30.h,
-            bottom: MediaQuery.of(context).viewInsets.bottom + 30.h,
-          ),
+          padding: EdgeInsets.all(20.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('أضف عنوانك', style: AppStyles.bold20Black),
-              SizedBox(height: 20.h),
-              CustomTextFormField(
-                filledColor: AppColors.whiteColor,
-                controller: addressController,
-                hintText: 'أضف عنوانك',
+              Row(
+                children: [
+                  Icon(
+                    Icons.location_on,
+                    color: AppColors.darkGreenColor,
+                    size: 30,
+                  ),
+                  SizedBox(width: 12.w),
+                  Text('تأكيد موقع التوصيل', style: AppStyles.bold20Black),
+                ],
               ),
-              if (addressController.text.trim().isEmpty)
-                Padding(
-                  padding: EdgeInsets.only(top: 8.h),
-                  child: Text('يجب إضافة عنوان', style: AppStyles.bold16Red),
+              SizedBox(height: 20.h),
+
+              Container(
+                padding: EdgeInsets.all(16.w),
+                decoration: BoxDecoration(
+                  color: AppColors.darkGreenColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(
+                    color: AppColors.darkGreenColor.withOpacity(0.3),
+                  ),
                 ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: AppColors.darkGreenColor,
+                          size: 20,
+                        ),
+                        SizedBox(width: 8.w),
+                        Text('عنوان التوصيل:', style: AppStyles.bold16Black),
+                      ],
+                    ),
+                    SizedBox(height: 12.h),
+                    Text(
+                      _selectedAddress ?? '',
+                      style: AppStyles.light16Gray,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 8.h),
+                    Divider(color: AppColors.darkGreenColor.withOpacity(0.3)),
+                    SizedBox(height: 8.h),
+                    Row(
+                      children: [
+                        Icon(Icons.push_pin_outlined,
+                            color: Colors.grey, size: 16),
+                        SizedBox(width: 8.w),
+                        Expanded(
+                          child: Text(
+                            'خط العرض: ${_latitude?.toStringAsFixed(5) ?? ''}\nخط الطول: ${_longitude?.toStringAsFixed(5) ?? ''}',
+                            style: TextStyle(
+                              fontSize: 11.sp,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
               SizedBox(height: 30.h),
-              CustomElevatedButton(
-                text: 'اتمام الطلب',
-                onPressed: () async {
-                  if (addressController.text.trim().isNotEmpty) {
-                    Navigator.pop(context);
-                    context.read<CartViewModel>().confirm(addressController.text);
-                    Navigator.popUntil(context, (route) => route.isFirst);
-                    ToastMessage.toastMsg('تم اتمام الطلب بنجاح', AppColors.darkGreenColor, AppColors.whiteColor);
-                  }else{
-                    ToastMessage.toastMsg('يجب إضافة عنوانك', AppColors.redColor, AppColors.whiteColor);
-                  }
-                },
-                backgroundColor: AppColors.darkGreenColor,
-                textStyle: AppStyles.bold24White,
+
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _openLocationPicker(); // فتح الخريطة مرة أخرى
+                      },
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
+                        side: BorderSide(color: AppColors.darkGreenColor),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                      ),
+                      child: Text(
+                        'تغيير الموقع',
+                        style: TextStyle(
+                          color: AppColors.darkGreenColor,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _confirmOrder();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.darkGreenColor,
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                      ),
+                      child: Text(
+                        'إتمام الطلب',
+                        style: AppStyles.bold24White.copyWith(fontSize: 16.sp),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -286,9 +395,25 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    addressController.dispose();
-    super.dispose();
+  // تأكيد الطلب
+  void _confirmOrder() {
+    if (_selectedAddress != null && _latitude != null && _longitude != null) {
+      // إرسال الموقع للـ ViewModel
+      context.read<CartViewModel>().confirm(_selectedAddress!);
+
+      Navigator.popUntil(context, (route) => route.isFirst);
+
+      ToastMessage.toastMsg(
+        'تم إتمام الطلب بنجاح',
+        AppColors.darkGreenColor,
+        AppColors.whiteColor,
+      );
+    } else {
+      ToastMessage.toastMsg(
+        'يجب اختيار موقع التوصيل',
+        AppColors.redColor,
+        AppColors.whiteColor,
+      );
+    }
   }
 }

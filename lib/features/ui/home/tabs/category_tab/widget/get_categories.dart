@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
-import 'package:re_save_app/domain/entities/response/item.dart';
+import 'package:re_save_app/domain/entities/response/public/item.dart';
 import 'package:re_save_app/features/ui/home/tabs/category_tab/cubit/category_state.dart';
 import 'package:re_save_app/features/ui/home/tabs/category_tab/cubit/category_view_model.dart';
-import 'package:re_save_app/features/ui/home/tabs/home_tab/widget/category_item.dart';
+import 'package:re_save_app/features/ui/home/tabs/category_tab/widget/category_item.dart';
 
 class GetCategories extends StatefulWidget {
   String categoryName;

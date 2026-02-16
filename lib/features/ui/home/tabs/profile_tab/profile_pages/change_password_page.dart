@@ -4,10 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
-import 'package:re_save_app/features/ui/cubit/profile_state.dart';
-import 'package:re_save_app/features/ui/cubit/profile_view_model.dart';
 import 'package:re_save_app/features/widget/custom_elevatedbutton.dart';
 import 'package:re_save_app/features/widget/custom_text_form_field.dart';
+
+import '../cubit/profile_state.dart';
+import '../cubit/profile_view_model.dart';
 
 class ChangePasswordPage extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();

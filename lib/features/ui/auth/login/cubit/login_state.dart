@@ -1,4 +1,4 @@
-import 'package:re_save_app/domain/entities/response/login_response.dart';
+import 'package:re_save_app/domain/entities/response/auth/login_response.dart';
 
 abstract class LoginState {}
 

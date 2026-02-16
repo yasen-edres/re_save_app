@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "468933969162",
+    "project_id": "resave-app-5c611",
+    "storage_bucket": "resave-app-5c611.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468933969162:android:466d509da4bbed04dee6f3",
+        "android_client_info": {
+          "package_name": "com.example.re_save_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlBNNY2XYBqUIqDFZpxOE1LFJVncq9Ah0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

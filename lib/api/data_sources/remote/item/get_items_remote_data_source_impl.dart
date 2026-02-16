@@ -1,9 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:re_save_app/api/api_services.dart';
-import 'package:re_save_app/api/mappers/get_items_response_mappers.dart';
-import 'package:re_save_app/domain/entities/response/get_items_response.dart';
+import 'package:re_save_app/api/mappers/public/get_items_response_mappers.dart';
+import 'package:re_save_app/domain/entities/response/public/get_items_response.dart';
 
-import '../../../../data/data_sources/remote/get_items_remote_data_source.dart';
+import '../../../../data/data_sources/remote/public/get_items_remote_data_source.dart';
 
 @Injectable(as: GetItemsRemoteDataSource)
 class GetItemsRemoteDataSourceImpl implements GetItemsRemoteDataSource {

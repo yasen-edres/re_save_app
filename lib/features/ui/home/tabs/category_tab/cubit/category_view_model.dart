@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:re_save_app/domain/entities/response/item.dart';
-import 'package:re_save_app/domain/usecases/get_items_use_case.dart';
+import 'package:re_save_app/domain/entities/response/public/item.dart';
+import 'package:re_save_app/domain/usecases/public/get_items_use_case.dart';
 
 import '../../../../../../core/utils/app_assets.dart';
 import 'category_state.dart';
@@ -41,7 +41,6 @@ class CategoryViewModel extends Cubit<CategoryState> {
 
   Future<void> getItems() async {
     emit(CategoryInitialState());
-
     try {
       final response = await getItemsUseCase.invoke();
 

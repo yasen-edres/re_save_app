@@ -1,13 +1,13 @@
 import 'package:injectable/injectable.dart';
 import 'package:re_save_app/api/api_services.dart';
-import 'package:re_save_app/api/mappers/auth_request_mappers.dart';
-import 'package:re_save_app/api/mappers/auth_response_mappers.dart';
-import 'package:re_save_app/data/data_sources/remote/auth_remote_data_source.dart';
-import 'package:re_save_app/domain/entities/request/login_request.dart';
-import 'package:re_save_app/domain/entities/request/register_request.dart';
-import 'package:re_save_app/domain/entities/response/register_response.dart';
+import 'package:re_save_app/api/mappers/auth/auth_request_mappers.dart';
+import 'package:re_save_app/api/mappers/auth/auth_response_mappers.dart';
+import 'package:re_save_app/data/data_sources/remote/auth/auth_remote_data_source.dart';
+import 'package:re_save_app/domain/entities/request/auth/login_request.dart';
+import 'package:re_save_app/domain/entities/request/auth/register_request.dart';
+import 'package:re_save_app/domain/entities/response/auth/register_response.dart';
 
-import '../../../../domain/entities/response/login_response.dart';
+import '../../../../domain/entities/response/auth/login_response.dart';
 
 @Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {

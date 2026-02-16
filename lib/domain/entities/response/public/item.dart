@@ -5,7 +5,7 @@ class Item {
   final String? image;
   final String? pricingType;
   final String? price;
-  final int? isActive;
+  final bool? isActive;
   final dynamic createdAt;
   final dynamic updatedAt;
   final String? category;

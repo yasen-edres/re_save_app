@@ -144,7 +144,7 @@ class ItemDto {
   @JsonKey(name: "price")
   final String? price;
   @JsonKey(name: "is_active")
-  final int? isActive;
+  final bool? isActive;
   @JsonKey(name: "created_at")
   final dynamic? createdAt;
   @JsonKey(name: "updated_at")

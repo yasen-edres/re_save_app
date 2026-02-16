@@ -23,7 +23,7 @@ class ItemDto {
   final String? price;
 
   @JsonKey(name: "is_active")
-  final int? isActive;
+  final bool? isActive;
 
   @JsonKey(name: "created_at")
   final dynamic createdAt;

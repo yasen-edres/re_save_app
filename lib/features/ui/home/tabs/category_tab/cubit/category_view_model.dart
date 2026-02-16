@@ -41,7 +41,6 @@ class CategoryViewModel extends Cubit<CategoryState> {
 
   Future<void> getItems() async {
     emit(CategoryInitialState());
-
     try {
       final response = await getItemsUseCase.invoke();
 

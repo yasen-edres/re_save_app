@@ -93,7 +93,7 @@ ItemDto _$ItemDtoFromJson(Map<String, dynamic> json) => ItemDto(
   image: json['image'] as String?,
   pricingType: json['pricing_type'] as String?,
   price: json['price'] as String?,
-  isActive: (json['is_active'] as num?)?.toInt(),
+  isActive: json['is_active'] as bool?,
   createdAt: json['created_at'],
   updatedAt: json['updated_at'],
   category: json['category'] as String?,

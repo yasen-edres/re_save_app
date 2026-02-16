@@ -33,9 +33,9 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<CategoryViewModel>().getItems();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ProfileViewModel>().getUserData();
+      context.read<CategoryViewModel>().getItems();
     });
   }
 
@@ -279,7 +279,8 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                         itemBuilder: (context, index) {
                           return CategoryItem(
-                            item: context.read<CategoryViewModel>().items[index],);
+                            item: context.read<CategoryViewModel>().items[index]//this items not display in first run display in the secound run
+                            ,);
                         },
                       ),
                     ),

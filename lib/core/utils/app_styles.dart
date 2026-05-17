@@ -182,4 +182,39 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.primaryDark,
   );
+  static TextStyle bold16White = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle bold16PrimaryDark = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primaryDark,
+  );
+  static TextStyle bold32Green = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    color: AppColors.greenColor,
+  );
+  static TextStyle medium14Gray = GoogleFonts.poppins(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: AppColors.grayColor,
+  );
+  static TextStyle medium16Black = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: AppColors.blackColor,
+  );
+  static TextStyle medium14White = GoogleFonts.poppins(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle bold12White = GoogleFonts.poppins(
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+    color: AppColors.whiteColor,
+  );
 }

@@ -43,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(
               context: context, message: state.errorMessage,
-          posActionName: 'OK');
+              posActionName: 'OK');
         } else if (state is RegisterSuccess) {
           DialogUtils.hideLoading(context: context);
           DialogUtils.showMessage(

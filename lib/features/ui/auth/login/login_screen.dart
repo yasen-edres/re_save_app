@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:re_save_app/config/di.dart';
 import 'package:re_save_app/core/utils/app_routes.dart';
 import 'package:re_save_app/core/utils/dialog_utils.dart';
@@ -144,7 +144,7 @@ class LoginScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        FaIcon(FontAwesomeIcons.google),
+                        Brand(Brands.google),
                         SizedBox(width: 8.w,),
                         Text('المتابعة عبر جوجل',
                           style: AppStyles.medium18Header,)

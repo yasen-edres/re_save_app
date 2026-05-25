@@ -38,7 +38,7 @@ dependencies:
   flutter_native_splash: ^2.4.7
   google_fonts: ^6.3.2
   auto_size_text: ^3.0.0
-  font_awesome_flutter: ^10.10.0
+  icons_plus: ^5.0.0
   flutter_localization: ^0.3.3
   carousel_slider: ^5.1.1
   dialog: ^0.8.0

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:re_save_app/core/utils/app_colors.dart';
 import 'package:re_save_app/core/utils/app_styles.dart';
 import 'package:re_save_app/core/utils/flutter_toast.dart';
@@ -30,7 +31,9 @@ class CustomBottomSheetContent extends StatefulWidget {
 }
 
 class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
-  final TextEditingController quantityController = TextEditingController(text: '0');
+  final TextEditingController quantityController = TextEditingController(
+    text: '0',
+  );
   int quantity = 0;
   bool checkPrice = false;
   int minPrice = 100;
@@ -48,9 +51,8 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   Widget build(BuildContext context) {
     return BlocBuilder<OrderViewModel, OrderState>(
       builder: (context, state) {
-        final price = double.parse(widget.item.price!);
-        double totalPrice = quantity * double.parse(widget.item.price!);
-        final cloudImages = context.read<OrderViewModel>().cloudImageUrls;
+        final price = double.tryParse(widget.item.price ?? '') ?? 0;
+        final totalPrice = quantity * price;
 
         return Container(
           padding: EdgeInsets.symmetric(vertical: 30.h, horizontal: 20.w),
@@ -63,8 +65,15 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.item.pricingType == 'kg' ? Text('أضف الكمية بالوزن', style: AppStyles.bold24Black) : Text('أضف العدد', style: AppStyles.bold24Black),
-                widget.item.pricingType == 'kg'? Text('الوزن يقاس بالكيلوجرام', style: AppStyles.light16Gray) : Text('الوزن يقاس بالقطعه', style: AppStyles.light16Gray),
+                widget.item.pricingType == 'kg'
+                    ? Text('أضف الكمية بالوزن', style: AppStyles.bold24Black)
+                    : Text('أضف العدد', style: AppStyles.bold24Black),
+                widget.item.pricingType == 'kg'
+                    ? Text(
+                        'الوزن يقاس بالكيلوجرام',
+                        style: AppStyles.light16Gray,
+                      )
+                    : Text('الوزن يقاس بالقطعه', style: AppStyles.light16Gray),
                 SizedBox(height: 10.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50.w),
@@ -74,111 +83,125 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                       Center(
                         child: isUploading
                             ? Container(
-                          width: 180.w,
-                          height: 150.h,
-                          decoration: BoxDecoration(
-                            color: AppColors.lightGrayColor.withOpacity(0.3),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: AppColors.darkGreenColor.withOpacity(0.3),
-                              width: 2,
-                            ),
-                          ),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircularProgressIndicator(
-                                  color: AppColors.darkGreenColor,
-                                  strokeWidth: 3,
-                                ),
-                                SizedBox(height: 12.h),
-                                Text(
-                                  'جاري رفع الصورة...',
-                                  style: AppStyles.semi14TextBlack.copyWith(
-                                    color: AppColors.darkGreenColor,
+                                width: 180.w,
+                                height: 150.h,
+                                decoration: BoxDecoration(
+                                  color: AppColors.lightGrayColor.withOpacity(
+                                    0.3,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: AppColors.darkGreenColor.withOpacity(
+                                      0.3,
+                                    ),
+                                    width: 2,
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        )
-                            : cloudImages.isNotEmpty
+                                child: Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircularProgressIndicator(
+                                        color: AppColors.darkGreenColor,
+                                        strokeWidth: 3,
+                                      ),
+                                      SizedBox(height: 12.h),
+                                      Text(
+                                        'جاري رفع الصورة...',
+                                        style: AppStyles.semi14TextBlack
+                                            .copyWith(
+                                              color: AppColors.darkGreenColor,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : imageUrl.isNotEmpty
                             ? CachedNetworkImage(
-                          imageUrl: cloudImages[0],
-                          width: 180.w,
-                          height: 150.h,
-                          fit: BoxFit.cover,
-                          imageBuilder: (context, imageProvider) => Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              image: DecorationImage(
-                                image: imageProvider,
+                                imageUrl: imageUrl,
+                                width: 180.w,
+                                height: 150.h,
                                 fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          placeholder: (context, url) => Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            child: Container(
-                              width: 180.w,
-                              height: 150.h,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            ),
-                          ),
-                          errorWidget: (context, url, error) => Container(
-                            width: 180.w,
-                            height: 150.h,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Icon(
-                              Icons.broken_image,
-                              color: Colors.grey,
-                              size: 40,
-                            ),
-                          ),
-                        )
-                            : InkWell(
-                          onTap: pickFromCamera,
-                          child: Container(
-                            width: 180.w,
-                            height: 150.h,
-                            decoration: BoxDecoration(
-                              color: AppColors.lightGrayColor,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                color: AppColors.darkGreenColor.withOpacity(0.3),
-                                width: 2,
-                                style: BorderStyle.solid,
-                              ),
-                            ),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    CupertinoIcons.camera,
-                                    size: 40,
-                                    color: AppColors.darkGreenColor,
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(16),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                      baseColor: Colors.grey[300]!,
+                                      highlightColor: Colors.grey[100]!,
+                                      child: Container(
+                                        width: 180.w,
+                                        height: 150.h,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                errorWidget: (context, url, error) => Container(
+                                  width: 180.w,
+                                  height: 150.h,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(16),
                                   ),
-                                  SizedBox(height: 8.h),
-                                  Text(
-                                    'إضافة صورة',
-                                    style: AppStyles.light16Gray.copyWith(
-                                      color: AppColors.darkGreenColor,
+                                  child: Icon(
+                                    Icons.broken_image,
+                                    color: Colors.grey,
+                                    size: 40,
+                                  ),
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () async {
+                                  final granted = await requestCameraPermission();
+                                  if (granted) await pickFromCamera();
+                                },
+                                child: Container(
+                                  width: 180.w,
+                                  height: 150.h,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.lightGrayColor,
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: AppColors.darkGreenColor
+                                          .withOpacity(0.3),
+                                      width: 2,
+                                      style: BorderStyle.solid,
                                     ),
                                   ),
-                                ],
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.camera,
+                                          size: 40,
+                                          color: AppColors.darkGreenColor,
+                                        ),
+                                        SizedBox(height: 8.h),
+                                        Text(
+                                          'إضافة صورة',
+                                          style: AppStyles.light16Gray.copyWith(
+                                            color: AppColors.darkGreenColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
                       ),
                       SizedBox(height: 10.h),
                       !checkImage
@@ -188,9 +211,15 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                       Center(
                         child: Column(
                           children: [
-                            Text(widget.item.name!, style: AppStyles.bold20Black),
+                            Text(
+                              widget.item.name!,
+                              style: AppStyles.bold20Black,
+                            ),
                             SizedBox(height: 5.h),
-                            Text(widget.item.description!, style: AppStyles.light16Gray),
+                            Text(
+                              widget.item.description!,
+                              style: AppStyles.light16Gray,
+                            ),
                             SizedBox(height: 10.h),
                             Text('الحد الادني للطلب هو 25 جنيهًا'),
                           ],
@@ -243,12 +272,16 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                           color: AppColors.whiteColor,
                           border: Border.all(color: AppColors.lightGrayColor),
                         ),
-                        child: Text('${totalPrice.toStringAsFixed(2)} جنيه',
-                            style: AppStyles.bold16Black),
+                        child: Text(
+                          '${totalPrice.toStringAsFixed(2)} جنيه',
+                          style: AppStyles.bold16Black,
+                        ),
                       ),
                       checkPrice
-                          ? Text('السعر أقل من الحد الأدنى! ${minPrice}',
-                          style: AppStyles.bold16Red)
+                          ? Text(
+                              'السعر أقل من الحد الأدنى! ${minPrice}',
+                              style: AppStyles.bold16Red,
+                            )
                           : SizedBox.shrink(),
                     ],
                   ),
@@ -270,36 +303,40 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
                     Expanded(
                       child: CustomElevatedButton(
                         text: 'اتمام الطلب',
-                        onPressed:isUploading?null: () {
-                          if (quantity * price < minPrice) {
-                            setState(() {
-                              checkPrice = true;
-                            });
-                            return;
-                          } else {
-                            setState(() {
-                              checkPrice = false;
-                            });
-                          }
+                        onPressed: isUploading
+                            ? null
+                            : () {
+                                if (quantity * price < minPrice) {
+                                  setState(() {
+                                    checkPrice = true;
+                                  });
+                                  return;
+                                } else {
+                                  setState(() {
+                                    checkPrice = false;
+                                  });
+                                }
 
-                          if (!checkImage) {
-                            return;
-                          }
+                                if (!checkImage) {
+                                  return;
+                                }
 
-                          final addItemToCartRequest = AddItemToCartRequest(
-                            estimatedQuantity: quantity,
-                            itemId: widget.item.id,
-                            image: imageUrl,
-                          );
-                          ToastMessage.toastMsg(
-                            'تمت إضافة المنتج إلى سلة التسوق بنجاح',
-                            AppColors.darkGreenColor,
-                            AppColors.whiteColor,
-                          );
-                          context.read<OrderViewModel>().addItemToCart(addItemToCartRequest);
-                          Navigator.pop(context);
-
-                        },
+                                final addItemToCartRequest =
+                                    AddItemToCartRequest(
+                                      estimatedQuantity: quantity,
+                                      itemId: widget.item.id,
+                                      image: imageUrl,
+                                    );
+                                ToastMessage.toastMsg(
+                                  'تمت إضافة المنتج إلى سلة التسوق بنجاح',
+                                  AppColors.darkGreenColor,
+                                  AppColors.whiteColor,
+                                );
+                                context.read<OrderViewModel>().addItemToCart(
+                                  addItemToCartRequest,
+                                );
+                                Navigator.pop(context);
+                              },
                         backgroundColor: AppColors.whiteColor,
                         textStyle: AppStyles.bold20Green,
                         borderColor: AppColors.darkGreenColor,
@@ -328,17 +365,17 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   }
 
   Future<void> uploadImageToCloudinary(File file) async {
-    setState(() {
-      isUploading = true;
-    });
+    setState(() => isUploading = true);
 
     try {
-      CloudinaryResponse response = await cloudinary.uploadFile(
+      final response = await cloudinary.uploadFile(
         CloudinaryFile.fromFile(
           file.path,
           resourceType: CloudinaryResourceType.Image,
         ),
       );
+
+      if (!mounted) return;
 
       setState(() {
         checkImage = true;
@@ -347,12 +384,11 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
       });
 
       context.read<OrderViewModel>().addImage(response.secureUrl);
-    } on CloudinaryException catch (e) {
-      print('Cloudinary Error: ${e.message}');
-      setState(() {
-        isUploading = false;
-      });
+    } catch (e) {
+      debugPrint('Upload error: $e');
+      if (!mounted) return;
 
+      setState(() => isUploading = false);
       ToastMessage.toastMsg(
         'فشل رفع الصورة، حاول مرة أخرى',
         Colors.red,
@@ -381,5 +417,17 @@ class _CustomBottomSheetContentState extends State<CustomBottomSheetContent> {
   void dispose() {
     quantityController.dispose();
     super.dispose();
+  }
+
+  Future<bool> requestCameraPermission() async {
+    final status = await Permission.camera.request();
+
+    if (status.isGranted) return true;
+
+    if (status.isPermanentlyDenied || status.isRestricted) {
+      // iOS مش هيظهر الـ dialog تاني، الحل الوحيد الإعدادات
+      await openAppSettings();
+    }
+    return false;
   }
 }

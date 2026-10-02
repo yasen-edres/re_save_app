@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,6 +27,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String imageUrl = '';
   bool checkImage = false;
   bool isUploading = false;
+  bool _initialized = false; // عشان نملا الـ controllers مرة واحدة بس
   final ImagePicker _picker = ImagePicker();
   final cloudinary = CloudinaryPublic(
     'dd2gpv170',
@@ -48,12 +50,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
         final viewModel = context.read<ProfileViewModel>();
         final user = viewModel.user;
 
-        if (user != null) {
+        // املا الاسم والرقم مرة واحدة بس، عشان setState ما يمسحش تعديلات المستخدم
+        if (user != null && !_initialized) {
           phoneController.text = user.phone ?? '';
           nameController.text = user.name ?? '';
-          if (!checkImage && user.image != null) {
-            imageUrl = user.image!;
-          }
+          _initialized = true;
+        }
+
+        // الصورة مالهاش علاقة بالـ controllers
+        if (!checkImage && user?.image != null) {
+          imageUrl = user!.image!;
         }
 
         if (state is ProfileLoading) {
@@ -82,14 +88,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
             body: Stack(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 20.w, vertical: 30.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('تعديل بيانات الحساب', style: AppStyles.bold22Black),
                       SizedBox(height: 20.h),
                       InkWell(
-                        onTap: isUploading ? null : () {
+                        onTap: isUploading
+                            ? null
+                            : () {
                           _showImageSourceDialog();
                         },
                         child: Row(
@@ -97,7 +106,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           children: [
                             Stack(
                               children: [
-                                (checkImage || (user?.image != null && user!.image!.isNotEmpty))
+                                (checkImage ||
+                                    (user?.image != null &&
+                                        user!.image!.isNotEmpty))
                                     ? CircleAvatar(
                                   radius: 70.w,
                                   backgroundColor: AppColors.greenColor,
@@ -162,7 +173,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       Spacer(),
                       CustomElevatedButton(
                         text: 'حفظ',
-                        onPressed: isUploading ? null : () {
+                        onPressed: isUploading
+                            ? null
+                            : () {
                           if (nameController.text.isEmpty) {
                             ToastMessage.toastMsg(
                               'من فضلك أدخل الاسم',
@@ -183,7 +196,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           viewModel.updateProfile(
                             nameController.text,
                             phoneController.text,
-                            imageUrl.isNotEmpty ? imageUrl : user?.image ?? '',
+                            imageUrl.isNotEmpty
+                                ? imageUrl
+                                : user?.image ?? '',
                           );
                           Navigator.pop(context);
                         },
@@ -210,7 +225,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: Wrap(
             children: [
               ListTile(
-                leading: Icon(Icons.photo_camera, color: AppColors.darkGreenColor),
+                leading:
+                Icon(Icons.photo_camera, color: AppColors.darkGreenColor),
                 title: Text('التقاط صورة', style: AppStyles.bold18Black),
                 onTap: () {
                   Navigator.pop(context);
@@ -218,7 +234,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo_library, color: AppColors.darkGreenColor),
+                leading:
+                Icon(Icons.photo_library, color: AppColors.darkGreenColor),
                 title: Text('اختيار من المعرض', style: AppStyles.bold18Black),
                 onTap: () {
                   Navigator.pop(context);
@@ -233,26 +250,40 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   Future<void> pickFromCamera() async {
-    final XFile? image = await _picker.pickImage(
-      source: ImageSource.camera,
-      imageQuality: 70,
-    );
-
-    if (image != null) {
-      File file = File(image.path);
-      await uploadImageToCloudinary(file);
+    try {
+      final XFile? image = await _picker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 70,
+      );
+      if (image != null) {
+        await uploadImageToCloudinary(File(image.path));
+      }
+    } on PlatformException catch (e) {
+      debugPrint('Camera error: ${e.code}');
+      ToastMessage.toastMsg(
+        'مفيش صلاحية للكاميرا، فعّلها من إعدادات الجهاز',
+        Colors.red,
+        AppColors.whiteColor,
+      );
     }
   }
 
   Future<void> pickFromGallery() async {
-    final XFile? image = await _picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 70,
-    );
-
-    if (image != null) {
-      File file = File(image.path);
-      await uploadImageToCloudinary(file);
+    try {
+      final XFile? image = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 70,
+      );
+      if (image != null) {
+        await uploadImageToCloudinary(File(image.path));
+      }
+    } on PlatformException catch (e) {
+      debugPrint('Gallery error: ${e.code}');
+      ToastMessage.toastMsg(
+        'مفيش صلاحية للمعرض، فعّلها من إعدادات الجهاز',
+        Colors.red,
+        AppColors.whiteColor,
+      );
     }
   }
 
@@ -269,9 +300,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
       );
 
+      if (!mounted) return;
+
       setState(() {
         checkImage = true;
-        imageUrl = response.secureUrl ?? '';
+        imageUrl = response.secureUrl;
         isUploading = false;
       });
 
@@ -281,7 +314,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         AppColors.whiteColor,
       );
     } on CloudinaryException catch (e) {
-      print('Cloudinary Error: ${e.message}');
+      debugPrint('Cloudinary Error: ${e.message}');
+      if (!mounted) return;
+
       setState(() {
         isUploading = false;
       });
@@ -292,7 +327,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         AppColors.whiteColor,
       );
     } catch (e) {
-      print('Error: $e');
+      debugPrint('Error: $e');
+      if (!mounted) return;
+
       setState(() {
         isUploading = false;
       });

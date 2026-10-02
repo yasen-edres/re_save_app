@@ -51,6 +51,8 @@
 		<false/>
 
 		<!-- أضف هذه الصلاحيات للموقع -->
+		<key>NSCameraUsageDescription</key>
+        <string>التطبيق محتاج الكاميرا عشان تصور الصور</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>نحتاج للوصول إلى موقعك لتحديد عنوان التوصيل على الخريطة</string>
 		<key>NSLocationAlwaysUsageDescription</key>
